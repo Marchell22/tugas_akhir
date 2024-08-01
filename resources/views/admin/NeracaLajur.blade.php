@@ -254,8 +254,8 @@
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penyesuaian</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="">Kelola Jurnal Penyesuaian</a></li>
-                            <li><a href="">Menu Validasi</a></li>
+                            <li><a href="{{ route('admin.JurnalPenyesuaian') }}">Kelola Jurnal Penyesuaian</a></li>
+                            <li><a href="{{ route('admin.ValidasiJurnalPenyesuaian') }}">Menu Validasi</a></li>
                         </ul>
                     </li>
                     <li>
@@ -369,33 +369,34 @@
                 </div>
                 <div class="pb-10 pd-2">
                     <table class="table table-bordered">
-                        <thead>
+                        <thead class="">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
+                                <th rowspan="2" style="vertical-align: middle" class="text-center">Kode</th>
+                                <th rowspan="2" style="vertical-align: middle" class="text-center">Nama</th>
+                                <th colspan="2" class="text-center">Neraca Saldo</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Debit</th>
+                                <th class="text-center">Kredit</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                            <td>A</th>
+                            <td>B</td>
+                            <td>A</td>
+                            <td>A</td>
                         </tbody>
+                        <tfoot class="">
+                            <tr>
+                                <th colspan="2" class="text-right">Jumlah</th>
+                                <th>A</th>
+                                <th>B</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="text-right">Selisih</th>
+                                <th colspan="2" class="text-right" id="selisih_neraca_saldo">B</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

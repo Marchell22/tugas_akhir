@@ -250,8 +250,8 @@
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penyesuaian</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="">Kelola Jurnal Penyesuaian</a></li>
-							<li><a href="">Menu Validasi</a></li>
+                            <li><a href="{{ route('admin.JurnalPenyesuaian') }}">Kelola Jurnal Penyesuaian</a></li>
+							<li><a href="{{ route('admin.ValidasiJurnalPenyesuaian') }}">Menu Validasi</a></li>
                         </ul>
                     </li>
                     <li>

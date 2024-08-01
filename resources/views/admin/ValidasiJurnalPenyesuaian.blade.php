@@ -236,22 +236,22 @@
                         </ul>
 
                     </li>
-                    <li class="dropdown show">
-                        <a href="javascript:;" class="dropdown-toggle" data-option="on">
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Umum</span>
                         </a>
-                        <ul class="submenu" style="display: block;">
-                            <li><a href="{{ route('admin.JurnalUmum') }}" class="active">Kelola Jurnal Umum</a></li>
+                        <ul class="submenu">
+                            <li><a href="{{ route('admin.JurnalUmum') }}">Kelola Jurnal Umum</a></li>
 							<li><a href="{{ route('admin.ValidasiJurnalUmum') }}">Menu Validasi</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown show">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penyesuaian</span>
                         </a>
-                        <ul class="submenu">
-                            <li><a href="{{ route('admin.JurnalPenyesuaian') }}">Kelola Jurnal Penyesuaian</a></li>
-							<li><a href="{{ route('admin.ValidasiJurnalPenyesuaian') }}">Menu Validasi</a></li>
+                        <ul class="submenu" style="display: block;">
+                            <li><a href="{{ route('admin.JurnalPenyesuaian') }}" >Kelola Jurnal Penyesuaian</a></li>
+							<li><a href="{{ route('admin.ValidasiJurnalPenyesuaian') }}"class="active">Menu Validasi</a></li>
                         </ul>
                     </li>
                     <li>
@@ -313,9 +313,9 @@
                                     class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                                     <div class="mb-3">
                                         <a class="dropdown-toggle no-arrow" role="">
-                                            <span class="user-name-header">Jurnal Umum</span>
+                                            <span class="user-name-header">Jurnal Penyesuaian</span>
                                         </a>
-                                        <p class="mb-0 text-sm">Kelola Jurnal Umum</p>
+                                        <p class="mb-0 text-sm">Menu Validasi</p>
                                     </div>
                                     <div class="mb-3">
                                         <a href="" class="btn btn-success" title="Tambah"><i
