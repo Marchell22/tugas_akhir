@@ -255,7 +255,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.BukuBesar') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Buku Besar</span>
                         </a>
                     </li>
