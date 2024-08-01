@@ -268,18 +268,18 @@
                             <span class="micon dw dw-list3"></span><span class="mtext">Neraca Lajur</span>
                         </a>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown show">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-list3"></span><span class="mtext">Laporan</span>
                         </a>
-                        <ul class="submenu">
-                            <li><a href="{{ route('admin.Ekuitas') }}">Perubahan Ekuitas</a></li>
+                        <ul class="submenu" style="display: block;">
+                            <li><a href="{{ route('admin.Ekuitas') }}" class="active">Perubahan Ekuitas</a></li>
                             <li><a href="">Laba Rugi</a></li>
                             <li><a href="">Posisi Keuangan</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('admin.JurnalPenutup') }}" class="dropdown-toggle no-arrow active">
+                        <a href="{{ route('admin.JurnalPenutup') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penutup</span>
                         </a>
                     </li>
@@ -313,8 +313,8 @@
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
                         <div class="pull-left">
-                            <h4 class="text-black h4">Jurnal Penutup</h4>
-                            <p class="mb-30">Kelola Jurnal Penutup</p>
+                            <h4 class="text-black h4">Neraca Lajur</h4>
+                            <p class="mb-30">Kelola Neraca Lajur</p>
                         </div>
                         {{-- <div class="pull-right">
                             <a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"
