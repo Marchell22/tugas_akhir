@@ -7,9 +7,9 @@
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('tmplt/vendors/images/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('tmplt/vendors/images/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('tmplt/vendors/images/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('tmplt/vendors/images/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('tmplt/vendors/images/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('tmplt/vendors/images/favicon-16x16.png')}}">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -18,14 +18,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('tmplt/vendors/styles/core.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('tmplt/vendors/styles/icon-font.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('tmplt/vendors/styles/core.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('tmplt/vendors/styles/icon-font.min.css')}}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('tmplt/src/plugins/datatables/css/dataTables.bootstrap4.min.css') }}">
+        href="{{ asset('tmplt/src/plugins/datatables/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('tmplt/src/plugins/datatables/css/responsive.bootstrap4.min.css') }}">
+        href="{{ asset('tmplt/src/plugins/datatables/css/responsive.bootstrap4.min.css')}}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('tmplt/vendors/styles/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('tmplt/vendors/styles/style.css')}}">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
     <script>
@@ -37,6 +37,7 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-119386393-1');
+
     </script>
     <style>
         /* Mengubah ukuran font pada .user-name */
@@ -60,18 +61,19 @@
             margin-bottom: 10px;
         }
 
-        /*
-  .form-control {
-  width: 200px;
-  padding: 5px;
-  font-size: 14px;
-  } */
+        /* 		
+		.form-control {
+		  width: 200px;
+		  padding: 5px;
+		  font-size: 14px;
+		} */
+
     </style>
 
 <body>
     <div class="pre-loader">
         <div class="pre-loader-box">
-            <div class="loader-logo"><img src="{{ asset('tmplt/vendors/images/loading.png') }}" alt=""></div>
+            <div class="loader-logo"><img src="{{ asset('tmplt/vendors/images/loading.png')}}" alt=""></div>
             <div class='loader-progress' id="progress_div">
                 <div class='bar' id='bar1'></div>
             </div>
@@ -151,18 +153,16 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
-                            class="custom-control-input" value="icon-style-2">
-                        <label class="custom-control-label" for="sidebaricon-2"><i
-                                class="ion-plus-round"></i></label>
+                        <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon" class="custom-control-input"
+                            value="icon-style-2">
+                        <label class="custom-control-label" for="sidebaricon-2"><i class="ion-plus-round"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="sidebaricon-3" name="menu-dropdown-icon"
-                            class="custom-control-input" value="icon-style-3">
+                        <input type="radio" id="sidebaricon-3" name="menu-dropdown-icon" class="custom-control-input"
+                            value="icon-style-3">
                         <label class="custom-control-label" for="sidebaricon-3"><i
                                 class="fa fa-angle-double-right"></i></label>
                     </div>
@@ -171,40 +171,38 @@
                 <h4 class="weight-600 font-18 pb-10">Menu List Icon</h4>
                 <div class="sidebar-radio-group pb-30 mb-10">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="sidebariconlist-1" name="menu-list-icon"
-                            class="custom-control-input" value="icon-list-style-1" checked="">
+                        <input type="radio" id="sidebariconlist-1" name="menu-list-icon" class="custom-control-input"
+                            value="icon-list-style-1" checked="">
                         <label class="custom-control-label" for="sidebariconlist-1"><i
                                 class="ion-minus-round"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="sidebariconlist-2" name="menu-list-icon"
-                            class="custom-control-input" value="icon-list-style-2">
+                        <input type="radio" id="sidebariconlist-2" name="menu-list-icon" class="custom-control-input"
+                            value="icon-list-style-2">
                         <label class="custom-control-label" for="sidebariconlist-2"><i class="fa fa-circle-o"
                                 aria-hidden="true"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="sidebariconlist-3" name="menu-list-icon"
-                            class="custom-control-input" value="icon-list-style-3">
-                        <label class="custom-control-label" for="sidebariconlist-3"><i
-                                class="dw dw-check"></i></label>
+                        <input type="radio" id="sidebariconlist-3" name="menu-list-icon" class="custom-control-input"
+                            value="icon-list-style-3">
+                        <label class="custom-control-label" for="sidebariconlist-3"><i class="dw dw-check"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="sidebariconlist-4" name="menu-list-icon"
-                            class="custom-control-input" value="icon-list-style-4" checked="">
+                        <input type="radio" id="sidebariconlist-4" name="menu-list-icon" class="custom-control-input"
+                            value="icon-list-style-4" checked="">
                         <label class="custom-control-label" for="sidebariconlist-4"><i
                                 class="icon-copy dw dw-next-2"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="sidebariconlist-5" name="menu-list-icon"
-                            class="custom-control-input" value="icon-list-style-5">
+                        <input type="radio" id="sidebariconlist-5" name="menu-list-icon" class="custom-control-input"
+                            value="icon-list-style-5">
                         <label class="custom-control-label" for="sidebariconlist-5"><i
                                 class="dw dw-fast-forward-1"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="sidebariconlist-6" name="menu-list-icon"
-                            class="custom-control-input" value="icon-list-style-6">
-                        <label class="custom-control-label" for="sidebariconlist-6"><i
-                                class="dw dw-next"></i></label>
+                        <input type="radio" id="sidebariconlist-6" name="menu-list-icon" class="custom-control-input"
+                            value="icon-list-style-6">
+                        <label class="custom-control-label" for="sidebariconlist-6"><i class="dw dw-next"></i></label>
                     </div>
                 </div>
 
@@ -218,9 +216,8 @@
     <div class="left-side-bar">
         <div class="brand-logo">
             <a href="#">
-                <img src="{{ asset('tmplt/vendors/images/accounting.svg') }}" alt="" class="dark-logo">
-                <img src="{{ asset('tmplt/vendors/images/accounting-white.svg') }}" alt=""
-                    class="light-logo">
+                <img src="{{ asset('tmplt/vendors/images/accounting.svg')}}" alt="" class="dark-logo">
+                <img src="{{ asset('tmplt/vendors/images/accounting-white.svg')}}" alt="" class="light-logo">
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
                 <i class="ion-close-round"></i>
@@ -229,24 +226,23 @@
         <div class="menu-block customscroll">
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
-                    <li class="dropdown">
+                    <li class="dropdown" >
                         <a href="javascript:;" class="dropdown-toggle" data-option="on">
                             <span class="micon dw dw-list3"></span><span class="mtext">Data Akun Transaksi</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="{{ route('admin.AkunTransaksi') }}">Kelola Akun Transaksi</a></li>
-                            <li><a href="{{ route('admin.ValidasiTransaksi') }}">Menu Validasi</a>
-                            </li>
+							<li><a href="{{ route('admin.ValidasiTransaksi') }}" >Menu Validasi</a></li>
                         </ul>
 
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown show">
                         <a href="javascript:;" class="dropdown-toggle" data-option="on">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Umum</span>
                         </a>
-                        <ul class="submenu">
+                        <ul class="submenu" style="display: block;">
                             <li><a href="{{ route('admin.JurnalUmum') }}">Kelola Jurnal Umum</a></li>
-                            <li><a href="{{ route('admin.ValidasiJurnalUmum') }}">Menu Validasi</a></li>
+							<li><a href="{{ route('admin.ValidasiJurnalUmum') }}"class="active">Menu Validasi</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -255,7 +251,7 @@
                         </a>
                         <ul class="submenu">
                             <li><a href="">Kelola Jurnal Penyesuaian</a></li>
-                            <li><a href="">Menu Validasi</a></li>
+							<li><a href="">Menu Validasi</a></li>
                         </ul>
                     </li>
                     <li>
@@ -264,7 +260,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow active">
+                        <a href="{{ route('admin.NeracaLajur') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Neraca Lajur</span>
                         </a>
                     </li>
@@ -274,8 +270,8 @@
                         </a>
                         <ul class="submenu">
                             <li><a href="">Perubahan Ekuitas</a></li>
-                            <li><a href="">Laba Rugi</a></li>
-                            <li><a href="">Posisi Keuangan</a></li>
+							<li><a href="">Laba Rugi</a></li>
+							<li><a href="">Posisi Keuangan</a></li>
                         </ul>
                     </li>
                     <li>
@@ -298,7 +294,6 @@
                         <a href="{{ route('logout') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-right-arrow1"></span><span class="mtext">Logout</span>
                         </a>
-
                     </li>
 
                 </ul>
@@ -310,93 +305,85 @@
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
-                <div class="pd-20 card-box mb-30">
-                    <div class="clearfix">
-                        <div class="pull-left">
-                            <h4 class="text-black h4">Neraca Lajur</h4>
-                            <p class="mb-30">Kelola Neraca Lajur</p>
-                        </div>
-                        {{-- <div class="pull-right">
-                            <a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"
-                                data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
-                        </div> --}}
-                    </div>
-                    <form>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Select</label>
-                            <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-
-                        </div>
-                        {{-- <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Text</label>
-                            <div class="col-sm-12 col-md-10">
-                                <input class="form-control" type="text" placeholder="Johnny Brown">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col">
+                            <div class="title">
+                                <div
+                                    class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+                                    <div class="mb-3">
+                                        <a class="dropdown-toggle no-arrow" role="">
+                                            <span class="user-name-header">Jurnal Umum</span>
+                                        </a>
+                                        <p class="mb-0 text-sm">Menu Validasi</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <a href="" class="btn btn-success" title="Tambah"><i
+                                                class="icon-copy ion-plus-round"></i></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Search</label>
-                            <div class="col-sm-12 col-md-10">
-                                <input class="form-control" placeholder="Search Here" type="search">
-                            </div>
-                        </div> --}}
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Select</label>
-                            <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-
-                        </div>
-                    </form>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-info">Dark</button>
                     </div>
                 </div>
-            </div>
-            <div class="card-box mb-30">
-                <div class="pd-10">
-                </div>
-                <div class="pb-10 pd-2">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="card-box mb-30">
+                    <div class="pd-10">
+                    </div>
+                    <div class="pb-10 pd-2">
+                        <table class="data-table table ">
+                            <thead>
+                                <tr>
+                                    {{-- <th class="table-plus datatable-nosort">Name</th> --}}
+									<th class="table-plus sort_disabled">Kode</th>
+                                    <th class="table-plus datatable-nosort">Nama</th>
+                                    <th  class="table-plus datatable-nosort">Post Saldo</th>
+                                    <th  class="table-plus datatable-nosort">Post Penyesuaian</th>
+                                    <th  class="table-plus datatable-nosort">Post Laporan</th>
+                                    <th class="datatable-nosort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="">1101</td>
+                                    <td>Kas</td>
+                                    <td>Debit </td>
+                                    <td>Kredit</td>
+                                    <td>Neraca</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                href="#" role="button" data-toggle="dropdown">
+                                                <i class="dw dw-more"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
+                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="">1102</td>
+                                    <td>Pendapatan</td>
+                                    <td>Debit </td>
+                                    <td>Kredit</td>
+                                    <td>Neraca</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                href="#" role="button" data-toggle="dropdown">
+                                                <i class="dw dw-more"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
+                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -408,26 +395,26 @@
     </div>
     </div>
     <!-- js -->
-    <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
-    <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
-    <script src="{{ asset('tmplt/vendors/scripts/process.js') }}"></script>
-    <script src="{{ asset('tmplt/vendors/scripts/layout-settings.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('tmplt/vendors/scripts/dashboard.js') }}"></script>
-    <!-- buttons for Export datatable -->
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
-    <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
+    <script src="{{ asset('tmplt/vendors/scripts/core.js')}}"></script>
+    <script src="{{ asset('tmplt/vendors/scripts/script.min.js')}}"></script>
+    <script src="{{ asset('tmplt/vendors/scripts/process.js')}}"></script>
+    <script src="{{ asset('tmplt/vendors/scripts/layout-settings.js')}}"></script>
+    <script src="{{ asset('tmplt/src/plugins/apexcharts/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{ asset('tmplt/vendors/scripts/dashboard.js')}}"></script>
+		<!-- buttons for Export datatable -->
+	<script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.buttons.min.js')}}"></script>
+	<script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.bootstrap4.min.js')}}"></script>
+	<script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.print.min.js')}}"></script>
+	<script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.html5.min.js')}}"></script>
+	<script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js')}}"></script>
+	<script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js')}}"></script>
+	<script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js')}}"></script>
+	<!-- Datatable Setting js -->
+	<script src="vendors/scripts/datatable-setting.js"></script>
 </body>
 
 </html>

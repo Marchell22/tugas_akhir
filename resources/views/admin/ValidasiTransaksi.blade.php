@@ -241,8 +241,8 @@
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Umum</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="">Kelola Jurnal Umum</a></li>
-							<li><a href="">Menu Validasi</a></li>
+                            <li><a href="{{ route('admin.JurnalUmum') }}">Kelola Jurnal Umum</a></li>
+							<li><a href="{{ route('admin.ValidasiJurnalUmum') }}">Menu Validasi</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
