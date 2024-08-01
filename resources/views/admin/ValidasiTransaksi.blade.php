@@ -231,8 +231,8 @@
                             <span class="micon dw dw-list3"></span><span class="mtext">Data Akun Transaksi</span>
                         </a>
                         <ul class="submenu" style="display: block;">
-                            <li><a href="{{ route('admin.AkunTransaksi') }}" class="active">Kelola Akun Transaksi</a></li>
-							<li><a href="{{ route('admin.ValidasiTransaksi') }}" >Menu Validasi</a></li>
+                            <li><a href="{{ route('admin.AkunTransaksi')}}">Kelola Akun Transaksi</a></li>
+							<li><a href="{{ route('admin.ValidasiTransaksi')}}" class="active">Menu Validasi</a></li>
                         </ul>
 
                     </li>
@@ -318,7 +318,7 @@
                                         <a class="dropdown-toggle no-arrow" role="">
                                             <span class="user-name-header">Akun Transaksi</span>
                                         </a>
-                                        <p class="mb-0 text-sm">Kelola Akun</p>
+                                        <p class="mb-0 text-sm">Menu Validasi</p>
                                     </div>
                                     <div class="mb-3">
                                         <a href="" class="btn btn-success" title="Tambah"><i
