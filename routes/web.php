@@ -4,6 +4,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AkunTransaksiController;
 use App\Http\Controllers\BukuBesarController;
+use App\Http\Controllers\JurnalPenutupController;
 use App\Http\Controllers\JurnalPenyesuaianController;
 use App\Http\Controllers\NeracaLajurController;
 use App\Http\Controllers\JurnalUmumController;
@@ -32,6 +33,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/ValidasiJurnalPenyesuaian', [JurnalPenyesuaianController::class, 'ValidasiJurnalPenyesuaian'])->name('ValidasiJurnalPenyesuaian');
     Route::get('/BukuBesar', [BukuBesarController::class, 'BukuBesar'])->name('BukuBesar');
     Route::get('/NeracaLajur', [NeracaLajurController::class, 'NeracaLajur'])->name('NeracaLajur');
+    Route::get('/JurnalPenutup', [JurnalPenutupController::class, 'JurnalPenutup'])->name('JurnalPenutup');
 });
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function(){
     Route::get('/landingUser', [HomeController::class, 'landingUser'])->name('landingUser');

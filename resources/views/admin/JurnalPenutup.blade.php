@@ -259,12 +259,12 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('admin.BukuBesar') }}" class="dropdown-toggle no-arrow active">
+                        <a href="{{ route('admin.BukuBesar') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Buku Besar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow ">
+                        <a href="" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Neraca Lajur</span>
                         </a>
                     </li>
@@ -279,7 +279,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('admin.JurnalPenutup') }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.JurnalPenutup') }}" class="dropdown-toggle no-arrow active">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penutup</span>
                         </a>
                     </li>
@@ -313,8 +313,8 @@
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
                         <div class="pull-left">
-                            <h4 class="text-black h4">Buku Besar</h4>
-                            <p class="mb-30">Kelola Buku Besar</p>
+                            <h4 class="text-black h4">Jurnal Penutup</h4>
+                            <p class="mb-30">Kelola Jurnal Penutup</p>
                         </div>
                         {{-- <div class="pull-right">
                             <a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"
@@ -322,18 +322,6 @@
                         </div> --}}
                     </div>
                     <form>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Select</label>
-                            <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-
-                        </div>
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Select</label>
                             <div class="col-sm-12 col-md-10">
@@ -380,76 +368,67 @@
                 <div class="pd-10">
                 </div>
                 <div class="pb-10 pd-2">
-                    <div class="container-fluid mt-7">
-                        <div class="card shadow">
-                            <div
-                                class="card-header d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
-                                <span class="font-weight-900">Nama Akun <span class="font-weight-900">Kode Akun </span></span>
-                                
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;"
-                                                    width="100px">Tanggal</th>
-                                                <th rowspan="2"
-                                                    style="vertical-align: middle; text-align: center;">Keterangan</th>
-                                                <th rowspan="2"
-                                                    style="vertical-align: middle; text-align: center;">Debit</th>
-                                                <th rowspan="2"
-                                                    style="vertical-align: middle; text-align: center;">Kredit</th>
-                                                <th colspan="2" style="text-align: center;">Saldo</th>
-                                            </tr>
-                                            <tr>
-                                                <th style="vertical-align: middle; text-align: center;">Debit</th>
-                                                <th style="vertical-align: middle; text-align: center;">Kredit</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <table class="table table-bordered">
+                        <thead class="">
+                            <tr>
+                                <th rowspan="2" style="vertical-align: middle" class="text-center">Kode</th>
+                                <th rowspan="2" style="vertical-align: middle" class="text-center">Nama</th>
+                                <th colspan="2" class="text-center">Neraca Saldo</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Debit</th>
+                                <th class="text-center">Kredit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td>A</th>
+                            <td>B</td>
+                            <td>A</td>
+                            <td>A</td>
+                        </tbody>
+                        <tfoot class="">
+                            <tr>
+                                <th colspan="2" class="text-right">Jumlah</th>
+                                <th>A</th>
+                                <th>B</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="text-right">Selisih</th>
+                                <th colspan="2" class="text-right" id="selisih_neraca_saldo">B</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
-
-
-
             </div>
         </div>
-        <!-- js -->
-        <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
-        <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
-        <script src="{{ asset('tmplt/vendors/scripts/process.js') }}"></script>
-        <script src="{{ asset('tmplt/vendors/scripts/layout-settings.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/apexcharts/apexcharts.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('tmplt/vendors/scripts/dashboard.js') }}"></script>
-        <!-- buttons for Export datatable -->
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.buttons.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.print.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.html5.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
-        <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
-        <!-- Datatable Setting js -->
-        <script src="vendors/scripts/datatable-setting.js"></script>
+    </div>
+    </div>
+
+
+
+    </div>
+    </div>
+    <!-- js -->
+    <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
+    <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
+    <script src="{{ asset('tmplt/vendors/scripts/process.js') }}"></script>
+    <script src="{{ asset('tmplt/vendors/scripts/layout-settings.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('tmplt/vendors/scripts/dashboard.js') }}"></script>
+    <!-- buttons for Export datatable -->
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
+    <!-- Datatable Setting js -->
+    <script src="vendors/scripts/datatable-setting.js"></script>
 </body>
 
 </html>

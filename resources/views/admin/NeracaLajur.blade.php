@@ -279,7 +279,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.JurnalPenutup') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penutup</span>
                         </a>
                     </li>
