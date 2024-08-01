@@ -264,7 +264,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow ">
+                        <a href="{{ route('admin.NeracaLajur') }}" class="dropdown-toggle no-arrow ">
                             <span class="micon dw dw-list3"></span><span class="mtext">Neraca Lajur</span>
                         </a>
                     </li>
@@ -274,7 +274,7 @@
                         </a>
                         <ul class="submenu">
                             <li><a href="{{ route('admin.Ekuitas') }}">Perubahan Ekuitas</a></li>
-                            <li><a href="">Laba Rugi</a></li>
+                            <li><a href="{{ route('admin.LabaRugi') }}">Laba Rugi</a></li>
                             <li><a href="">Posisi Keuangan</a></li>
                         </ul>
                     </li>

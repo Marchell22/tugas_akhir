@@ -264,7 +264,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.NeracaLajur') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Neraca Lajur</span>
                         </a>
                     </li>
@@ -274,7 +274,7 @@
                         </a>
                         <ul class="submenu" style="display: block;">
                             <li><a href="{{ route('admin.Ekuitas') }}" class="active">Perubahan Ekuitas</a></li>
-                            <li><a href="">Laba Rugi</a></li>
+                            <li><a href="{{ route('admin.LabaRugi') }}">Laba Rugi</a></li>
                             <li><a href="">Posisi Keuangan</a></li>
                         </ul>
                     </li>
@@ -313,8 +313,8 @@
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
                         <div class="pull-left">
-                            <h4 class="text-black h4">Neraca Lajur</h4>
-                            <p class="mb-30">Kelola Neraca Lajur</p>
+                            <h4 class="text-black h4">Laporan Perubahan Ekuitas</h4>
+                            <p class="mb-30">Kelola Laporan Perubahan Ekuitas</p>
                         </div>
                         {{-- <div class="pull-right">
                             <a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"
@@ -369,35 +369,40 @@
                 </div>
                 <div class="pb-10 pd-2">
                     <table class="table table-bordered">
-                        <thead class="">
+                    <tbody>
                             <tr>
-                                <th rowspan="2" style="vertical-align: middle" class="text-center">Kode</th>
-                                <th rowspan="2" style="vertical-align: middle" class="text-center">Nama</th>
-                                <th colspan="2" class="text-center">Neraca Saldo</th>
+                                <td>Modal</td>
+                                <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
+                                <td class="text-right modal_neraca_saldo_kredit"></td>
+                                <td></td>
                             </tr>
-                            <tr>
-                                <th class="text-center">Debit</th>
-                                <th class="text-center">Kredit</th>
+                             <tr>
+                                <td>Prive</td>
+                                <td class="text-right modal_neraca_saldo_debit">-</td>
+                                <td class="text-right modal_neraca_saldo_kredit">Rp.0</td>
+                                <td></td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <td>A</th>
-                            <td>B</td>
-                            <td>A</td>
-                            <td>A</td>
-                        </tbody>
-                        <tfoot class="">
-                            <tr>
-                                <th colspan="2" class="text-right">Jumlah</th>
-                                <th>A</th>
-                                <th>B</th>
-                            </tr>
-                            <tr>
-                                <th colspan="2" class="text-right">Selisih</th>
-                                <th colspan="2" class="text-right" id="selisih_neraca_saldo">B</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                        <tr>
+                           
+                            <td>Laba Bersih</td>
+                            <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
+                            <td class="text-right modal_neraca_saldo_kredit">-</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Total Modal</th>
+                            <th class="text-right" id="jumlah_modal_debit">Rp.0</th>
+                            <th class="text-right" id="jumlah_modal_kredit">Rp.0</th>
+                            <th class="text-right" id="jumlah_modal">Rp.0</th>
+                        </tr>
+                    </tbody>
+                    <tfoot class="bg-primary text-white">
+                        <tr>
+                            <th colspan="3" class="text-right">Total Modal</th>
+                            <th class="text-right" id="total_modal">Rp.0</th>
+                        </tr>
+                    </tfoot>
+                </table>
                 </div>
             </div>
         </div>

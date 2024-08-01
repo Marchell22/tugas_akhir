@@ -10,4 +10,8 @@ class LaporanController extends Controller
     {
         return view('admin.Ekuitas');
     }
+    public function LabaRugi()
+    {
+        return view('admin.LabaRugi');
+    }
 }

@@ -270,7 +270,7 @@
                         </a>
                         <ul class="submenu">
                             <li><a href="{{ route('admin.Ekuitas') }}">Perubahan Ekuitas</a></li>
-							<li><a href="">Laba Rugi</a></li>
+							<li><a href="{{ route('admin.LabaRugi') }}">Laba Rugi</a></li>
 							<li><a href="">Posisi Keuangan</a></li>
                         </ul>
                     </li>
@@ -316,9 +316,9 @@
                                     class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                                     <div class="mb-3">
                                         <a class="dropdown-toggle no-arrow" role="">
-                                            <span class="user-name-header">Laporan Perubahan Ekuitas</span>
+                                            <span class="user-name-header">Akun Transaksi</span>
                                         </a>
-                                        <p class="mb-0 text-sm">Kelola Laporan Perubahan Ekuitas</p>
+                                        <p class="mb-0 text-sm">Menu Validasi</p>
                                     </div>
                                     <div class="mb-3">
                                         <a href="" class="btn btn-success" title="Tambah"><i

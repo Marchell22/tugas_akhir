@@ -264,7 +264,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.NeracaLajur') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Neraca Lajur</span>
                         </a>
                     </li>
@@ -274,7 +274,7 @@
                         </a>
                         <ul class="submenu">
                             <li><a href="{{ route('admin.Ekuitas') }}">Perubahan Ekuitas</a></li>
-                            <li><a href="">Laba Rugi</a></li>
+                            <li><a href="{{ route('admin.LabaRugi') }}">Laba Rugi</a></li>
                             <li><a href="">Posisi Keuangan</a></li>
                         </ul>
                     </li>
@@ -369,32 +369,54 @@
                 </div>
                 <div class="pb-10 pd-2">
                     <table class="table table-bordered">
-                        <thead class="">
-                            <tr>
-                                <th rowspan="2" style="vertical-align: middle" class="text-center">Kode</th>
-                                <th rowspan="2" style="vertical-align: middle" class="text-center">Nama</th>
-                                <th colspan="2" class="text-center">Neraca Saldo</th>
-                            </tr>
-                            <tr>
-                                <th class="text-center">Debit</th>
-                                <th class="text-center">Kredit</th>
-                            </tr>
-                        </thead>
                         <tbody>
-                            <td>A</th>
-                            <td>B</td>
-                            <td>A</td>
-                            <td>A</td>
-                        </tbody>
-                        <tfoot class="">
                             <tr>
-                                <th colspan="2" class="text-right">Jumlah</th>
-                                <th>A</th>
-                                <th>B</th>
+                                <td>Pendapatan Perusahaan</td>
+                                <td class="text-right pendapatan kiri">Rp.0</td>
+                                <td class="text-right kanan">-</td>
                             </tr>
                             <tr>
-                                <th colspan="2" class="text-right">Selisih</th>
-                                <th colspan="2" class="text-right" id="selisih_neraca_saldo">B</th>
+                                <td> &nbsp; &nbsp; &nbsp; &nbsp; Iktisar Laba-Rugi</td>
+                                <td class="text-right kiri">-</td>
+                                <td class="text-right kanan" id="iktisar_laba_rugi_pendapatan">Rp.0</td>
+                            </tr>
+                            <tr>
+                                <td>Iktisar Laba Rugi</td>
+                                <td class="text-right kiri">Rp.0</td>
+                                <td class="text-right kanan">-</td>
+                            </tr>
+                            <tr>
+                                <td> &nbsp; &nbsp; &nbsp; &nbsp; Beban Gaji</td>
+                                <td class="text-right kiri">-</td>
+                                <td class="text-right kanan">Rp.0</td>
+                            </tr>
+
+                            <tr>
+                                <td>Modal</td>
+                                <td class="text-right kiri">Rp.0</td>
+                                <td class="text-right kanan">-</td>
+                            </tr>
+                            <tr>
+                                <td> &nbsp; &nbsp; &nbsp; &nbsp; Iktisar Laba Rugi</td>
+                                <td class="text-right kiri">-</td>
+                                <td class="text-right kanan">Rp.0</td>
+                            </tr>
+                            <tr>
+                                <td>Modal</td>
+                                <td class="text-right kiri">Rp.0</td>
+                                <td class="text-right kanan">-</td>
+                            </tr>
+                            <tr>
+                                <td> &nbsp; &nbsp; &nbsp; &nbsp; Prive</td>
+                                <td class="text-right kiri">-</td>
+                                <td class="text-right kanan">Rp.0</td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="bg-primary text-white">
+                            <tr>
+                                <th class="text-right">Total</th>
+                                <th class="text-right">Rp.0</th>
+                                <th class="text-right">Rp.0</th>
                             </tr>
                         </tfoot>
                     </table>
