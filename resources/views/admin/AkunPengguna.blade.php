@@ -86,6 +86,7 @@
         .btn-success {
             margin-top: 20px;
         }
+
         @media (max-width: 768px) {
             #popup {
                 width: 80%;
@@ -377,7 +378,7 @@
                                     <div class="mb-3">
                                         <a href="#" class="btn btn-success show-modal"
                                             onclick="showPopup()"title="Tambah"><i
-                                                class="icon-copy ion-plus-round"></i></a>
+                                                class="icon-copy ion-plus-round" style="font-size: 30px;"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -488,9 +489,9 @@
                     </select>
                 </div>
             </div>
-   
-                <button style="width:100px;" class="btn btn-success">Update</button>
-          
+
+            <button style="width:100px;" class="btn btn-success">Update</button>
+
         </form>
     </div>
 

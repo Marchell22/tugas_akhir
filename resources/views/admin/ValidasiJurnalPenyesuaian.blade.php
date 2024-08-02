@@ -317,9 +317,11 @@
                                         </a>
                                         <p class="mb-0 text-sm">Menu Validasi</p>
                                     </div>
-                                    <div class="mb-3">
+                                    <div class="mb-3" >
+                                        <a href="" class="btn btn-primary" style="height: 60px;width: 90px;"
+                                            title="Tambah"><i class="icon-copy ion-ios-calendar-outline" style="font-size: 30px;"></i></a>
                                         <a href="" class="btn btn-success" title="Tambah"><i
-                                                class="icon-copy ion-plus-round"></i></a>
+                                                class="icon-copy ion-plus-round" style="font-size: 30px;"></i></a>
                                     </div>
                                 </div>
                             </div>
