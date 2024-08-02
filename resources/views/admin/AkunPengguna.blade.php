@@ -372,9 +372,6 @@
                                         <p class="mb-0 text-sm">Kelola Akun Pengguna</p>
                                     </div>
                                     <div class="mb-3">
-                                        <a href="" class="btn btn-primary" title="Tambah"><i
-                                                class="icon-copy ion-ios-calendar-outline"
-                                                style="font-size: 30px;"></i></a>
                                         <a href="#" class="btn btn-success show-modal"
                                             onclick="showPopup()"title="Tambah"><i class="icon-copy ion-plus-round"
                                                 style="font-size: 30px;"></i></a>
