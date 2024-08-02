@@ -10,6 +10,7 @@ use App\Http\Controllers\JurnalPenyesuaianController;
 use App\Http\Controllers\NeracaLajurController;
 use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\RencanaAnggaranBiayaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/LabaRugi', [LaporanController::class, 'LabaRugi'])->name('LabaRugi');
     Route::get('/JurnalPenutup', [JurnalPenutupController::class, 'JurnalPenutup'])->name('JurnalPenutup');
     Route::get('/AkunPengguna', [AkunPenggunaController::class, 'AkunPengguna'])->name('AkunPengguna');
+    Route::get('/RencanaAnggaranBiaya', [RencanaAnggaranBiayaController::class, 'RencanaAnggaranBiaya'])->name('RencanaAnggaranBiaya');
 });
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function(){
     Route::get('/landingUser', [HomeController::class, 'landingUser'])->name('landingUser');

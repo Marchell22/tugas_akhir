@@ -226,13 +226,13 @@
         <div class="menu-block customscroll">
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
-                    <li class="dropdown show" style="display: block;">
-                        <a href="javascript:;" class="dropdown-toggle" data-option="on">
+                    <li class="dropdown " >
+                        <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-list3"></span><span class="mtext">Data Akun Transaksi</span>
                         </a>
-                        <ul class="submenu" style="display: block;">
-                            <li><a href="{{ route('admin.AkunTransaksi')}}">Kelola Akun Transaksi</a></li>
-							<li><a href="{{ route('admin.ValidasiTransaksi')}}" class="active">Menu Validasi</a></li>
+                        <ul class="submenu" >
+                            <li><a href="{{ route('admin.AkunTransaksi') }}">Kelola Akun Transaksi</a></li>
+							<li><a href="{{ route('admin.ValidasiTransaksi') }}" >Menu Validasi</a></li>
                         </ul>
 
                     </li>
@@ -280,7 +280,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.RencanaAnggaranBiaya') }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.RencanaAnggaranBiaya') }}" class="dropdown-toggle no-arrow active">
                             <span class="micon dw dw-list3"></span><span class="mtext">Rencana Anggaran Biaya</span>
                         </a>
                     </li>
@@ -316,9 +316,9 @@
                                     class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                                     <div class="mb-3">
                                         <a class="dropdown-toggle no-arrow" role="">
-                                            <span class="user-name-header">Akun Transaksi</span>
+                                            <span class="user-name-header">Rencana Anggaran Biaya</span>
                                         </a>
-                                        <p class="mb-0 text-sm">Menu Validasi</p>
+                                        <p class="mb-0 text-sm">Kelola Rencana Anggaran Biaya</p>
                                     </div>
                                     <div class="mb-3">
                                         <a href="" class="btn btn-success" title="Tambah"><i
@@ -359,8 +359,8 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
                                                 <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>

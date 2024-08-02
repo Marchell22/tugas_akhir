@@ -280,7 +280,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.RencanaAnggaranBiaya') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Rencana Anggaran Biaya</span>
                         </a>
                     </li>
@@ -378,8 +378,8 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
                                                 <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>
