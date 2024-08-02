@@ -39,6 +39,70 @@
         gtag('config', 'UA-119386393-1');
     </script>
     <style>
+        /* Styling for the popup */
+        #popup {
+            display: none;
+            /* Initially hidden */
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 30%;
+            height: 50%;
+            padding: 40px;
+            z-index: 1000;
+
+
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Overlay styling */
+        #overlay {
+            display: none;
+            /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .btn-success {
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            #popup {
+                width: 80%;
+                height: auto;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #popup {
+                width: 90%;
+                height: auto;
+                padding: 15px;
+            }
+        }
+    </style>
+    <style>
         /* Mengubah ukuran font pada .user-name */
         .user-name-header {
             font-size: 20px;
@@ -59,13 +123,6 @@
             /* margin: 20px; */
             margin-bottom: 10px;
         }
-
-        /*
-  .form-control {
-  width: 200px;
-  padding: 5px;
-  font-size: 14px;
-  } */
     </style>
 
 <body>
@@ -318,7 +375,8 @@
                                         <p class="mb-0 text-sm">Kelola Akun Pengguna</p>
                                     </div>
                                     <div class="mb-3">
-                                        <a href="" class="btn btn-success" title="Tambah"><i
+                                        <a href="#" class="btn btn-success show-modal"
+                                            onclick="showPopup()"title="Tambah"><i
                                                 class="icon-copy ion-plus-round"></i></a>
                                     </div>
                                 </div>
@@ -392,29 +450,61 @@
             </div>
         </div>
     </div>
-    <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
+    <div id="overlay" onclick="closeModal()"></div>
+    <div id="popup" style="width: 50%;">
 
-                <form action="{{ route('admin.submitDenahPertama') }}" method='post'>
-                    @csrf
-                    <input type="text" id="value_id_input" name="value_id" style="display: none;">
-                     <p id="modalValueText"style="font-weight: bold; margin-left : 300px"></p>
-                    <table class="table table-bordered bordered" id="table" data-id="1">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Value</th>
-                                <th><a href="javascript:void(0)" class="btn btn-success btn-sm addRow">+</a></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                    <button type="submit" class="btn btn-success mt-2">Update</button>
-                </form>
+        <span class="close" onclick="closeModal()">&times;</span>
+        <form class="model-popup">
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option selected="">Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
             </div>
-        </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option selected="">Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option selected="">Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+   
+                <button style="width:100px;" class="btn btn-success">Update</button>
+          
+        </form>
+    </div>
+
+    <script>
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+
+        }
+
+        function closeModal() {
+            document.getElementById('popup').style.display = 'none';
+
+        }
+    </script>
 
 
     <!-- js -->

@@ -344,20 +344,7 @@
                                     <option value="3">Three</option>
                                 </select>
                             </div>
-
                         </div>
-                        {{-- <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Text</label>
-                            <div class="col-sm-12 col-md-10">
-                                <input class="form-control" type="text" placeholder="Johnny Brown">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Search</label>
-                            <div class="col-sm-12 col-md-10">
-                                <input class="form-control" placeholder="Search Here" type="search">
-                            </div>
-                        </div> --}}
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Select</label>
                             <div class="col-sm-12 col-md-10">
