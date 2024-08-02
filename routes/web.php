@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AkunPenggunaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AkunTransaksiController;
@@ -37,6 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/Ekuitas', [LaporanController::class, 'Ekuitas'])->name('Ekuitas');
     Route::get('/LabaRugi', [LaporanController::class, 'LabaRugi'])->name('LabaRugi');
     Route::get('/JurnalPenutup', [JurnalPenutupController::class, 'JurnalPenutup'])->name('JurnalPenutup');
+    Route::get('/AkunPengguna', [AkunPenggunaController::class, 'AkunPengguna'])->name('AkunPengguna');
 });
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function(){
     Route::get('/landingUser', [HomeController::class, 'landingUser'])->name('landingUser');

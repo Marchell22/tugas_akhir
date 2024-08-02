@@ -285,7 +285,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.AkunPengguna') }}" class="dropdown-toggle no-arrow">
                             <span class="micon fa fa-user-o"></span><span class="mtext">Akun Pengguna</span>
 
                         </a>
@@ -318,7 +318,7 @@
                                         <a class="dropdown-toggle no-arrow" role="">
                                             <span class="user-name-header">Akun Transaksi</span>
                                         </a>
-                                        <p class="mb-0 text-sm">Kelola Akun</p>
+                                        <p class="mb-0 text-sm">Kelola Akun Transaksi</p>
                                     </div>
                                     <div class="mb-3">
                                         <a href="" class="btn btn-success" title="Tambah"><i

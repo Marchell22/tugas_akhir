@@ -289,7 +289,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.AkunPengguna') }}" class="dropdown-toggle no-arrow">
                             <span class="micon fa fa-user-o"></span><span class="mtext">Akun Pengguna</span>
 
                         </a>

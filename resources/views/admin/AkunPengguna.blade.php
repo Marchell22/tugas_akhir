@@ -226,18 +226,18 @@
         <div class="menu-block customscroll">
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
-                    <li class="dropdown" >
-                        <a href="javascript:;" class="dropdown-toggle" data-option="on">
+                    <li class="dropdown " >
+                        <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-list3"></span><span class="mtext">Data Akun Transaksi</span>
                         </a>
-                        <ul class="submenu">
+                        <ul class="submenu" >
                             <li><a href="{{ route('admin.AkunTransaksi') }}">Kelola Akun Transaksi</a></li>
 							<li><a href="{{ route('admin.ValidasiTransaksi') }}" >Menu Validasi</a></li>
                         </ul>
 
                     </li>
                     <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
+                        <a href="javascript:;" class="dropdown-toggle" data-option="on">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Umum</span>
                         </a>
                         <ul class="submenu">
@@ -245,12 +245,12 @@
 							<li><a href="{{ route('admin.ValidasiJurnalUmum') }}">Menu Validasi</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown show">
+                    <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penyesuaian</span>
                         </a>
-                        <ul class="submenu" style="display: block;">
-                            <li><a href="{{ route('admin.JurnalPenyesuaian') }}" class="active">Kelola Jurnal Penyesuaian</a></li>
+                        <ul class="submenu">
+                            <li><a href="{{ route('admin.JurnalPenyesuaian') }}">Kelola Jurnal Penyesuaian</a></li>
 							<li><a href="{{ route('admin.ValidasiJurnalPenyesuaian') }}">Menu Validasi</a></li>
                         </ul>
                     </li>
@@ -285,7 +285,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.AkunPengguna') }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.AkunPengguna') }}" class="dropdown-toggle no-arrow active">
                             <span class="micon fa fa-user-o"></span><span class="mtext">Akun Pengguna</span>
 
                         </a>
@@ -294,6 +294,7 @@
                         <a href="{{ route('logout') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-right-arrow1"></span><span class="mtext">Logout</span>
                         </a>
+
                     </li>
 
                 </ul>
@@ -303,6 +304,8 @@
     <div class="mobile-menu-overlay"></div>
 
     <div class="main-container">
+
+
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
                 <div class="page-header">
@@ -313,9 +316,9 @@
                                     class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                                     <div class="mb-3">
                                         <a class="dropdown-toggle no-arrow" role="">
-                                            <span class="user-name-header">Jurnal Penyesuaian</span>
+                                            <span class="user-name-header">Akun Pengguna</span>
                                         </a>
-                                        <p class="mb-0 text-sm">Kelola Jurnal Penyesuaian</p>
+                                        <p class="mb-0 text-sm">Kelola Akun Pengguna</p>
                                     </div>
                                     <div class="mb-3">
                                         <a href="" class="btn btn-success" title="Tambah"><i
@@ -356,8 +359,8 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
                                                 <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>
