@@ -273,7 +273,7 @@
                             <span class="micon dw dw-list3"></span><span class="mtext">Laporan</span>
                         </a>
                         <ul class="submenu" style="display: block;">
-                            <li><a href="{{ route('admin.Ekuitas') }}" >Perubahan Ekuitas</a></li>
+                            <li><a href="{{ route('admin.Ekuitas') }}">Perubahan Ekuitas</a></li>
                             <li><a href="{{ route('admin.LabaRugi') }}" class="active">Laba Rugi</a></li>
                             <li><a href="">Posisi Keuangan</a></li>
                         </ul>
