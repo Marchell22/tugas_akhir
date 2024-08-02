@@ -273,9 +273,9 @@
                             <span class="micon dw dw-list3"></span><span class="mtext">Laporan</span>
                         </a>
                         <ul class="submenu" style="display: block;">
-                            <li><a href="{{ route('admin.Ekuitas') }}" class="active">Perubahan Ekuitas</a></li>
+                            <li><a href="{{ route('admin.Ekuitas') }}">Perubahan Ekuitas</a></li>
                             <li><a href="{{ route('admin.LabaRugi') }}">Laba Rugi</a></li>
-                            <li><a href="{{ route('admin.PosisiKeuangan') }}">Posisi Keuangan</a></li>
+                            <li><a href="{{ route('admin.PosisiKeuangan') }}" class="active">Posisi Keuangan</a></li>
                         </ul>
                     </li>
                     <li>
@@ -313,8 +313,8 @@
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
                         <div class="pull-left">
-                            <h4 class="text-black h4">Laporan Perubahan Ekuitas</h4>
-                            <p class="mb-30">Kelola Laporan Perubahan Ekuitas</p>
+                            <h4 class="text-black h4">Laporan Posisi Keuangan</h4>
+                            <p class="mb-30">Kelola Laporan Posisi Keuangan</p>
                         </div>
                         {{-- <div class="pull-right">
                             <a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"
@@ -368,44 +368,149 @@
                 <div class="pd-10">
                 </div>
                 <div class="pb-10 pd-2">
-                    <table class="table table-bordered">
-                    <tbody>
-                            <tr>
-                                <td>Modal</td>
-                                <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
-                                <td class="text-right modal_neraca_saldo_kredit"></td>
-                                <td></td>
-                            </tr>
-                             <tr>
-                                <td>Prive</td>
-                                <td class="text-right modal_neraca_saldo_debit">-</td>
-                                <td class="text-right modal_neraca_saldo_kredit">Rp.0</td>
-                                <td></td>
-                            </tr>
-                        <tr>
-                           
-                            <td>Laba Bersih</td>
-                            <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
-                            <td class="text-right modal_neraca_saldo_kredit">-</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th class="text-right">Total Modal</th>
-                            <th class="text-right" id="jumlah_modal_debit">Rp.0</th>
-                            <th class="text-right" id="jumlah_modal_kredit">Rp.0</th>
-                            <th class="text-right" id="jumlah_modal">Rp.0</th>
-                        </tr>
-                    </tbody>
-                    <tfoot class="bg-primary text-white">
-                        <tr>
-                            <th colspan="3" class="text-right">Total Modal</th>
-                            <th class="text-right" id="total_modal">Rp.0</th>
-                        </tr>
-                    </tfoot>
-                </table>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="bg-primary text-white">
+                                        <tr>
+                                            <th colspan="5" class="text-center">Aktiva</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="5">Aktiva Lancar</th>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <td colspan="2">A</td>
+                                            <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                RP.0
+                                            </td>
+                                            <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                -
+                                            </td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th colspan="2" class="text-right">Total Aktiva Lancar</th>
+                                            <th class="text-right" id="jumlah_aktiva_lancar_debit">Rp.0</th>
+                                            <th class="text-right" id="jumlah_aktiva_lancar_kredit">-</th>
+                                            <th class="text-right" id="jumlah_aktiva_lancar">Rp.0</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="5">Aktiva Tetap</th>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2">B</td>
+                                            <td class="text-right aktiva_tetap_neraca_saldo_debit">
+                                                RP.0
+                                            </td>
+                                            <td class="text-right aktiva_tetap_neraca_saldo_kredit">
+                                                -
+                                            </td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th colspan="2" class="text-right">Total Aktiva Tetap</th>
+                                            <th class="text-right" id="jumlah_aktiva_tetap_debit">RP.0</th>
+                                            <th class="text-right" id="jumlah_aktiva_tetap_kredit">-</th>
+                                            <th class="text-right" id="jumlah_aktiva_tetap">RP.0</th>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot class="bg-primary text-white">
+                                        <tr>
+                                            <th colspan="4" class="text-right">Total Aktiva</th>
+                                            <th class="text-right" id="total_aktiva">Rp.0</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="bg-primary text-white">
+                                        <tr>
+                                            <th colspan="5" class="text-center">Kewajiban Dan Modal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="5">Utang Lancar</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">A</td>
+                                            <td class="text-right utang_lancar_neraca_saldo_debit">Rp.0</td>
+                                            <td class="text-right utang_lancar_neraca_saldo_kredit">-</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2" class="text-right">Total Utang Lancar</th>
+                                            <th class="text-right" id="jumlah_utang_lancar_debit">Rp.0</th>
+                                            <th class="text-right" id="jumlah_utang_lancar_kredit">-</th>
+                                            <th class="text-right" id="jumlah_utang_lancar">Rp.0</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="5">Utang Tetap</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">B</td>
+                                            <td class="text-right utang_tetap_neraca_saldo_debit">Rp.0</td>
+                                            <td class="text-right utang_tetap_neraca_saldo_kredit">-</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2" class="text-right">Total Utang Tetap</th>
+                                            <th class="text-right" id="jumlah_utang_tetap_debit">Rp.0</th>
+                                            <th class="text-right" id="jumlah_utang_tetap_kredit">-</th>
+                                            <th class="text-right" id="jumlah_utang_tetap">Rp.0</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="5">Modal</th>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2">C</td>
+                                            <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
+                                            <td class="text-right modal_neraca_saldo_kredit">-</td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2">Laba Bersih</td>
+                                            <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
+                                            <td class="text-right modal_neraca_saldo_kredit">-</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2" class="text-right">Total Modal</th>
+                                            <th class="text-right" id="jumlah_modal_debit">Rp.0</th>
+                                            <th class="text-right" id="jumlah_modal_kredit">Rp/0</th>
+                                            <th class="text-right" id="jumlah_modal">Rp.0</th>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot class="bg-primary text-white">
+                                        <tr>
+                                            <th colspan="4" class="text-right">Total Kewajiban Dan Modal</th>
+                                            <th class="text-right" id="total_modal">Rp.0</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
+    </div>
     </div>
     </div>
 

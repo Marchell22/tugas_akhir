@@ -275,7 +275,7 @@
                         <ul class="submenu" style="display: block;">
                             <li><a href="{{ route('admin.Ekuitas') }}">Perubahan Ekuitas</a></li>
                             <li><a href="{{ route('admin.LabaRugi') }}" class="active">Laba Rugi</a></li>
-                            <li><a href="">Posisi Keuangan</a></li>
+                            <li><a href="{{ route('admin.PosisiKeuangan') }}">Posisi Keuangan</a></li>
                         </ul>
                     </li>
                     <li>

@@ -14,4 +14,8 @@ class LaporanController extends Controller
     {
         return view('admin.LabaRugi');
     }
+    public function PosisiKeuangan()
+    {
+        return view('admin.PosisiKeuangan');
+    }
 }
