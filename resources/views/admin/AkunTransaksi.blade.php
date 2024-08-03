@@ -40,7 +40,7 @@
     </script>
     <style>
         /* Styling for the popup */
-        #popup {
+        .popup {
             display: none;
             /* Initially hidden */
             position: fixed;
@@ -386,12 +386,13 @@
                                         <p class="mb-0 text-sm">Kelola Akun Transaksi</p>
                                     </div>
                                     <div class="mb-3">
-                                        <a href="" class="btn btn-primary" title="Waktu"><i
+                                        <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
                                                 class="icon-copy ion-ios-calendar-outline"
-                                                style="font-size: 30px;"></i></a>
-                                        <a onclick="showPopup()" class="btn btn-success show-modal"
-                                            title="Tambah"><i class="icon-copy ion-plus-round"
-                                                style="font-size: 30px; color:white;"></i></a>
+                                                style="font-size: 30px; color:white"></i></a>
+                                        <a class="btn btn-success show-modal"
+                                            onclick="openPopup('popup1')"title="Tambah"><i
+                                                class="icon-copy ion-plus-round"
+                                                style="font-size: 30px; color:white"></i></a>
                                     </div>
 
                                 </div>
@@ -465,10 +466,10 @@
             </div>
         </div>
     </div>
-    <div id="overlay" onclick="closeModal()"></div>
-    <div id="popup" style="width: 50%;">
+    <div id="overlay" onclick="closePopup('popup1')"></div>
+    <div id="popup1" class="popup" style="width: 50%;">
 
-        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="close" onclick="closePopup('popup1')">&times;</span>
         <form class="model-popup">
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Select</label>
@@ -503,18 +504,61 @@
                     </select>
                 </div>
             </div>
+
             <button style="width:100px;" class="btn btn-success">Update</button>
+
+        </form>
+    </div>
+    <div id="overlay" onclick="closePopup('popup2')"></div>
+    <div id="popup2" class="popup" style="width: 50%;">
+
+        <span class="close" onclick="closePopup('popup2')">&times;</span>
+        <form class="model-popup">
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option selected="">Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option selected="">Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option selected="">Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+
+            <button style="width:100px;" class="btn btn-primary">Update</button>
+
         </form>
     </div>
     <script>
-        function showPopup() {
-            document.getElementById('popup').style.display = 'block';
-
+        function openPopup(popupId) {
+            document.getElementById(popupId).style.display = 'block';
         }
 
-        function closeModal() {
-            document.getElementById('popup').style.display = 'none';
-
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
         }
     </script>
     <!-- js -->
