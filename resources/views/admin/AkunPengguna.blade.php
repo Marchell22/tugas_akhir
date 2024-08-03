@@ -372,9 +372,9 @@
                                         <p class="mb-0 text-sm">Kelola Akun Pengguna</p>
                                     </div>
                                     <div class="mb-3">
-                                        <a href="#" class="btn btn-success show-modal"
+                                        <a class="btn btn-success show-modal"
                                             onclick="showPopup()"title="Tambah"><i class="icon-copy ion-plus-round"
-                                                style="font-size: 30px;"></i></a>
+                                                style="font-size: 30px; color:white"></i></a>
                                     </div>
                                 </div>
                             </div>
