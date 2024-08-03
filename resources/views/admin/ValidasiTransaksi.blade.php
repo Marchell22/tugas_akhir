@@ -386,9 +386,6 @@
                                         <p class="mb-0 text-sm">Menu Validasi</p>
                                     </div>
                                     <div class="mb-3">
-                                        <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
-                                                class="icon-copy ion-ios-calendar-outline"
-                                                style="font-size: 30px; color:white"></i></a>
                                         <a class="btn btn-success show-modal"
                                             onclick="openPopup('popup1')"title="Tambah"><i
                                                 class="icon-copy ion-plus-round"
