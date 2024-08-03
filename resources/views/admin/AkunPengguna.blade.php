@@ -52,6 +52,12 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 30%;
             height: 50%;
+            max-width: 600px;
+            /* Lebar maksimum */
+            max-height: 50%;
+            /* Tinggi maksimum */
+            overflow-y: auto;
+            /* Tambahkan scrollbar jika konten terlalu tinggi */
             padding: 40px;
             z-index: 1000;
 

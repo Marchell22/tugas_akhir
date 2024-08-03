@@ -520,24 +520,12 @@
                 <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-12 col-md-10">
                     <input class="form-control " type="date" name="awal" required>
-                    {{-- <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select> --}}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-12 col-md-10">
                     <input class="form-control " type="date" name="akhir" required>
-                    {{-- <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select> --}}
                 </div>
             </div>
             <button style="width:100px;" class="btn btn-primary">Cari</button>

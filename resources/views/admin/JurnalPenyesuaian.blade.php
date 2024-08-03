@@ -52,6 +52,12 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 30%;
             height: 50%;
+            max-width: 600px;
+            /* Lebar maksimum */
+            max-height: 50%;
+            /* Tinggi maksimum */
+            overflow-y: auto;
+            /* Tambahkan scrollbar jika konten terlalu tinggi */
             padding: 40px;
             z-index: 1000;
 
@@ -383,7 +389,7 @@
                                         <p class="mb-0 text-sm">Kelola Jurnal Penyesuaian</p>
                                     </div>
                                     <div class="mb-3">
-                                         <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
+                                        <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
                                                 class="icon-copy ion-ios-calendar-outline"
                                                 style="font-size: 30px; color:white"></i></a>
                                         <a class="btn btn-success show-modal"
@@ -462,7 +468,7 @@
             </div>
         </div>
     </div>
-        <div id="overlay" onclick="closePopup('popup1')"></div>
+    <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup1')">&times;</span>
@@ -509,38 +515,30 @@
     <div id="popup2" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup2')">&times;</span>
+        <h4 class="modal-title">Waktu</h4>
         <form class="model-popup">
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
+                    <input class="form-control " type="date" name="awal" required>
+                    {{-- <select class="custom-select col-12">
                         <option selected="">Choose...</option>
                         <option value="1">One</option>
                         <option value="2">Two</option>
                         <option value="3">Three</option>
-                    </select>
+                    </select> --}}
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
+                    <input class="form-control " type="date" name="akhir" required>
+                    {{-- <select class="custom-select col-12">
                         <option selected="">Choose...</option>
                         <option value="1">One</option>
                         <option value="2">Two</option>
                         <option value="3">Three</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
-                <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    </select> --}}
                 </div>
             </div>
 

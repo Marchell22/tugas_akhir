@@ -50,11 +50,15 @@
             background-color: white;
             border: 1px solid #ccc;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 30%;
             height: 50%;
+            max-width: 600px;
+            /* Lebar maksimum */
+            max-height: 50%;
+            /* Tinggi maksimum */
+            overflow-y: auto;
+            /* Tambahkan scrollbar jika konten terlalu tinggi */
             padding: 40px;
             z-index: 1000;
-
 
         }
 
@@ -509,41 +513,20 @@
     <div id="popup2" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup2')">&times;</span>
+        <h4 class="modal-title">Waktu</h4>
         <form class="model-popup">
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <input class="form-control " type="date" name="awal" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <input class="form-control " type="date" name="akhir" required>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
-                <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-            </div>
-
             <button style="width:100px;" class="btn btn-primary">Update</button>
 
         </form>
