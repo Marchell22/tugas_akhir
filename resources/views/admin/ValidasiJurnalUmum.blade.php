@@ -80,7 +80,7 @@
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-top: 20px;
         }
 
         @media (max-width: 768px) {

@@ -52,6 +52,12 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 30%;
             height: 50%;
+            max-width: 600px;
+            /* Lebar maksimum */
+            max-height: 50%;
+            /* Tinggi maksimum */
+            overflow-y: auto;
+            /* Tambahkan scrollbar jika konten terlalu tinggi */
             padding: 40px;
             z-index: 1000;
 
@@ -80,7 +86,7 @@
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-top: 20px;
         }
 
         @media (max-width: 768px) {
@@ -461,7 +467,7 @@
             </div>
         </div>
     </div>
-        <div id="overlay" onclick="closePopup('popup1')"></div>
+    <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup1')">&times;</span>
@@ -508,7 +514,7 @@
     <div id="popup2" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup2')">&times;</span>
-         <h4 class="modal-title">Waktu</h4>
+        <h4 class="modal-title">Waktu</h4>
         <form class="model-popup">
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
@@ -522,7 +528,7 @@
                     </select> --}}
                 </div>
             </div>
-             <div class="form-group row">
+            <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-12 col-md-10">
                     <input class="form-control " type="date" name="akhir" required>
