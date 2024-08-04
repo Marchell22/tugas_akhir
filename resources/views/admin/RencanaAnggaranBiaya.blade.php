@@ -434,7 +434,7 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i>
+                                                <a class="dropdown-item"  onclick="openPopup('popup3')"><i class="dw dw-edit2"></i>
                                                     Edit</a>
                                                 <a class="dropdown-item" href="#"><i
                                                         class="dw dw-delete-3"></i> Delete</a>
@@ -457,7 +457,7 @@
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
                                                     View</a>
-                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i>
+                                                <a class="dropdown-item"  onclick="openPopup('popup3')"><i class="dw dw-edit2"></i>
                                                     Edit</a>
                                             </div>
                                         </div>
@@ -470,46 +470,101 @@
             </div>
         </div>
     </div>
-        <div id="overlay" onclick="closePopup('popup1')"></div>
+    <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup1')">&times;</span>
         <form class="model-popup">
+            <h4 class="modal-title">Tambah Rencana Anggaran Biaya</h4>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="  col-sm-12 col-md-2 col-form-label">Kelompok Akun</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option value="1">Asset</option>
+                        <option value="2">Kewajiban</option>
+                        <option value="3">Ekuitas</option>
+                        <option value="4">Pendapatan</option>
+                        <option value="5">Belanja</option>
+                        <option value="6">Pembiayaan</option>
                     </select>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="  col-sm-12 col-md-2 col-form-label">Kelompok Laporan Posisi Keuangan</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option value="1">Aktiva Lancar</option>
+                        <option value="2">Aktiva Tetap</option>
                     </select>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Kode</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <input type="number" class="form-control" placeholder="Masukan Kode">
                 </div>
             </div>
-
-            <button style="width:100px;" class="btn btn-success">Update</button>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Name</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="name" class="form-control" placeholder="Masukan Nama">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Post Saldo</label>
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Debit
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Kredit
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Post Penyesuaian</label>
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Debit
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Kredit
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Post Laporan</label>
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Neraca
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline" style="right: 15px;">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Laba Rugi
+                    </div>
+                </div>
+            </div>
+            <button style="width:100px;" class="btn btn-success">Tambah</button>
 
         </form>
     </div>
@@ -519,7 +574,7 @@
         <span class="close" onclick="closePopup('popup2')">&times;</span>
         <h4 class="modal-title">Waktu</h4>
         <form class="model-popup">
-             <div class="form-group row">
+            <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-12 col-md-10">
                     <input class="form-control " type="date" name="awal" required>
@@ -532,6 +587,104 @@
                 </div>
             </div>
             <button style="width:100px;" class="btn btn-primary">Update</button>
+
+        </form>
+    </div>
+    <div id="overlay" onclick="closePopup('popup3')"></div>
+    <div id="popup3" class="popup" style="width: 50%;">
+
+        <span class="close" onclick="closePopup('popup3')">&times;</span>
+        <form class="model-popup">
+            <h4 class="modal-title">Edit Rencana Anggaran Biaya</h4>
+            <div class="form-group row">
+                <label class="  col-sm-12 col-md-2 col-form-label">Kelompok Akun</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option value="1">Asset</option>
+                        <option value="2">Kewajiban</option>
+                        <option value="3">Ekuitas</option>
+                        <option value="4">Pendapatan</option>
+                        <option value="5">Belanja</option>
+                        <option value="6">Pembiayaan</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="  col-sm-12 col-md-2 col-form-label">Kelompok Laporan Posisi Keuangan</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option value="1">Aktiva Lancar</option>
+                        <option value="2">Aktiva Tetap</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Kode</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="number" class="form-control" placeholder="Masukan Kode">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Name</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="name" class="form-control" placeholder="Masukan Nama">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Post Saldo</label>
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Debit
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Kredit
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Post Penyesuaian</label>
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Debit
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Kredit
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Post Laporan</label>
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Neraca
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline" style="right: 15px;">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Laba Rugi
+                    </div>
+                </div>
+            </div>
+            <button style="width:100px;" class="btn btn-primary">Edit</button>
 
         </form>
     </div>

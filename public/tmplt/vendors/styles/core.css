@@ -5074,7 +5074,7 @@ a.close.disabled {
   margin: -1rem -1rem -1rem auto; }
 
 .modal-title {
-  margin-bottom: 0;
+  margin-bottom: 20px;
   line-height: 1.5; }
 
 .modal-body {
