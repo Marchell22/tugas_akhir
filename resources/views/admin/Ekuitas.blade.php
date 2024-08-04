@@ -316,51 +316,32 @@
                             <h4 class="text-black h4">Laporan Perubahan Ekuitas</h4>
                             <p class="mb-30">Kelola Laporan Perubahan Ekuitas</p>
                         </div>
-                        {{-- <div class="pull-right">
-                            <a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"
-                                data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
-                        </div> --}}
                     </div>
                     <form>
                         <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                            <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option value="1">Periode</option>
+                                    <option value="2">Tanggal</option>
                                 </select>
                             </div>
 
                         </div>
-                        {{-- <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Text</label>
-                            <div class="col-sm-12 col-md-10">
-                                <input class="form-control" type="text" placeholder="Johnny Brown">
-                            </div>
-                        </div>
                         <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Search</label>
-                            <div class="col-sm-12 col-md-10">
-                                <input class="form-control" placeholder="Search Here" type="search">
-                            </div>
-                        </div> --}}
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                            <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option value="1">1 Tahun Terakhir</option>
+                                    <option value="2">1 Bulan Terakhir</option>
+                                    <option value="3">1 Minggu Terakhir</option>
                                 </select>
                             </div>
 
                         </div>
                     </form>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-info">Dark</button>
+                        <button type="button" class="btn btn-outline-info">Cari</button>
                     </div>
                 </div>
             </div>

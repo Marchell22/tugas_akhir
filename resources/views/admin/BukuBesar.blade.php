@@ -323,42 +323,38 @@
                     </div>
                     <form>
                         <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                            <label class="col-sm-12 col-md-2 col-form-label">Akun</label>
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12">
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option value="1">1001 - Kas</option>
+                                    <option value="2">1002 - Pendapatan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
+                            <div class="col-sm-12 col-md-10">
+                                <select class="custom-select col-12">
+                                    <option value="1">Periode</option>
+                                    <option value="2">Tanggal</option>
                                 </select>
                             </div>
 
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                            <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Select</label>
-                            <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option value="1">1 Tahun Terakhir</option>
+                                    <option value="2">1 Bulan Terakhir</option>
+                                    <option value="3">1 Minggu Terakhir</option>
                                 </select>
                             </div>
 
                         </div>
                     </form>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-info">Dark</button>
+                        <button type="button" class="btn btn-outline-info">Cari</button>
                     </div>
                 </div>
             </div>
@@ -370,8 +366,9 @@
                         <div class="card shadow">
                             <div
                                 class="card-header d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
-                                <span class="font-weight-900">Nama Akun <span class="font-weight-900">Kode Akun </span></span>
-                                
+                                <span class="font-weight-900">Nama Akun <span class="font-weight-900">Kode Akun
+                                    </span></span>
+
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
