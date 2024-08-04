@@ -419,59 +419,39 @@
                             <thead>
                                 <tr>
                                     {{-- <th class="table-plus datatable-nosort">Name</th> --}}
-                                    <th class="table-plus sort_disabled">Kode</th>
+                                    <th>No</th>
                                     <th class="table-plus datatable-nosort">Nama</th>
-                                    <th class="table-plus datatable-nosort">Post Saldo</th>
-                                    <th class="table-plus datatable-nosort">Post Penyesuaian</th>
-                                    <th class="table-plus datatable-nosort">Post Laporan</th>
+                                    <th class="table-plus datatable-nosort">Username</th>
+                                    <th class="table-plus datatable-nosort">Email</th>
+                                    <th class="table-plus datatable-nosort">Role</th>
                                     <th class="datatable-nosort">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="">1101</td>
-                                    <td>Kas</td>
-                                    <td>Debit </td>
-                                    <td>Kredit</td>
-                                    <td>Neraca</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" onclick="openPopup('popup1')""><i
-                                                        class="dw dw-edit2"></i>
-                                                    Edit</a>
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="dw dw-delete-3"></i> Delete</a>
+                                @foreach ($data as $d)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $d->name }}</td>
+                                        <td>{{ $d->username }} </td>
+                                        <td>{{ $d->email }}</td>
+                                        <td>{{ $d->role }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                    href="#" role="button" data-toggle="dropdown">
+                                                    <i class="dw dw-more"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                    <a class="dropdown-item" onclick="openPopup('popup1')""><i
+                                                            class="dw dw-edit2"></i>
+                                                        Edit</a>
+                                                    <a class="dropdown-item" href="#"><i
+                                                            class="dw dw-delete-3"></i> Delete</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="">1102</td>
-                                    <td>Pendapatan</td>
-                                    <td>Debit </td>
-                                    <td>Kredit</td>
-                                    <td>Neraca</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item"onclick="openPopup('popup1')"><i
-                                                        class="dw dw-edit2"></i>
-                                                    Edit</a>
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="dw dw-delete-3"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

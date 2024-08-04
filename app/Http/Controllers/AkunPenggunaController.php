@@ -11,7 +11,8 @@ class AkunPenggunaController extends Controller
 {
     public function AkunPengguna()
     {
-        return view('admin.AkunPengguna');
+        $data=User::get();
+        return view('admin.AkunPengguna', compact('data'));
     }
     public function store(Request $request)
     {
