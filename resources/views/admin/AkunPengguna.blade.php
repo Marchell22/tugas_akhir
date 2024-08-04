@@ -481,46 +481,69 @@
     </div>
     <div id="overlay" onclick="closeModal()"></div>
     <div id="popup" style="width: 50%;">
-
         <span class="close" onclick="closeModal()">&times;</span>
-        <form class="model-popup">
+        <form class="model-popup" action="{{ route('admin.AkunPenggunastore') }}" method="POST">
+            @csrf
             <h4 class="modal-title">Tambah Akun Pengguna</h4>
+
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Nama</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="name">Nama</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="name" class="form-control" placeholder="Masukan Nama">
+                    <input type="text" class="form-control" placeholder="Masukan Nama" id="name"
+                        name="name" value="{{ old('name') }}">
+                    @error('name')
+                        <small>{{ $message }}</small>
+                    @enderror
                 </div>
             </div>
+
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Email</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="email">Email</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="email" class="form-control" placeholder="Masukan Email">
+                    <input type="email" class="form-control" placeholder="Masukan Email" id="email"
+                        name="email" value="{{ old('email') }}">
+                    @error('email')
+                        <small>{{ $message }}</small>
+                    @enderror
                 </div>
             </div>
+
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Username</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="username">Username</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="name" class="form-control" placeholder="Masukan Username">
+                    <input type="text" class="form-control" placeholder="Masukan Username" id="username"
+                        name="username" value="{{ old('username') }}">
+                    @error('username')
+                        <small>{{ $message }}</small>
+                    @enderror
                 </div>
             </div>
+
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Password</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="password">Password</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="Password" class="form-control" placeholder="Masukan Password">
+                    <input type="password" class="form-control" placeholder="Masukan Password" id="password"
+                        name="password">
+                    @error('password')
+                        <small>{{ $message }}</small>
+                    @enderror
                 </div>
             </div>
+
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Role</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="role">Role</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option value="1">Admin</option>
-                        <option value="2">User</option>
+                    <select name="role" id="role" class="custom-select col-12">
+                        <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="User" {{ old('role') == 'User' ? 'selected' : '' }}>User</option>
                     </select>
+                    @error('role')
+                        <small>{{ $message }}</small>
+                    @enderror
                 </div>
             </div>
 
-            <button style="width:100px;" class="btn btn-success">Tambah</button>
-
+            <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>
     </div>
     <div id="overlay" onclick="closePopup('popup1')"></div>
@@ -609,7 +632,7 @@
     <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
     <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
+    {{-- <script src="{{ asset('tmplt/vendors/scripts/datatable-setting.js')}}"></script> --}}
 </body>
 
 </html>
