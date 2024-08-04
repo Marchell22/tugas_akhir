@@ -433,7 +433,7 @@
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
                                                     View</a>
-                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i>
+                                                <a class="dropdown-item" onclick="openPopup('popup3')" ><i class="dw dw-edit2"></i>
                                                     Edit</a>
                                             </div>
                                         </div>
@@ -454,7 +454,7 @@
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
                                                     View</a>
-                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i>
+                                                <a class="dropdown-item" onclick="openPopup('popup3')" ><i class="dw dw-edit2"></i>
                                                     Edit</a>
                                             </div>
                                         </div>
@@ -474,7 +474,7 @@
         <form class="model-popup">
             <h4 class="modal-title">Tambah Jurnal Umum</h4>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Akun</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Akun</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12">
                         <option value="1">1001 - Kas</option>
@@ -483,25 +483,25 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Tanggal</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal</label>
                 <div class="col-sm-12 col-md-10">
                     <input class="form-control " type="date" name="Tanggal" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Keterangan</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Keterangan</label>
                 <div class="col-sm-12 col-md-10">
                     <input class="form-control" placeholder="Masukan Keterangan">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="formFile" class="form-label">Bukti</label>
+                <label for="formFile" class="col-sm-12 col-md-2 col-form-label">Bukti</label>
                 <div class="col-sm-12 col-md-10">
                     <input class="form-control" type="file" id="formFile">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="form-label">Debit/Kredit</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Debit/Kredit</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="flexRadioDefault"
@@ -518,7 +518,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
+             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Nilai</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="number" class="form-control" placeholder="Masukan Nilai">
@@ -537,18 +537,81 @@
         <h4 class="modal-title">Waktu</h4>
         <form class="model-popup">
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-12 col-md-10">
                     <input class="form-control " type="date" name="awal" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-12 col-md-10">
                     <input class="form-control " type="date" name="akhir" required>
                 </div>
             </div>
             <button style="width:100px;" class="btn btn-primary">Cari</button>
+
+        </form>
+    </div>
+    <div id="overlay" onclick="closePopup('popup3')"></div>
+    <div id="popup3" class="popup" style="width: 50%;">
+
+        <span class="close" onclick="closePopup('popup3')">&times;</span>
+        <form class="model-popup">
+            <h4 class="modal-title">Edit Jurnal Umum</h4>
+            <div class="form-group row">
+                <label class=" col-sm-12 col-md-2 col-form-label">Akun</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option value="1">1001 - Kas</option>
+                        <option value="2">1002 - Pendapatan</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal</label>
+                <div class="col-sm-12 col-md-10">
+                    <input class="form-control " type="date" name="Tanggal" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class=" col-sm-12 col-md-2 col-form-label">Keterangan</label>
+                <div class="col-sm-12 col-md-10">
+                    <input class="form-control" placeholder="Masukan Keterangan">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="formFile" class="col-sm-12 col-md-2 col-form-label">Bukti</label>
+                <div class="col-sm-12 col-md-10">
+                    <input class="form-control" type="file" id="formFile">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Debit/Kredit</label>
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                           Debit
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                            id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Kredit
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class=" col-sm-12 col-md-2 col-form-label">Nilai</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="number" class="form-control" placeholder="Masukan Nilai">
+                </div>
+            </div>
+
+
+            <button style="width:100px;" class="btn btn-success">Tambah</button>
 
         </form>
     </div>

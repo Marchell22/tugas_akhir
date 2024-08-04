@@ -486,31 +486,31 @@
         <form class="model-popup">
             <h4 class="modal-title">Tambah Akun Pengguna</h4>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Nama</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Nama</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="name" class="form-control" placeholder="Masukan Nama">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Email</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Email</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="email" class="form-control" placeholder="Masukan Email">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Username</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Username</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="name" class="form-control" placeholder="Masukan Username">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Password</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Password</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="Password" class="form-control" placeholder="Masukan Password">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Role</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Role</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12">
                         <option value="1">Admin</option>
@@ -530,31 +530,31 @@
         <form class="model-popup">
             <h4 class="modal-title">Edit Akun Pengguna</h4>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Nama</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Nama</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="name" class="form-control" placeholder="Masukan Nama">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Email</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Email</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="email" class="form-control" placeholder="Masukan Email">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Username</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Username</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="name" class="form-control" placeholder="Masukan Username">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Password</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Password</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="Password" class="form-control" placeholder="Masukan Password">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Role</label>
+                <label class=" col-sm-12 col-md-2 col-form-label">Role</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12">
                         <option value="1">Admin</option>
