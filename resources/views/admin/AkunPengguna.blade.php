@@ -534,8 +534,8 @@
                 <label class="col-sm-12 col-md-2 col-form-label" for="role">Role</label>
                 <div class="col-sm-12 col-md-10">
                     <select name="role" id="role" class="custom-select col-12">
-                        <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="User" {{ old('role') == 'User' ? 'selected' : '' }}>User</option>
+                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
                     </select>
                     @error('role')
                         <small>{{ $message }}</small>
