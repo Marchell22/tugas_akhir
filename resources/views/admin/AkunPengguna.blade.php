@@ -64,6 +64,30 @@
 
         }
 
+        .popup {
+            display: none;
+            /* Initially hidden */
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 30%;
+            height: 50%;
+            max-width: 600px;
+            /* Lebar maksimum */
+            max-height: 50%;
+            /* Tinggi maksimum */
+            overflow-y: auto;
+            /* Tambahkan scrollbar jika konten terlalu tinggi */
+            padding: 40px;
+            z-index: 1000;
+
+        }
+
+
         .close {
             position: absolute;
             top: 10px;
@@ -378,8 +402,8 @@
                                         <p class="mb-0 text-sm">Kelola Akun Pengguna</p>
                                     </div>
                                     <div class="mb-3">
-                                        <a class="btn btn-success show-modal"
-                                            onclick="showPopup()"title="Tambah"><i class="icon-copy ion-plus-round"
+                                        <a class="btn btn-success show-modal" onclick="showPopup()"title="Tambah"><i
+                                                class="icon-copy ion-plus-round"
                                                 style="font-size: 30px; color:white"></i></a>
                                     </div>
                                 </div>
@@ -417,7 +441,8 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i>
+                                                <a class="dropdown-item" onclick="openPopup('popup1')""><i
+                                                        class="dw dw-edit2"></i>
                                                     Edit</a>
                                                 <a class="dropdown-item" href="#"><i
                                                         class="dw dw-delete-3"></i> Delete</a>
@@ -438,7 +463,8 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i>
+                                                <a class="dropdown-item"onclick="openPopup('popup1')"><i
+                                                        class="dw dw-edit2"></i>
                                                     Edit</a>
                                                 <a class="dropdown-item" href="#"><i
                                                         class="dw dw-delete-3"></i> Delete</a>
@@ -458,41 +484,86 @@
 
         <span class="close" onclick="closeModal()">&times;</span>
         <form class="model-popup">
+            <h4 class="modal-title">Tambah Akun Pengguna</h4>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Nama</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <input type="name" class="form-control" placeholder="Masukan Nama">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Email</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <input type="email" class="form-control" placeholder="Masukan Email">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Username</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="name" class="form-control" placeholder="Masukan Username">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Password</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="Password" class="form-control" placeholder="Masukan Password">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Role</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option value="1">Admin</option>
+                        <option value="2">User</option>
                     </select>
                 </div>
             </div>
 
-            <button style="width:100px;" class="btn btn-success">Update</button>
+            <button style="width:100px;" class="btn btn-success">Tambah</button>
+
+        </form>
+    </div>
+    <div id="overlay" onclick="closePopup('popup1')"></div>
+    <div id="popup1" class="popup" style="width: 50%;">
+
+        <span class="close" onclick="closePopup('popup1')">&times;</span>
+        <form class="model-popup">
+            <h4 class="modal-title">Edit Akun Pengguna</h4>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Nama</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="name" class="form-control" placeholder="Masukan Nama">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Email</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="email" class="form-control" placeholder="Masukan Email">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Username</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="name" class="form-control" placeholder="Masukan Username">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Password</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="Password" class="form-control" placeholder="Masukan Password">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Role</label>
+                <div class="col-sm-12 col-md-10">
+                    <select class="custom-select col-12">
+                        <option value="1">Admin</option>
+                        <option value="2">User</option>
+                    </select>
+                </div>
+            </div>
+
+            <button style="width:100px;" class="btn btn-primary">Edit</button>
 
         </form>
     </div>
@@ -506,6 +577,14 @@
         function closeModal() {
             document.getElementById('popup').style.display = 'none';
 
+        }
+
+        function openPopup(popupId) {
+            document.getElementById(popupId).style.display = 'block';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
         }
     </script>
 
