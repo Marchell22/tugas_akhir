@@ -419,12 +419,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($data as $d)
                                 <tr>
-                                    <td class="">1101</td>
-                                    <td>Kas</td>
-                                    <td>Debit </td>
-                                    <td>Kredit</td>
-                                    <td>Neraca</td>
+                                    <td class="">{{ $d->kode }}</td>
+                                    <td>{{ $d->nama }}</td>
+                                    <td>{{ $d->post_saldo == 1 ? 'Debit' : 'Kredit' }} </td>
+                                    <td>{{ $d->post_penyesuaian == 1 ? 'Debit' : 'Kredit' }}</td>
+                                    <td>{{ $d->post_laporan == 1 ? 'Neraca' : 'Laba Rugi' }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -432,8 +433,6 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
-                                                    View</a>
                                                 <a class="dropdown-item" onclick="openPopup('popup2')"><i
                                                         class="dw dw-edit2"></i>
                                                     Edit</a>
@@ -441,28 +440,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="">1102</td>
-                                    <td>Pendapatan</td>
-                                    <td>Debit </td>
-                                    <td>Kredit</td>
-                                    <td>Neraca</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
-                                                    View</a>
-                                                <a class="dropdown-item" onclick="openPopup('popup2')"><i
-                                                        class="dw dw-edit2"></i>
-                                                    Edit</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                               @endforeach
                             </tbody>
                         </table>
                     </div>
