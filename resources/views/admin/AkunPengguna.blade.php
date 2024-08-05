@@ -442,11 +442,21 @@
                                                     <i class="dw dw-more"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                    <a class="dropdown-item" onclick="openPopup('popup1')""><i
-                                                            class="dw dw-edit2"></i>
-                                                        Edit</a>
-                                                    <a class="dropdown-item" href="#"><i
-                                                            class="dw dw-delete-3"></i> Delete</a>
+                                                    <a class="dropdown-item"
+                                                        onclick="openPopup('popup1', '{{ $d->id }}', '{{ $d->name }}', '{{ $d->email }}', '{{ $d->username }}', '{{ $d->role }}')">
+                                                        <i class="dw dw-edit2"></i> Edit
+                                                    </a>
+                                                    <form
+                                                        action="{{ route('admin.AkunPenggunadelete', ['id' => $d->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item"
+                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                            <i class="dw dw-delete-3"></i> Delete
+                                                        </button>
+                                                    </form>
+
                                                 </div>
                                             </div>
                                         </td>
@@ -462,7 +472,8 @@
     <div id="overlay" onclick="closeModal()"></div>
     <div id="popup" style="width: 50%;">
         <span class="close" onclick="closeModal()">&times;</span>
-        <form class="model-popup" action="{{ route('admin.AkunPenggunastore') }}" method="POST">
+        <form class="model-popup" action="{{ route('admin.AkunPenggunastore') }}" method="POST"
+            onsubmit="return validateForm()">
             @csrf
             <h4 class="modal-title">Tambah Akun Pengguna</h4>
 
@@ -527,49 +538,58 @@
         </form>
     </div>
     <div id="overlay" onclick="closePopup('popup1')"></div>
-    <div id="popup1" class="popup" style="width: 50%;">
+    <div id="popup1" class="popup" style="width: 50%; display: none;">
 
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form class="model-popup">
+        <form id="editForm"action="{{ route('admin.AkunPenggunaupdate',   ['id' => ':id']) }}" method="POST" class="model-popup">
+            @csrf
+            @method('PUT')
             <h4 class="modal-title">Edit Akun Pengguna</h4>
+            <input type="hidden" name="id" id="editUserId">
+
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Nama</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Nama</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="name" class="form-control" placeholder="Masukan Nama">
+                    <input type="text" name="name" id="editName" class="form-control"
+                        placeholder="Masukan Nama">
                 </div>
             </div>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Email</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Email</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="email" class="form-control" placeholder="Masukan Email">
+                    <input type="email" name="email" id="editEmail" class="form-control"
+                        placeholder="Masukan Email">
                 </div>
             </div>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Username</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Username</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="name" class="form-control" placeholder="Masukan Username">
+                    <input type="text" name="username" id="editUsername" class="form-control"
+                        placeholder="Masukan Username">
                 </div>
             </div>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Password</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Password</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="Password" class="form-control" placeholder="Masukan Password">
+                    <input type="password" name="password" class="form-control"
+                        placeholder="Masukan Password (Kosongkan jika tidak ingin mengubah)">
                 </div>
             </div>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Role</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Role</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option value="1">Admin</option>
-                        <option value="2">User</option>
+                    <select name="role" id="editRole" class="custom-select col-12">
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
                     </select>
                 </div>
             </div>
 
-            <button style="width:100px;" class="btn btn-primary">Edit</button>
+            <button type= "submit" style="width:100px;" class="btn btn-primary">Edit</button>
 
         </form>
     </div>
+
 
     <script>
         function showPopup() {
@@ -582,12 +602,43 @@
 
         }
 
-        function openPopup(popupId) {
-            document.getElementById(popupId).style.display = 'block';
+        function openPopup(popupId, userId, userName, userEmail, userUsername, userRole) {
+            document.getElementById('popup1').style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+
+            // Set input values with user data
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('editName').value = userName;
+            document.getElementById('editEmail').value = userEmail;
+            document.getElementById('editUsername').value = userUsername;
+            document.getElementById('editRole').value = userRole;
+
+              document.getElementById('editForm').action = "{{ url('admin/AkunPengguna/update') }}/" + userId;
         }
 
         function closePopup(popupId) {
-            document.getElementById(popupId).style.display = 'none';
+            document.getElementById(popupId).style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        function validateForm() {
+            // Get form fields
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var role = document.getElementById('role').value;
+
+            // Check if all fields are filled
+            if (name === "" || email === "" || username === "" || password === "" || role === "") {
+                alert("Semua field harus diisi.");
+                return false; // Prevent form submission
+            }
+
+            // Additional validation if needed
+            // For example, check email format or password strength
+
+            return true; // Allow form submission
         }
     </script>
 

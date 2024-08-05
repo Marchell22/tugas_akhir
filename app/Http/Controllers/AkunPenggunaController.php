@@ -11,7 +11,7 @@ class AkunPenggunaController extends Controller
 {
     public function AkunPengguna()
     {
-        $data=User::get();
+        $data = User::get();
         return view('admin.AkunPengguna', compact('data'));
     }
     public function store(Request $request)
@@ -32,5 +32,56 @@ class AkunPenggunaController extends Controller
 
         User::create($data);
         return redirect()->route('admin.AkunPengguna');
+    }
+    public function update(Request $request, $id)
+    {
+        // Validate the request data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'username' => 'required',
+            'email' => 'required|email',
+            'password' => 'nullable',
+            'role' => 'required|in:admin,user'  // Ensure role values are valid
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+
+        // Find the user by ID
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('admin.AkunPengguna')->with('error', 'User not found.');
+        }
+
+        // Update user details
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->username = $request->input('username');
+        $user->role = $request->input('role');
+
+        // Update password if provided
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        // Save changes to the database
+        $user->save();
+
+        return redirect()->route('admin.AkunPengguna')->with('success', 'Data pengguna berhasil diperbarui.');
+    }
+
+    public function delete($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('admin.AkunPengguna')->with('error', 'User not found');
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.AkunPengguna')->with('success', 'User deleted successfully');
     }
 }

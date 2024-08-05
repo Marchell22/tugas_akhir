@@ -203,7 +203,7 @@ select {
   -webkit-appearance: button; }
 
 [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
-    width: 86px;
+    width: 100%;
     cursor: pointer;
     border-radius: 10px;
     height: 60px;

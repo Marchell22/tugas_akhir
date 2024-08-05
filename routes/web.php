@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/JurnalPenutup', [JurnalPenutupController::class, 'JurnalPenutup'])->name('JurnalPenutup');
     Route::get('/AkunPengguna', [AkunPenggunaController::class, 'AkunPengguna'])->name('AkunPengguna');
     Route::post('/AkunPengguna/store', [AkunPenggunaController::class, 'store'])->name('AkunPenggunastore');
+    Route::delete('/AkunPengguna/delete/{id}', [AkunPenggunaController::class, 'delete'])->name('AkunPenggunadelete');
+    Route::put('/AkunPengguna/update/{id}', [AkunPenggunaController::class, 'update'])->name('AkunPenggunaupdate');
     Route::get('/RencanaAnggaranBiaya', [RencanaAnggaranBiayaController::class, 'RencanaAnggaranBiaya'])->name('RencanaAnggaranBiaya');
 });
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function(){
