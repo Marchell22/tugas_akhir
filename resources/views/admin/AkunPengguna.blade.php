@@ -541,7 +541,8 @@
     <div id="popup1" class="popup" style="width: 50%; display: none;">
 
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form id="editForm"action="{{ route('admin.AkunPenggunaupdate',   ['id' => ':id']) }}" method="POST" class="model-popup">
+        <form id="editForm"action="{{ route('admin.AkunPenggunaupdate', ['id' => ':id']) }}" method="POST"
+            class="model-popup">
             @csrf
             @method('PUT')
             <h4 class="modal-title">Edit Akun Pengguna</h4>
@@ -613,7 +614,7 @@
             document.getElementById('editUsername').value = userUsername;
             document.getElementById('editRole').value = userRole;
 
-              document.getElementById('editForm').action = "{{ url('admin/AkunPengguna/update') }}/" + userId;
+            document.getElementById('editForm').action = "{{ url('admin/AkunPengguna/update') }}/" + userId;
         }
 
         function closePopup(popupId) {
