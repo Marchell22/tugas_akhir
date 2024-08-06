@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
@@ -452,7 +453,7 @@
     <div id="popup1" class="popup" style="width: 50%;">
         <span class="close" onclick="closePopup('popup1')">&times;</span>
         <form class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST"
-            onsubmit="return validateForm()">
+            enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
             <h4 class="modal-title">Tambah Akun Transaksi</h4>
             <div class="form-group row">
@@ -467,17 +468,17 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
-                    Laporan Posisi Keuangan</label>
-                <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan"
-                        id="kelompok_laporan_posisi_keuangan">
-                        <option value="1" {{ old('kelompok_laporan_posisi_keuangan') == 1 ? 'selected' : '' }}>
-                            Aktiva Lancar</option>
-                        <option value="2" {{ old('kelompok_laporan_posisi_keuangan') == 2 ? 'selected' : '' }}>
-                            Aktiva Tetap</option>
-                    </select>
+            <div id="kelompok_laporan">
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
+                        Laporan Posisi Keuangan</label>
+                    <div class="col-sm-12 col-md-10">
+                        <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan"
+                            id="kelompok_laporan_posisi_keuangan">
+                            <option value="1">Aktiva Lancar</option>
+                            <option value="2">Aktiva Tetap</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
@@ -546,7 +547,6 @@
     </div>
     <div id="overlay" onclick="closePopup('popup2')"></div>
     <div id="popup2" class="popup" style="width: 50%;">
-
         <span class="close" onclick="closePopup('popup2')">&times;</span>
         <form class="model-popup">
             <h4 class="modal-title">Edit Akun Transaksi</h4>
@@ -675,6 +675,48 @@
             return true; // Allow form submission
         }
     </script>
+
+
+   <script>
+    $(document).ready(function() {
+        console.log("Document ready and script loaded"); // Debugging
+
+        $("#kelompok_akun_id").change(function() {
+            console.log("kelompok_akun_id changed to", $(this).val()); // Debugging
+
+            if ($(this).val() == 1) {
+                $("#kelompok_laporan").html(`
+                     <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
+                            Laporan Posisi Keuangan</label>
+                        <div class="col-sm-12 col-md-10">
+                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
+                                <option value="1">Aktiva Lancar</option>
+                                <option value="2">Aktiva Tetap</option>
+                            </select>
+                        </div>
+                    </div>
+                `);
+            } else if ($(this).val() == 2) {
+                $("#kelompok_laporan").html(`
+                    <div class="form-group row">
+                        <label class="form-control-label col-form-label col-md-4" for="kelompok_laporan_posisi_keuangan">Kelompok Laporan Posisi Keuangan</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
+                                <option value="3">Hutang Lancar</option>
+                                <option value="4">Hutang Tetap</option>
+                            </select>
+                            <span class="invalid-feedback font-weight-bold"></span>
+                        </div>
+                    </div>
+                `);
+            } else {
+                $("#kelompok_laporan").html('');
+            }
+        });
+    });
+</script>
+
 
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
