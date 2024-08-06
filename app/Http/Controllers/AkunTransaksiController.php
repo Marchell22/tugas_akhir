@@ -32,19 +32,19 @@ class AkunTransaksiController extends Controller
       'kelompok_laporan_posisi_keuangan' => 'nullable|numeric',
     ]);
 
-    if ($validator->fails()) {
-      // Log kesalahan untuk debugging
-      Log::error('Validation failed', ['errors' => $validator->errors()]);
+    // if ($validator->fails()) {
+    //   // Log kesalahan untuk debugging
+    //   Log::error('Validation failed', ['errors' => $validator->errors()]);
 
-      // Kembali dengan respons JSON jika validasi gagal
-      return response()->json([
-        'status' => 'error',
-        'errors' => $validator->errors()
-      ], 422);
-    }
-    // if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
-    // // Data input yang diterima
-    // Log::info($request->all());
+    //   // Kembali dengan respons JSON jika validasi gagal
+    //   return response()->json([
+    //     'status' => 'error',
+    //     'errors' => $validator->errors()
+    //   ], 422);
+    // }
+    if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+    // Data input yang diterima
+
     $data = $request->only([
       'kelompok_akun_id',
       'kode',
