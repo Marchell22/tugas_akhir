@@ -420,27 +420,27 @@
                             </thead>
                             <tbody>
                                 @foreach ($data as $d)
-                                <tr>
-                                    <td class="">{{ $d->kode }}</td>
-                                    <td>{{ $d->nama }}</td>
-                                    <td>{{ $d->post_saldo == 1 ? 'Debit' : 'Kredit' }} </td>
-                                    <td>{{ $d->post_penyesuaian == 1 ? 'Debit' : 'Kredit' }}</td>
-                                    <td>{{ $d->post_laporan == 1 ? 'Neraca' : 'Laba Rugi' }}</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" onclick="openPopup('popup2')"><i
-                                                        class="dw dw-edit2"></i>
-                                                    Edit</a>
+                                    <tr>
+                                        <td class="">{{ $d->kode }}</td>
+                                        <td>{{ $d->nama }}</td>
+                                        <td>{{ $d->post_saldo == 1 ? 'Debit' : 'Kredit' }} </td>
+                                        <td>{{ $d->post_penyesuaian == 1 ? 'Debit' : 'Kredit' }}</td>
+                                        <td>{{ $d->post_laporan == 1 ? 'Neraca' : 'Laba Rugi' }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                    href="#" role="button" data-toggle="dropdown">
+                                                    <i class="dw dw-more"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                    <a class="dropdown-item" onclick="openPopup('popup2')"><i
+                                                            class="dw dw-edit2"></i>
+                                                        Edit</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                               @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -450,99 +450,104 @@
     </div>
     <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
-
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form class="model-popup">
+        <form class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST"   onsubmit="return validateForm()">
+            @csrf
             <h4 class="modal-title">Tambah Akun Transaksi</h4>
             <div class="form-group row">
-                <label class="  col-sm-12 col-md-2 col-form-label">Kelompok Akun</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="kelompok_akun_id">Kelompok Akun</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option value="1">Asset</option>
-                        <option value="2">Kewajiban</option>
-                        <option value="3">Ekuitas</option>
-                        <option value="4">Pendapatan</option>
-                        <option value="5">Belanja</option>
-                        <option value="6">Pembiayaan</option>
+                    <select class="custom-select col-12" name="kelompok_akun_id" id="kelompok_akun_id">
+                        @foreach (App\Models\KelompokAkun::all() as $item)
+                            <option value="{{ $item->id }}"
+                                {{ old('kelompok_akun_id') == $item->id ? 'selected' : '' }}>{{ $item->nama }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="  col-sm-12 col-md-2 col-form-label">Kelompok Laporan Posisi Keuangan</label>
-                <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option value="1">Aktiva Lancar</option>
-                        <option value="2">Aktiva Tetap</option>
-                    </select>
+            <div id="kelompok_laporan">
+                <div class="form-group row">
+                    <label class="  col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
+                        Laporan Posisi Keuangan</label>
+                    <div class="col-sm-12 col-md-10">
+                        <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan"
+                            id="kelompok_laporan_posisi_keuangan">
+                            <option value="1" {{ old('kelompok_posisi_laporan_keuangan') == 1 ? 'checked' : '' }}>Aktiva Lancar</option>
+                            <option value="2" {{ old('kelompok_posisi_laporan_keuangan') == 2 ? 'checked' : '' }}>Aktiva Tetap</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Kode</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="kode">Kode</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="number" class="form-control" placeholder="Masukan Kode">
+                    <input type="number" name="kode" class="form-control" placeholder="Masukan Kode"
+                        value="{{ old('kode') }}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Name</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="nama">Name</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="name" class="form-control" placeholder="Masukan Nama">
+                    <input type="name" class="form-control" name="nama" placeholder="Masukan Nama"
+                        value="{{ old('nama') }}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Post Saldo</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="post_saldo">Post Saldo</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
+                        <input class="form-check-input" type="radio" id="post_saldo1" name="post_saldo" value="1" {{ old('post_saldo') == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_saldo1">
                             Debit
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <input class="form-check-input" type="radio" id="post_saldo2" name="post_saldo" value="2" {{ old('post_saldo') == 2 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_saldo2">
                             Kredit
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Post Penyesuaian</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="post_penyesuaian">Post Penyesuaian</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
+                        <input class="form-check-input" type="radio" id="post_penyesuaian1"
+                            name="post_penyesuaian" value="1"
+                            {{ old('post_penyesuaian') == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" f for="post_penyesuaian1">
                             Debit
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <input class="form-check-input" type="radio" id="post_penyesuaian2"
+                            name="post_penyesuaian" value="2"
+                            {{ old('post_penyesuaian') == 2 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_penyesuaian2">
                             Kredit
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Post Laporan</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="post_laporan">Post Laporan</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
+                        <input class="form-check-input" type="radio" id="post_laporan1" name="post_laporan"
+                            value="1" {{ old('post_laporan') == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_laporan1">
                             Neraca
                         </label>
                     </div>
                     <div class="form-check form-check-inline" style="right: 15px;">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <input class="form-check-input" type="radio" id="post_laporan2" name="post_laporan"
+                            value="2" {{ old('post_laporan') == 2 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_laporan2">
                             Laba Rugi
                     </div>
                 </div>
             </div>
-            <button style="width:100px;" class="btn btn-success">Tambah</button>
+            <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
 
         </form>
     </div>
@@ -653,13 +658,14 @@
             document.getElementById(popupId).style.display = 'none';
         }
     </script>
+ 
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/process.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/layout-settings.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('F/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
@@ -672,8 +678,6 @@
     <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
-    <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
 </body>
 
 </html>

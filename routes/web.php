@@ -29,6 +29,7 @@ Route::post('/login-proses',[loginController::class,'login_proses'])->name('logi
 Route::get('/logout',[loginController::class,'logout'])->name('logout');
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admin'], 'as' => 'admin.'], function(){
     Route::get('/AkunTransaksi', [AkunTransaksiController::class, 'AkunTransaksi'])->name('AkunTransaksi');
+    Route::post('/AkunTransaksi/store', [AkunTransaksiController::class, 'store'])->name('AkunTransaksistore');
     Route::get('/ValidasiTransaksi', [AkunTransaksiController::class, 'ValidasiTransaksi'])->name('ValidasiTransaksi');
     Route::get('/JurnalUmum', [JurnalUmumController::class, 'JurnalUmum'])->name('JurnalUmum');
     Route::get('/ValidasiJurnalUmum', [JurnalUmumController::class, 'ValidasiJurnalUmum'])->name('ValidasiJurnalUmum');

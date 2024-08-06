@@ -6,17 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AkunTransaksi extends Model
+
 {
+    use HasFactory;
     protected $table    = 'akunTransaksi';
-    protected $guarded  = [];
+    protected $fillable = [
+        'kelompok_akun_id',
+        'kode',
+        'nama' ,
+        'post_saldo',
+        'post_penyesuaian' ,
+        'post_laporan',
+        'kelompok_laporan_posisi_keuangan',
+    ];
 
-    // public function jurnal_umum()
-    // {
-    //     return $this->hasMany(JurnalUmum::class);
-    // }
-
-    // public function jurnal_penyesuaian()
-    // {
-    //     return $this->hasMany(JurnalPenyesuaian::class);
-    // }
 }
