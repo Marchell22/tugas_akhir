@@ -453,14 +453,14 @@
     <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form id="addForm" class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST" id="addFrom"
-            enctype="multipart/form-data" onsubmit="return validateForm()">
+        <form id="addForm" class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
             <h4 class="modal-title">Tambah Akun Transaksi</h4>
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_akun_id">Kelompok Akun</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12" name="kelompok_akun_id" id="kelompok_akun_id">
+                        <option selected>Pilih...</option>
                         @foreach (App\Models\KelompokAkun::all() as $item)
                             <option value="{{ $item->id }}"
                                 {{ old('kelompok_akun_id') == $item->id ? 'selected' : '' }}>{{ $item->nama }}
@@ -470,7 +470,7 @@
                 </div>
             </div>
             <div id="kelompok_laporan">
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
                         Laporan Posisi Keuangan</label>
                     <div class="col-sm-12 col-md-10">
@@ -480,7 +480,7 @@
                             <option value="2">Aktiva Tetap</option>
                         </select>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label" for="kode">Kode</label>
@@ -553,9 +553,7 @@
             @csrf
             @method('PUT')
             <h4 class="modal-title">Edit Akun Transaksi</h4>
-
             <input type="hidden" id="editUserId" name="id">
-
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Kelompok Akun</label>
                 <div class="col-sm-12 col-md-10">
@@ -652,6 +650,7 @@
         function openPopup(popupId, userId, userKelompokAkun, userKelompokLaporanPosisiKeuangan, userKode, userNama,
             postSaldo, postPenyesuaian, postLaporan) {
             $('#editForm')[0].reset();
+            $('#addForm')[0].reset();
 
             document.getElementById(popupId).style.display = 'block';
             document.getElementById("overlay").style.display = "block";
@@ -674,6 +673,8 @@
 
         function closePopup(popupId) {
             $('#editForm')[0].reset();
+            $('#addForm')[0].reset();
+             $("#kelompok_akun_id").val(0).trigger('change');
             document.getElementById(popupId).style.display = 'none';
             document.getElementById("overlay").style.display = "none";
         }
@@ -727,13 +728,13 @@
                 } else if ($(this).val() == 2) {
                     $("#kelompok_laporan").html(`
                     <div class="form-group row">
-                        <label class="form-control-label col-form-label col-md-4" for="kelompok_laporan_posisi_keuangan">Kelompok Laporan Posisi Keuangan</label>
-                        <div class="col-md-8">
-                            <select class="form-control" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
+                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
+                            Laporan Posisi Keuangan</label>
+                        <div class="col-sm-12 col-md-10">
+                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
                                 <option value="3">Hutang Lancar</option>
                                 <option value="4">Hutang Tetap</option>
                             </select>
-                            <span class="invalid-feedback font-weight-bold"></span>
                         </div>
                     </div>
                 `);
@@ -765,13 +766,13 @@
                 } else if ($(this).val() == 2) {
                     $("#edit_kelompok_laporan").html(`
                     <div class="form-group row">
-                        <label class="form-control-label col-form-label col-md-4" for="kelompok_laporan_posisi_keuangan">Kelompok Laporan Posisi Keuangan</label>
-                        <div class="col-md-8">
-                            <select class="form-control" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
+                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
+                            Laporan Posisi Keuangan</label>
+                        <div class="col-sm-12 col-md-10">
+                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
                                 <option value="3">Hutang Lancar</option>
                                 <option value="4">Hutang Tetap</option>
                             </select>
-                            <span class="invalid-feedback font-weight-bold"></span>
                         </div>
                     </div>
                 `);
