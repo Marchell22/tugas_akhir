@@ -472,7 +472,7 @@
     <div id="overlay" onclick="closeModal()"></div>
     <div id="popup" style="width: 50%;">
         <span class="close" onclick="closeModal()">&times;</span>
-        <form class="model-popup" action="{{ route('admin.AkunPenggunastore') }}" method="POST"
+        <form id="addForm"class="model-popup" action="{{ route('admin.AkunPenggunastore') }}" method="POST"
             onsubmit="return validateForm()">
             @csrf
             <h4 class="modal-title">Tambah Akun Pengguna</h4>
@@ -541,7 +541,7 @@
     <div id="popup1" class="popup" style="width: 50%; display: none;">
 
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form id="editForm"action="{{ route('admin.AkunPenggunaupdate', ['id' => ':id']) }}" method="POST"
+        <form id="editForm" action="{{ route('admin.AkunPenggunaupdate', ['id' => ':id']) }}" method="POST"
             class="model-popup">
             @csrf
             @method('PUT')
@@ -600,6 +600,7 @@
 
         function closeModal() {
             document.getElementById('popup').style.display = 'none';
+            $('#addForm')[0].reset();
 
         }
 
