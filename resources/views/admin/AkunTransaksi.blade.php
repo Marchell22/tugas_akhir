@@ -434,7 +434,8 @@
                                                     <i class="dw dw-more"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                    <a class="dropdown-item" onclick="openPopup('popup2')"><i
+                                                    <a class="dropdown-item"
+                                                        onclick="openPopup('popup2', '{{ $d->id }}','{{ $d->kelompok_akun_id }}', '{{ $d->kelompok_laporan_posisi_keuangan }}','{{ $d->kode }}','{{ $d->nama }}', '{{ $d->post_saldo }}', '{{ $d->post_penyesuaian }}', '{{ $d->post_laporan }}')"><i
                                                             class="dw dw-edit2"></i>
                                                         Edit</a>
                                                 </div>
@@ -452,7 +453,7 @@
     <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST"
+        <form id="addForm" class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST" id="addFrom"
             enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
             <h4 class="modal-title">Tambah Akun Transaksi</h4>
@@ -548,107 +549,133 @@
     <div id="overlay" onclick="closePopup('popup2')"></div>
     <div id="popup2" class="popup" style="width: 50%;">
         <span class="close" onclick="closePopup('popup2')">&times;</span>
-        <form class="model-popup">
+        <form id="editForm" class="model-popup" method="POST">
+            @csrf
+            @method('PUT')
             <h4 class="modal-title">Edit Akun Transaksi</h4>
+
+            <input type="hidden" id="editUserId" name="id">
+
             <div class="form-group row">
-                <label class="  col-sm-12 col-md-2 col-form-label">Kelompok Akun</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Kelompok Akun</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option value="1">Asset</option>
-                        <option value="2">Kewajiban</option>
-                        <option value="3">Ekuitas</option>
-                        <option value="4">Pendapatan</option>
-                        <option value="5">Belanja</option>
-                        <option value="6">Pembiayaan</option>
+                    <select class="custom-select col-12" id="editKelompokAkun" name="kelompok_akun_id">
+                        @foreach (App\Models\KelompokAkun::all() as $item)
+                            <option value="{{ $item->id }}"
+                                {{ old('kelompok_akun_id', $item->kelompok_akun_id) == $item->id ? 'selected' : '' }}>
+                                {{ $item->nama }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="  col-sm-12 col-md-2 col-form-label">Kelompok Laporan Posisi Keuangan</label>
-                <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option value="1">Aktiva Lancar</option>
-                        <option value="2">Aktiva Tetap</option>
-                    </select>
+            <div id="edit_kelompok_laporan">
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Kelompok Laporan Posisi Keuangan</label>
+                    <div class="col-sm-12 col-md-10">
+                        <select class="custom-select col-12" id="editKelompokLaporanPosisiKeuangan"
+                            name="kelompok_laporan_posisi_keuangan">
+                            <option value="1">Aktiva Lancar</option>
+                            <option value="2">Aktiva Tetap</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="  col-sm-12 col-md-2 col-form-label">Kode</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Kode</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="number" class="form-control" placeholder="Masukan Kode">
+                    <input type="number" class="form-control" id="editKode" name="kode"
+                        placeholder="Masukan Kode">
                 </div>
             </div>
+
             <div class="form-group row">
-                <label class="  col-sm-12 col-md-2 col-form-label">Name</label>
+                <label class="col-sm-12 col-md-2 col-form-label">Name</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="name" class="form-control" placeholder="Masukan Nama">
+                    <input type="text" class="form-control" id="editNama" name="nama"
+                        placeholder="Masukan Nama">
                 </div>
             </div>
+
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Post Saldo</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Debit
-                        </label>
+                        <input class="form-check-input" type="radio" id="postSaldoDebit" name="post_saldo"
+                            value="1">
+                        <label class="form-check-label" for="postSaldoDebit">Debit</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Kredit
+                        <input class="form-check-input" type="radio" id="postSaldoKredit" name="post_saldo"
+                            value="2">
+                        <label class="form-check-label" for="postSaldoKredit">Kredit</label>
                     </div>
                 </div>
             </div>
+
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Post Penyesuaian</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Debit
-                        </label>
+                        <input class="form-check-input" type="radio" id="postPenyesuaianDebit"
+                            name="post_penyesuaian" value="1">
+                        <label class="form-check-label" for="postPenyesuaianDebit">Debit</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Kredit
+                        <input class="form-check-input" type="radio" id="postPenyesuaianKredit"
+                            name="post_penyesuaian" value="2">
+                        <label class="form-check-label" for="postPenyesuaianKredit">Kredit</label>
                     </div>
                 </div>
             </div>
+
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Post Laporan</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Neraca
-                        </label>
+                        <input class="form-check-input" type="radio" id="postLaporanNeraca" name="post_laporan"
+                            value="1">
+                        <label class="form-check-label" for="postLaporanNeraca">Neraca</label>
                     </div>
-                    <div class="form-check form-check-inline" style="right: 15px;">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Laba Rugi
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="postLaporanLabaRugi" name="post_laporan"
+                            value="2">
+                        <label class="form-check-label" for="postLaporanLabaRugi">Laba Rugi</label>
                     </div>
                 </div>
             </div>
-            <button style="width:100px;" class="btn btn-primary">Edit</button>
 
+            <button type="submit" style="width:100px;" class="btn btn-primary">Edit</button>
         </form>
     </div>
+
     <script>
-        function openPopup(popupId) {
+        function openPopup(popupId, userId, userKelompokAkun, userKelompokLaporanPosisiKeuangan, userKode, userNama,
+            postSaldo, postPenyesuaian, postLaporan) {
+            $('#editForm')[0].reset();
+
             document.getElementById(popupId).style.display = 'block';
+            document.getElementById("overlay").style.display = "block";
+
+            $('#editUserId').val(userId);
+            $('#editKelompokAkun').val(userKelompokAkun).change();
+            $('#editKelompokLaporanPosisiKeuangan').val(userKelompokLaporanPosisiKeuangan);
+            $('#editKode').val(userKode);
+            $('#editNama').val(userNama);
+
+            // Set radio buttons
+            $('input[name="post_saldo"][value="' + postSaldo + '"]').prop('checked', true);
+            $('input[name="post_penyesuaian"][value="' + postPenyesuaian + '"]').prop('checked', true);
+            $('input[name="post_laporan"][value="' + postLaporan + '"]').prop('checked', true);
+
+            // Set form action
+            $('#editForm').attr('action', "{{ url('admin/AkunTransaksi/update') }}/" + userId);
         }
 
+
         function closePopup(popupId) {
+            $('#editForm')[0].reset();
             document.getElementById(popupId).style.display = 'none';
+            document.getElementById("overlay").style.display = "none";
         }
     </script>
     <script>
@@ -677,15 +704,15 @@
     </script>
 
 
-   <script>
-    $(document).ready(function() {
-        console.log("Document ready and script loaded"); // Debugging
+    <script>
+        $(document).ready(function() {
+            console.log("Document ready and script loaded"); // Debugging
 
-        $("#kelompok_akun_id").change(function() {
-            console.log("kelompok_akun_id changed to", $(this).val()); // Debugging
+            $("#kelompok_akun_id").change(function() {
+                console.log("kelompok_akun_id changed to", $(this).val()); // Debugging
 
-            if ($(this).val() == 1) {
-                $("#kelompok_laporan").html(`
+                if ($(this).val() == 1) {
+                    $("#kelompok_laporan").html(`
                      <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
                             Laporan Posisi Keuangan</label>
@@ -697,8 +724,8 @@
                         </div>
                     </div>
                 `);
-            } else if ($(this).val() == 2) {
-                $("#kelompok_laporan").html(`
+                } else if ($(this).val() == 2) {
+                    $("#kelompok_laporan").html(`
                     <div class="form-group row">
                         <label class="form-control-label col-form-label col-md-4" for="kelompok_laporan_posisi_keuangan">Kelompok Laporan Posisi Keuangan</label>
                         <div class="col-md-8">
@@ -710,12 +737,50 @@
                         </div>
                     </div>
                 `);
-            } else {
-                $("#kelompok_laporan").html('');
-            }
+                } else {
+                    $("#kelompok_laporan").html('');
+                }
+            });
         });
-    });
-</script>
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Event listener for kelompok_akun_id change
+            $("#editKelompokAkun").change(function() {
+                console.log("editKelompokAkun changed to", $(this).val()); // Debugging
+
+                if ($(this).val() == 1) {
+                    $("#edit_kelompok_laporan").html(`
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
+                            Laporan Posisi Keuangan</label>
+                        <div class="col-sm-12 col-md-10">
+                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
+                                <option value="1">Aktiva Lancar</option>
+                                <option value="2">Aktiva Tetap</option>
+                            </select>
+                        </div>
+                    </div>
+                `);
+                } else if ($(this).val() == 2) {
+                    $("#edit_kelompok_laporan").html(`
+                    <div class="form-group row">
+                        <label class="form-control-label col-form-label col-md-4" for="kelompok_laporan_posisi_keuangan">Kelompok Laporan Posisi Keuangan</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
+                                <option value="3">Hutang Lancar</option>
+                                <option value="4">Hutang Tetap</option>
+                            </select>
+                            <span class="invalid-feedback font-weight-bold"></span>
+                        </div>
+                    </div>
+                `);
+                } else {
+                    $("#edit_kelompok_laporan").html('');
+                }
+            });
+        });
+    </script>
 
 
     <!-- js -->

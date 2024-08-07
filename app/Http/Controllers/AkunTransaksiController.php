@@ -20,7 +20,7 @@ class AkunTransaksiController extends Controller
   }
   public function store(Request $request)
   {
-    
+
     // Validasi input
     $validator = Validator::make($request->all(), [
       'kelompok_akun_id' => 'required|numeric',
@@ -57,5 +57,57 @@ class AkunTransaksiController extends Controller
     // Membuat data baru di model AkunTransaksi
     AkunTransaksi::create($data);
     return redirect()->route('admin.AkunTransaksi');
+  }
+  public function update(Request $request, $id)
+  {
+    $validator = Validator::make($request->all(), [
+      'kelompok_akun_id' => 'required|numeric',
+      'kode' => 'required|numeric',
+      'nama' => 'required|string|max:128',
+      'post_saldo' => 'required|numeric',
+      'post_penyesuaian' => 'required|numeric',
+      'post_laporan' => 'required|numeric',
+      'kelompok_laporan_posisi_keuangan' => 'nullable|numeric',
+    ]);
+    if ($validator->fails()) {
+      // Log kesalahan untuk debugging
+      Log::error('Validation failed', ['errors' => $validator->errors()]);
+
+      // Kembali dengan respons JSON jika validasi gagal
+      return response()->json([
+        'status' => 'error',
+        'errors' => $validator->errors()
+      ], 422);
+    }
+
+    // if ($validator->fails()) {
+    //   return redirect()->back()->withInput()->withErrors($validator);
+    // }
+    $user = AkunTransaksi::find($id);
+
+    if (!$user) {
+      return redirect()->route('admin.AkunTransaksi')->with('error', 'User not found.');
+    }
+
+    if (!$user) {
+      return redirect()->route('admin.AkunPengguna')->with('error', 'User not found.');
+    }
+    // $user = $request->input([
+    //   'kelompok_akun_id',
+    //   'kode',
+    //   'nama',
+    //   'post_saldo',
+    //   'post_penyesuaian',
+    //   'post_laporan',
+    //   'kelompok_laporan_posisi_keuangan'
+    // ]);
+    $user->kelompok_akun_id = $request->input('kelompok_akun_id');
+    $user->kode = $request->input('kode');
+    $user->nama = $request->input('nama');
+    $user->post_penyesuaian = $request->input('post_penyesuaian');
+    $user->post_laporan = $request->input('post_laporan');
+    $user->kelompok_laporan_posisi_keuangan = $request->input('kelompok_laporan_posisi_keuangan');
+    $user->save();
+    return redirect()->route('admin.AkunTransaksi')->with('success', 'Data pengguna berhasil diperbarui.');
   }
 }

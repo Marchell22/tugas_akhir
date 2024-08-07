@@ -11,6 +11,7 @@ use App\Http\Controllers\NeracaLajurController;
 use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\RencanaAnggaranBiayaController;
+use App\Models\AkunTransaksi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,7 @@ Route::get('/logout',[loginController::class,'logout'])->name('logout');
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admin'], 'as' => 'admin.'], function(){
     Route::get('/AkunTransaksi', [AkunTransaksiController::class, 'AkunTransaksi'])->name('AkunTransaksi');
     Route::post('/AkunTransaksi/store', [AkunTransaksiController::class, 'store'])->name('AkunTransaksistore');
+    Route::put('/AkunTransaksi/update/{id}', [AkunTransaksiController::class, 'update'])->name('AkunTransaksiupdate');
     Route::get('/ValidasiTransaksi', [AkunTransaksiController::class, 'ValidasiTransaksi'])->name('ValidasiTransaksi');
     Route::get('/JurnalUmum', [JurnalUmumController::class, 'JurnalUmum'])->name('JurnalUmum');
     Route::get('/ValidasiJurnalUmum', [JurnalUmumController::class, 'ValidasiJurnalUmum'])->name('ValidasiJurnalUmum');
