@@ -405,47 +405,54 @@
                     <div class="pd-10">
                     </div>
                     <div class="pb-10 pd-2">
-                        <table class="data-table table ">
-                            <thead>
-                                <tr>
-                                    {{-- <th class="table-plus datatable-nosort">Name</th> --}}
-                                    <th class="table-plus sort_disabled">Tanggal</th>
-                                    <th class="table-plus datatable-nosort">Keterangan</th>
-                                    <th class="table-plus datatable-nosort">Akun</th>
-                                    <th class="table-plus datatable-nosort">Debit</th>
-                                    <th class="table-plus datatable-nosort">Kredit</th>
-                                    <th class="datatable-nosort">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $d)
+                        @if ($data->isEmpty())
+                            <p>Tidak ada data yang ditemukan untuk rentang tanggal ini.</p>
+                        @else
+                            <table class="data-table table ">
+                                <thead>
                                     <tr>
-                                        <td>{{ $d->tanggal }}</td>
-                                        <td>{{ $d->keterangan }}</td>
-                                        <td>{{ $d->akuntransaksi ? $d->akuntransaksi->kode : 'Tidak Ditemukan' }}</td>
-                                        <td>{{ $d->debit_atau_kredit == 1 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
-                                        </td>
-                                        <td>{{ $d->debit_atau_kredit == 2 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
-                                        </td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                    href="#" role="button" data-toggle="dropdown">
-                                                    <i class="dw dw-more"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
-                                                        View</a>
-                                                    <a class="dropdown-item" onclick="openPopup('popup3')"><i
-                                                            class="dw dw-edit2"></i>
-                                                        Edit</a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        {{-- <th class="table-plus datatable-nosort">Name</th> --}}
+                                        <th class="table-plus sort_disabled">Tanggal</th>
+                                        <th class="table-plus datatable-nosort">Keterangan</th>
+                                        <th class="table-plus datatable-nosort">Akun</th>
+                                        <th class="table-plus datatable-nosort">Debit</th>
+                                        <th class="table-plus datatable-nosort">Kredit</th>
+                                        <th class="datatable-nosort">Action</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $d)
+                                        <tr>
+                                            <td>{{ $d->tanggal }}</td>
+                                            <td>{{ $d->keterangan }}</td>
+                                            <td>{{ $d->akuntransaksi ? $d->akuntransaksi->kode : 'Tidak Ditemukan' }}
+                                            </td>
+                                            <td>{{ $d->debit_atau_kredit == 1 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                            </td>
+                                            <td>{{ $d->debit_atau_kredit == 2 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                        href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div
+                                                        class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="dw dw-eye"></i>
+                                                            View</a>
+                                                        <a class="dropdown-item" onclick="openPopup('popup3')"><i
+                                                                class="dw dw-edit2"></i>
+                                                            Edit</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -456,7 +463,7 @@
 
         <span class="close" onclick="closePopup('popup1')">&times;</span>
         <form id="addForm" class="model-popup" action="{{ route('admin.JurnalUmumstore') }}" method="POST"
-            onsubmit="return validateForm()">
+            onsubmit="return validateForm()" enctype="multipart/form-data">>
             @csrf
             <h4 class="modal-title">Tambah Jurnal Umum</h4>
             <div class="form-group row">
@@ -528,21 +535,22 @@
     <div id="popup2" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup2')">&times;</span>
-        <h4 class="modal-title">Waktu</h4>
-        <form class="model-popup">
+        <form class="model-popup" action="{{ route('admin.JurnalUmumFilter') }}" method="GET">
+            <h4 class="modal-title">Waktu</h4>
+
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="awal" required>
+                    <input class="form-control " type="date" name="awal" value="{{ request('awal') }}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="akhir" required>
+                    <input class="form-control " type="date" name="akhir" value="{{ request('akhir') }}">
                 </div>
             </div>
-            <button style="width:100px;" class="btn btn-primary">Cari</button>
+            <button type='submit' style="width:100px;" class="btn btn-primary">Cari</button>
 
         </form>
     </div>
@@ -645,7 +653,6 @@
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/process.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/layout-settings.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>

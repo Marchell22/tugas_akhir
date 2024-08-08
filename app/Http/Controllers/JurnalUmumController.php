@@ -14,6 +14,26 @@ class JurnalUmumController extends Controller
         $data=JurnalUmum::get();
         return view('admin.JurnalUmum', compact('data'));
     }
+    public function JurnalUmumFilter(Request $request)
+    {
+        // Ambil parameter tanggal dari request
+        $awal = $request->input('awal');
+        $akhir = $request->input('akhir');
+
+        // Query untuk mengambil data
+        $query = JurnalUmum::query();
+
+        // Tambahkan filter berdasarkan tanggal jika parameter ada
+        if ($awal && $akhir) {
+            $query->whereBetween('tanggal', [$awal, $akhir]);
+        }
+
+        // Ambil data
+        $data = $query->get();
+
+        // Kembalikan view dengan data
+        return view('admin.JurnalUmum', compact('data'));
+    }
     public function ValidasiJurnalUmum()
     {
         return view('admin.ValidasiJurnalUmum');
@@ -24,7 +44,7 @@ class JurnalUmumController extends Controller
             'akun_id' => 'required|exists:akunTransaksi,id',
             'tanggal' => 'required|date',
             'keterangan' => 'required|string',
-            'bukti' => 'nullable|string|max:128',
+            'bukti' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg',
             'debit_atau_kredit' => 'required|numeric',
             'nilai' => 'required|numeric',
         ]);
@@ -43,10 +63,13 @@ class JurnalUmumController extends Controller
             'akun_id',
             'tanggal',
             'keterangan',
-            'bukti',
             'debit_atau_kredit',
             'nilai',
         ]);
+
+        if ($request->bukti) {
+            $data['bukti']  = $request->bukti->store('public/bukti');
+        }
         JurnalUmum::create($data);
         return redirect()->route('admin.JurnalUmum');
     }
