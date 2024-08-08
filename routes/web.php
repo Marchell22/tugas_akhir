@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/JurnalUmum', [JurnalUmumController::class, 'JurnalUmum'])->name('JurnalUmum');
     Route::get('/JurnalUmumFilter', [JurnalUmumController::class, 'JurnalUmumFilter'])->name('JurnalUmumFilter');
     Route::post('/JurnalUmum/store', [JurnalUmumController::class, 'store'])->name('JurnalUmumstore');
+    Route::put('/JurnalUmum/update/{id}', [JurnalUmumController::class, 'update'])->name('JurnalUmumupdate');
     Route::get('/ValidasiJurnalUmum', [JurnalUmumController::class, 'ValidasiJurnalUmum'])->name('ValidasiJurnalUmum');
     Route::get('/JurnalPenyesuaian', [JurnalPenyesuaianController::class, 'JurnalPenyesuaian'])->name('JurnalPenyesuaian');
     Route::get('/ValidasiJurnalPenyesuaian', [JurnalPenyesuaianController::class, 'ValidasiJurnalPenyesuaian'])->name('ValidasiJurnalPenyesuaian');

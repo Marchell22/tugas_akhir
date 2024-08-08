@@ -439,10 +439,12 @@
                                                     </a>
                                                     <div
                                                         class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                        <a class="dropdown-item" href="#"><i
+                                                        <a class="dropdown-item" href="#"
+                                                            onclick="showImagePopup('{{ asset('storage/bukti/' . $d->bukti) }}')"><i
                                                                 class="dw dw-eye"></i>
-                                                            View</a>
-                                                        <a class="dropdown-item" onclick="openPopup('popup3')"><i
+                                                            Gambar</a>
+                                                        <a class="dropdown-item"
+                                                            onclick="openPopup('popup3', '{{ $d->id }}','{{ $d->akun_id }}','{{ $d->tanggal }}', '{{ $d->keterangan }}','{{ $d->bukti }}','{{ $d->debit_atau_kredit }}', '{{ $d->nilai }}')"><i
                                                                 class="dw dw-edit2"></i>
                                                             Edit</a>
                                                     </div>
@@ -458,12 +460,12 @@
             </div>
         </div>
     </div>
+    {{-- Pop Up Penambahan Data --}}
     <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
-
         <span class="close" onclick="closePopup('popup1')">&times;</span>
         <form id="addForm" class="model-popup" action="{{ route('admin.JurnalUmumstore') }}" method="POST"
-            onsubmit="return validateForm()" enctype="multipart/form-data">>
+            onsubmit="return validateForm()" enctype="multipart/form-data">
             @csrf
             <h4 class="modal-title">Tambah Jurnal Umum</h4>
             <div class="form-group row">
@@ -525,12 +527,11 @@
                         placeholder="Masukan Nilai" value="{{ old('nilai') }}">
                 </div>
             </div>
-
-
             <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
-
         </form>
     </div>
+
+    {{-- Pop Up Penampilan Data Berdasarkan Tanggal --}}
     <div id="overlay" onclick="closePopup('popup2')"></div>
     <div id="popup2" class="popup" style="width: 50%;">
 
@@ -554,78 +555,195 @@
 
         </form>
     </div>
+
+    {{-- Pop Up Pengeditan Data --}}
     <div id="overlay" onclick="closePopup('popup3')"></div>
     <div id="popup3" class="popup" style="width: 50%;">
-
         <span class="close" onclick="closePopup('popup3')">&times;</span>
-        <form class="model-popup">
+        <form id="editForm" class="model-popup" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
             <h4 class="modal-title">Edit Jurnal Umum</h4>
+            <input type="hidden" id="editUserId" name="id">
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Akun</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option value="1">1001 - Kas</option>
-                        <option value="2">1002 - Pendapatan</option>
+                    <select class="custom-select col-12" name="akun_id" id="editAkun_id">
+                        @foreach (App\Models\AkunTransaksi::orderBy('kode')->get() as $item)
+                            <option value="{{ $item->id }}">
+                                {{ $item->kode }} - {{ $item->nama }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="tanggal">Tanggal</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="Tanggal" required>
+                    <input class="form-control " type="date" name="tanggal" id="editTanggal">
                 </div>
             </div>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Keterangan</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="keterangan">Keterangan</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control" placeholder="Masukan Keterangan">
+                    <input class="form-control" placeholder="Masukan Keterangan" name="keterangan"
+                        id="editKeterangan">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="formFile" class="col-sm-12 col-md-2 col-form-label">Bukti</label>
+                <label for="formFile" class="col-sm-12 col-md-2 col-form-label" for="bukti">Bukti</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control" type="file" id="formFile">
+                    <input class="form-control" type="file" name="bukti" id="editBukti">
+                    <div id="existingImageContainer" style="margin-top: 10px;"></div>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Debit/Kredit</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="debit_atau_kredit">Debit/Kredit</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
+                        <input class="form-check-input" type="radio" name="debit_atau_kredit"
+                            id="debit_atau_kredit1" value="1">
+                        <label class="form-check-label" for="debit_atau_kredit1">
                             Debit
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <input class="form-check-input" type="radio" name="debit_atau_kredit"
+                            id="debit_atau_kredit2" value="2">
+                        <label class="form-check-label" for="debit_atau_kredit2">
                             Kredit
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Nilai</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="nilai">Nilai</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="number" class="form-control" placeholder="Masukan Nilai">
+                    <input type="number" class="form-control" placeholder="Masukan Nilai" name="nilai"
+                        id="editNilai">
                 </div>
             </div>
-
-
-            <button style="width:100px;" class="btn btn-success">Tambah</button>
-
+            <button type="submit" style="width:100px;" class="btn btn-primary">Edit</button>
         </form>
     </div>
 
+    {{-- Pop Up Penampilan Bukti Data Gambar --}}
+    <div id="imagePopup" class="popup" style="display: none;">
+        <span class="close" onclick="closeImagePopup()">&times;</span>
+        <img id="popupImage" src="" alt="Image" style="max-width: 100%; height: auto;">
+    </div>
+    <div id="overlay" style="display: none;" onclick="closeImagePopup()"></div>
+
+
     <script>
-        function openPopup(popupId) {
-            document.getElementById(popupId).style.display = 'block';
-            $('#addForm')[0].reset();
+        function showImagePopup(imageUrl) {
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            overlay.style.zIndex = '999';
+            overlay.style.cursor = 'pointer';
+
+            // Create a popup element
+            const popup = document.createElement('div');
+            popup.style.position = 'fixed';
+            popup.style.top = '50%';
+            popup.style.left = '60%';
+            popup.style.transform = 'translate(-50%, -50%)';
+            popup.style.backgroundColor = '#fff';
+            popup.style.padding = '10px';
+            popup.style.zIndex = '1000';
+            popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.5)';
+            popup.style.maxWidth = '15%';
+            popup.style.maxHeight = '90%';
+            popup.style.overflow = 'hidden';
+
+            // Create an image element
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+
+            // Create a close button
+            const closeBtn = document.createElement('button');
+            closeBtn.innerText = 'Close';
+            closeBtn.style.display = 'block';
+            closeBtn.style.marginTop = '10px';
+            closeBtn.style.marginLeft = 'auto';
+            closeBtn.style.marginRight = 'auto';
+            closeBtn.style.border = 'none';
+            closeBtn.style.backgroundColor = '#f00';
+            closeBtn.style.color = '#fff';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.style.padding = '5px 10px';
+            closeBtn.style.borderRadius = '5px';
+            closeBtn.onclick = function() {
+                document.body.removeChild(overlay);
+                document.body.removeChild(popup);
+            };
+
+            // Append elements to the popup
+            popup.appendChild(img);
+            popup.appendChild(closeBtn);
+
+            // Append the popup and overlay to the body
+            document.body.appendChild(overlay);
+            document.body.appendChild(popup);
+
+            // Close the popup when clicking on the overlay
+            overlay.onclick = function() {
+                document.body.removeChild(overlay);
+                document.body.removeChild(popup);
+            };
         }
+
+        function closeImagePopup() {
+            document.getElementById('imagePopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function openPopup(popupId, userId, userAkun_id, userTanggal, userKeterangan, userBukti, DebitKredit, userNilai) {
+            $('#editForm')[0].reset();
+            $('#addForm')[0].reset();
+
+            document.getElementById(popupId).style.display = 'block';
+            document.getElementById("overlay").style.display = "block";
+
+            $('#editUserId').val(userId);
+            $('#editAkun_id').val(userAkun_id).change(); // Make sure to trigger change event
+            $('#editTanggal').val(userTanggal);
+            $('#editKeterangan').val(userKeterangan);
+            $('#editNilai').val(userNilai);
+
+            // Set radio buttons
+            $('input[name="debit_atau_kredit"][value="' + DebitKredit + '"]').prop('checked', true);
+
+            // Handle existing image
+            const existingImageContainer = document.getElementById('existingImageContainer');
+            existingImageContainer.innerHTML = ''; // Clear previous image if any
+
+            if (userBukti) {
+                const imgElement = document.createElement('img');
+                imgElement.src = '/storage/bukti/' + userBukti; // Adjust path if necessary
+                imgElement.style.maxWidth = '100%';
+                imgElement.style.height = 'auto';
+                imgElement.style.marginTop = '10px'; // Adjust margin if needed
+
+                existingImageContainer.appendChild(imgElement);
+            }
+
+
+            // Set form action
+            $('#editForm').attr('action', "{{ url('admin/JurnalUmum/update') }}/" + userId);
+        }
+
+
 
         function closePopup(popupId) {
             document.getElementById(popupId).style.display = 'none';
+            document.getElementById("overlay").style.display = "none";
+            $('#editForm')[0].reset();
             $('#addForm')[0].reset();
         }
     </script>

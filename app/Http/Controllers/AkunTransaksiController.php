@@ -86,10 +86,6 @@ class AkunTransaksiController extends Controller
     $user = AkunTransaksi::find($id);
 
     if (!$user) {
-      return redirect()->route('admin.AkunTransaksi')->with('error', 'User not found.');
-    }
-
-    if (!$user) {
       return redirect()->route('admin.AkunPengguna')->with('error', 'User not found.');
     }
     // $user = $request->input([
