@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::put('/AkunTransaksi/update/{id}', [AkunTransaksiController::class, 'update'])->name('AkunTransaksiupdate');
     Route::get('/ValidasiTransaksi', [AkunTransaksiController::class, 'ValidasiTransaksi'])->name('ValidasiTransaksi');
     Route::get('/JurnalUmum', [JurnalUmumController::class, 'JurnalUmum'])->name('JurnalUmum');
+    Route::post('/JurnalUmum/store', [JurnalUmumController::class, 'store'])->name('JurnalUmumstore');
     Route::get('/ValidasiJurnalUmum', [JurnalUmumController::class, 'ValidasiJurnalUmum'])->name('ValidasiJurnalUmum');
     Route::get('/JurnalPenyesuaian', [JurnalPenyesuaianController::class, 'JurnalPenyesuaian'])->name('JurnalPenyesuaian');
     Route::get('/ValidasiJurnalPenyesuaian', [JurnalPenyesuaianController::class, 'ValidasiJurnalPenyesuaian'])->name('ValidasiJurnalPenyesuaian');

@@ -433,7 +433,8 @@
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
                                                     View</a>
-                                                <a class="dropdown-item" onclick="openPopup('popup3')" ><i class="dw dw-edit2"></i>
+                                                <a class="dropdown-item" onclick="openPopup('popup3')"><i
+                                                        class="dw dw-edit2"></i>
                                                     Edit</a>
                                             </div>
                                         </div>
@@ -454,7 +455,8 @@
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
                                                     View</a>
-                                                <a class="dropdown-item" onclick="openPopup('popup3')" ><i class="dw dw-edit2"></i>
+                                                <a class="dropdown-item" onclick="openPopup('popup3')"><i
+                                                        class="dw dw-edit2"></i>
                                                     Edit</a>
                                             </div>
                                         </div>
@@ -471,62 +473,65 @@
     <div id="popup1" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form class="model-popup">
+        <form id="addForm" class="model-popup" action="{{ route('admin.JurnalUmumstore') }}" method="POST">
+            @csrf
             <h4 class="modal-title">Tambah Jurnal Umum</h4>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Akun</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option value="1">1001 - Kas</option>
-                        <option value="2">1002 - Pendapatan</option>
+                    <select class="custom-select col-12" name="akun_id" id="akun_id">
+                        @foreach (App\Models\AkunTransaksi::orderBy('kode')->get() as $item)
+                            <option value="{{ $item->id }}" {{ old('akun_id') == $item->id ? 'selected' : '' }}>
+                                {{ $item->kode }} - {{ $item->nama }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="tanggal">Tanggal</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="Tanggal" required>
+                    <input class="form-control " type="date" name="tanggal" name="Tanggal" value="{{ old('tanggal')}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class=" col-sm-12 col-md-2 col-form-label">Keterangan</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="keterangan">Keterangan</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control" placeholder="Masukan Keterangan">
+                    <input class="form-control" placeholder="Masukan Keterangan"  name="keterangan" value="{{ old('keterangan')}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="formFile" class="col-sm-12 col-md-2 col-form-label">Bukti</label>
+                <label for="formFile" class="col-sm-12 col-md-2 col-form-label"  for="bukti">Bukti</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control" type="file" id="formFile">
+                    <input class="form-control" type="file"  name="bukti" id="bukti" value="{{ old('bukti')}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Debit/Kredit</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="debit_atau_kredit">Debit/Kredit</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                           Debit
+                        <input class="form-check-input" type="radio" name="debit_atau_kredit"
+                           id="debit_atau_kredit1" value="1" {{ old('debit_atau_kredit') == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="debit_atau_kredit1">
+                            Debit
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                            id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <input class="form-check-input" type="radio"name="debit_atau_kredit"
+                           id="debit_atau_kredit2" value="2" {{ old('debit_atau_kredit') == 2 ? 'checked' : '' }} >
+                        <label class="form-check-label" for="debit_atau_kredit2">
                             Kredit
                     </div>
                 </div>
             </div>
-             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Nilai</label>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label"for="nilai">Nilai</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="number" class="form-control" placeholder="Masukan Nilai">
+                    <input type="number" class="form-control" name="nilai" id="nilai" placeholder="Masukan Nilai" value="{{ old('nilai')}}">
                 </div>
             </div>
 
 
-            <button style="width:100px;" class="btn btn-success">Tambah</button>
+            <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
 
         </form>
     </div>
@@ -592,7 +597,7 @@
                         <input class="form-check-input" type="radio" name="flexRadioDefault"
                             id="flexRadioDefault1">
                         <label class="form-check-label" for="flexRadioDefault1">
-                           Debit
+                            Debit
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
