@@ -409,59 +409,41 @@
                             <thead>
                                 <tr>
                                     {{-- <th class="table-plus datatable-nosort">Name</th> --}}
-                                    <th class="table-plus sort_disabled">Kode</th>
-                                    <th class="table-plus datatable-nosort">Nama</th>
-                                    <th class="table-plus datatable-nosort">Post Saldo</th>
-                                    <th class="table-plus datatable-nosort">Post Penyesuaian</th>
-                                    <th class="table-plus datatable-nosort">Post Laporan</th>
+                                    <th class="table-plus sort_disabled">Tanggal</th>
+                                    <th class="table-plus datatable-nosort">Keterangan</th>
+                                    <th class="table-plus datatable-nosort">Akun</th>
+                                    <th class="table-plus datatable-nosort">Debit</th>
+                                    <th class="table-plus datatable-nosort">Kredit</th>
                                     <th class="datatable-nosort">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="">1101</td>
-                                    <td>Kas</td>
-                                    <td>Debit </td>
-                                    <td>Kredit</td>
-                                    <td>Neraca</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
-                                                    View</a>
-                                                <a class="dropdown-item" onclick="openPopup('popup3')"><i
-                                                        class="dw dw-edit2"></i>
-                                                    Edit</a>
+                                @foreach ($data as $d)
+                                    <tr>
+                                        <td>{{ $d->tanggal }}</td>
+                                        <td>{{ $d->keterangan }}</td>
+                                        <td>{{ $d->akuntransaksi ? $d->akuntransaksi->kode : 'Tidak Ditemukan' }}</td>
+                                        <td>{{ $d->debit_atau_kredit == 1 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                        </td>
+                                        <td>{{ $d->debit_atau_kredit == 2 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                    href="#" role="button" data-toggle="dropdown">
+                                                    <i class="dw dw-more"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
+                                                        View</a>
+                                                    <a class="dropdown-item" onclick="openPopup('popup3')"><i
+                                                            class="dw dw-edit2"></i>
+                                                        Edit</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="">1102</td>
-                                    <td>Pendapatan</td>
-                                    <td>Debit </td>
-                                    <td>Kredit</td>
-                                    <td>Neraca</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
-                                                    View</a>
-                                                <a class="dropdown-item" onclick="openPopup('popup3')"><i
-                                                        class="dw dw-edit2"></i>
-                                                    Edit</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -473,7 +455,8 @@
     <div id="popup1" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form id="addForm" class="model-popup" action="{{ route('admin.JurnalUmumstore') }}" method="POST">
+        <form id="addForm" class="model-popup" action="{{ route('admin.JurnalUmumstore') }}" method="POST"
+            onsubmit="return validateForm()">
             @csrf
             <h4 class="modal-title">Tambah Jurnal Umum</h4>
             <div class="form-group row">
@@ -490,19 +473,22 @@
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label" for="tanggal">Tanggal</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="tanggal" name="Tanggal" value="{{ old('tanggal')}}">
+                    <input class="form-control " type="date" name="tanggal" id="tanggal" name="Tanggal"
+                        value="{{ old('tanggal') }}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label" for="keterangan">Keterangan</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control" placeholder="Masukan Keterangan"  name="keterangan" value="{{ old('keterangan')}}">
+                    <input class="form-control" placeholder="Masukan Keterangan" name="keterangan" id="keterangan"
+                        value="{{ old('keterangan') }}">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="formFile" class="col-sm-12 col-md-2 col-form-label"  for="bukti">Bukti</label>
+                <label for="formFile" class="col-sm-12 col-md-2 col-form-label" for="bukti">Bukti</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control" type="file"  name="bukti" id="bukti" value="{{ old('bukti')}}">
+                    <input class="form-control" type="file" name="bukti" id="bukti"
+                        value="{{ old('bukti') }}">
                 </div>
             </div>
             <div class="form-group row">
@@ -510,14 +496,16 @@
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="debit_atau_kredit"
-                           id="debit_atau_kredit1" value="1" {{ old('debit_atau_kredit') == 1 ? 'checked' : '' }}>
+                            id="debit_atau_kredit1" value="1"
+                            {{ old('debit_atau_kredit') == 1 ? 'checked' : '' }}>
                         <label class="form-check-label" for="debit_atau_kredit1">
                             Debit
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio"name="debit_atau_kredit"
-                           id="debit_atau_kredit2" value="2" {{ old('debit_atau_kredit') == 2 ? 'checked' : '' }} >
+                            id="debit_atau_kredit2" value="2"
+                            {{ old('debit_atau_kredit') == 2 ? 'checked' : '' }}>
                         <label class="form-check-label" for="debit_atau_kredit2">
                             Kredit
                     </div>
@@ -526,7 +514,8 @@
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label"for="nilai">Nilai</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="number" class="form-control" name="nilai" id="nilai" placeholder="Masukan Nilai" value="{{ old('nilai')}}">
+                    <input type="number" class="form-control" name="nilai" id="nilai"
+                        placeholder="Masukan Nilai" value="{{ old('nilai') }}">
                 </div>
             </div>
 
@@ -624,12 +613,33 @@
     <script>
         function openPopup(popupId) {
             document.getElementById(popupId).style.display = 'block';
+            $('#addForm')[0].reset();
         }
 
         function closePopup(popupId) {
             document.getElementById(popupId).style.display = 'none';
+            $('#addForm')[0].reset();
         }
     </script>
+    <script>
+        function validateForm() {
+            console.log("validateForm called"); // Debugging
+
+            var akun_id = document.getElementById('akun_id').value;
+            var tanggal = document.getElementById('tanggal').value;
+            var keterangan = document.getElementById('keterangan').value;
+            var bukti = document.getElementById('bukti').value;
+            var debit_atau_kredit = document.querySelector('input[name="debit_atau_kredit"]:checked');
+
+            if (akun_id === "" || tanggal === "" || keterangan === "" || bukti === "" || !debit_atau_kredit) {
+                alert("Semua field harus diisi.");
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
+
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
@@ -650,7 +660,6 @@
     <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
     <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
 </body>
 
 </html>

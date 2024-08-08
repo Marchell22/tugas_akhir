@@ -17,4 +17,8 @@ class JurnalUmum extends Model
         'debit_atau_kredit',
         'nilai',
     ];
+    public function akuntransaksi()
+    {
+        return $this->belongsTo(AkunTransaksi::class, 'akun_id');
+    }
 }
