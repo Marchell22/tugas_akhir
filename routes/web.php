@@ -39,6 +39,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::put('/JurnalUmum/update/{id}', [JurnalUmumController::class, 'update'])->name('JurnalUmumupdate');
     Route::get('/ValidasiJurnalUmum', [JurnalUmumController::class, 'ValidasiJurnalUmum'])->name('ValidasiJurnalUmum');
     Route::get('/JurnalPenyesuaian', [JurnalPenyesuaianController::class, 'JurnalPenyesuaian'])->name('JurnalPenyesuaian');
+    Route::get('/JurnalPenyesuaianFilter', [JurnalPenyesuaianController::class, 'JurnalPenyesuaianFilter'])->name('JurnalPenyesuaianFilter');
+    Route::post('/JurnalPenyesuaian/store', [JurnalPenyesuaianController::class, 'store'])->name('JurnalPenyesuaianstore');
+    Route::put('/JurnalPenyesuaian/update/{id}', [JurnalPenyesuaianController::class, 'update'])->name('JurnalPenyesuaianupdate');
     Route::get('/ValidasiJurnalPenyesuaian', [JurnalPenyesuaianController::class, 'ValidasiJurnalPenyesuaian'])->name('ValidasiJurnalPenyesuaian');
     Route::get('/BukuBesar', [BukuBesarController::class, 'BukuBesar'])->name('BukuBesar');
     Route::get('/NeracaLajur', [NeracaLajurController::class, 'NeracaLajur'])->name('NeracaLajur');
