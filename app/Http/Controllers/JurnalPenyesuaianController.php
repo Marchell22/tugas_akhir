@@ -15,7 +15,7 @@ class JurnalPenyesuaianController extends Controller
         $data = JurnalPenyesuaian::get();
         return view('admin.JurnalPenyesuaian', compact('data'));
     }
-    public function JurnalUmumFilter(Request $request)
+    public function JurnalPenyesuaianFilter(Request $request)
     {
         // Ambil parameter tanggal dari request
         $awal = $request->input('awal');
