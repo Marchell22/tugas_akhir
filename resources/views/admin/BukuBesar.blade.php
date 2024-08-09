@@ -321,44 +321,123 @@
                                 data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
                         </div> --}}
                     </div>
-                    <form>
+                    <form method="GET" action="{{ route('admin.BukuBesar') }}">
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Akun</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option value="1">1001 - Kas</option>
-                                    <option value="2">1002 - Pendapatan</option>
+                                <select class="custom-select col-12" name="akun" required>
+                                    <option value="" selected>Pilih...</option>
+                                    @foreach (App\Models\AkunTransaksi::orderBy('kode')->get() as $item)
+                                        <option value="{{ $item->id }}">{{ $item->kode }} -
+                                            {{ $item->nama }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option value="1">Periode</option>
-                                    <option value="2">Tanggal</option>
+                                <select class="custom-select col-12" id="kriteriaSelect" name="kriteria" required>
+                                    <option value="" selected>Pilih...</option>
+                                    <option value="periode">Periode</option>
+                                    <option value="tanggal">Tanggal</option>
                                 </select>
                             </div>
-
                         </div>
-                        <div class="form-group row">
+
+                        <div class="form-group row" id="periodeOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
+                                <select class="custom-select col-12" name="periode">
+                                    <option value="" selected>Pilih...</option>
                                     <option value="1">1 Tahun Terakhir</option>
                                     <option value="2">1 Bulan Terakhir</option>
                                     <option value="3">1 Minggu Terakhir</option>
                                 </select>
                             </div>
+                        </div>
 
+                        <!-- Tanggal options (hidden by default) -->
+                        <div class="form-group row" id="tanggalOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" id="tanggalAkhirOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-outline-info">Cari</button>
                         </div>
                     </form>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-info">Cari</button>
+
+                </div>
+            </div>
+        </div>
+        @if ($results->isNotEmpty())
+            @php
+                $nilai = 0;
+                $akunTransaksi = $akunTransaksiList->find($results->first()->akun_id);
+            @endphp
+            <div class="card shadow mt-4">
+                <div class="card-header">
+                    <div
+                        class="card-header d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+                        <span class="font-weight-900">Nama Akun : {{ $akunTransaksi->nama }}</span>
+                        <span class="font-weight-900">Kode Akun : {{ $akunTransaksi->kode }}</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Keterangan</th>
+                                    <th>Debit</th>
+                                    <th>Kredit</th>
+                                    <th>Saldo Debit</th>
+                                    <th>Saldo Kredit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($results as $result)
+                                    @php
+                                        if ($result['debit_atau_kredit'] == $akunTransaksi->post_saldo) {
+                                            $nilai += $result['nilai'];
+                                        } else {
+                                            $nilai -= $item['nilai'];
+                                        }
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $result->created_at }}</td>
+                                        <td>{{ $result->keterangan }}</td>
+                                        <td>{{ $result->debit_atau_kredit == 1 ? 'Rp. ' . substr(number_format($result->nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                        </td>
+                                        <td>{{ $result->debit_atau_kredit == 2 ? 'Rp. ' . substr(number_format($result->nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                        </td>
+                                        <td>{{ $akunTransaksi->post_saldo == 1 ? 'Rp. ' . substr(number_format($nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                        </td>
+                                        <td>{{ $akunTransaksi->post_saldo == 2 ? 'Rp. ' . substr(number_format($nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="card-box mb-30">
+        @else
+            <div></div>
+        @endif
+        {{-- <div class="card-box mb-30">
                 <div class="pd-10">
                 </div>
                 <div class="pb-10 pd-2">
@@ -410,8 +489,26 @@
 
 
 
-            </div>
-        </div>
+            </div> --}}
+        <!-- Periode options (hidden by default) -->
+        <script>
+            document.getElementById('kriteriaSelect').addEventListener('change', function() {
+                var selectedKriteria = this.value;
+
+                // Hide both options first
+                document.getElementById('periodeOptions').style.display = 'none';
+                document.getElementById('tanggalOptions').style.display = 'none';
+                document.getElementById('tanggalAkhirOptions').style.display = 'none';
+
+                // Show the appropriate options based on selection
+                if (selectedKriteria === 'periode') {
+                    document.getElementById('periodeOptions').style.display = 'flex';
+                } else if (selectedKriteria === 'tanggal') {
+                    document.getElementById('tanggalOptions').style.display = 'flex';
+                    document.getElementById('tanggalAkhirOptions').style.display = 'flex';
+                }
+            });
+        </script>
         <!-- js -->
         <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
         <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
