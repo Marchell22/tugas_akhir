@@ -321,28 +321,43 @@
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option value="1">Periode</option>
-                                    <option value="2">Tanggal</option>
+                                <select class="custom-select col-12" id="kriteriaSelect" name="kriteria" required>
+                                    <option value="" selected>Pilih...</option>
+                                    <option value="periode">Periode</option>
+                                    <option value="tanggal">Tanggal</option>
                                 </select>
                             </div>
-
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" id="periodeOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
+                                <select class="custom-select col-12" name="periode">
+                                    <option value="" selected>Pilih...</option>
                                     <option value="1">1 Tahun Terakhir</option>
                                     <option value="2">1 Bulan Terakhir</option>
                                     <option value="3">1 Minggu Terakhir</option>
                                 </select>
                             </div>
+                        </div>
+                        <!-- Tanggal options (hidden by default) -->
+                        <div class="form-group row" id="tanggalOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal">
+                            </div>
+                        </div>
 
+                        <div class="form-group row" id="tanggalAkhirOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-outline-info">Cari</button>
                         </div>
                     </form>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-info">Cari</button>
-                    </div>
                 </div>
             </div>
             <div class="card-box mb-30">
@@ -350,50 +365,63 @@
                 </div>
                 <div class="pb-10 pd-2">
                     <table class="table table-bordered">
-                    <tbody>
+                        <tbody>
                             <tr>
                                 <td>Modal</td>
                                 <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
                                 <td class="text-right modal_neraca_saldo_kredit"></td>
                                 <td></td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td>Prive</td>
                                 <td class="text-right modal_neraca_saldo_debit">-</td>
                                 <td class="text-right modal_neraca_saldo_kredit">Rp.0</td>
                                 <td></td>
                             </tr>
-                        <tr>
-                           
-                            <td>Laba Bersih</td>
-                            <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
-                            <td class="text-right modal_neraca_saldo_kredit">-</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th class="text-right">Total Modal</th>
-                            <th class="text-right" id="jumlah_modal_debit">Rp.0</th>
-                            <th class="text-right" id="jumlah_modal_kredit">Rp.0</th>
-                            <th class="text-right" id="jumlah_modal">Rp.0</th>
-                        </tr>
-                    </tbody>
-                    <tfoot class="bg-primary text-white">
-                        <tr>
-                            <th colspan="3" class="text-right">Total Modal</th>
-                            <th class="text-right" id="total_modal">Rp.0</th>
-                        </tr>
-                    </tfoot>
-                </table>
+                            <tr>
+
+                                <td>Laba Bersih</td>
+                                <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
+                                <td class="text-right modal_neraca_saldo_kredit">-</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="text-right">Total Modal</th>
+                                <th class="text-right" id="jumlah_modal_debit">Rp.0</th>
+                                <th class="text-right" id="jumlah_modal_kredit">Rp.0</th>
+                                <th class="text-right" id="jumlah_modal">Rp.0</th>
+                            </tr>
+                        </tbody>
+                        <tfoot class="bg-primary text-white">
+                            <tr>
+                                <th colspan="3" class="text-right">Total Modal</th>
+                                <th class="text-right" id="total_modal">Rp.0</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+    <script>
+        document.getElementById('kriteriaSelect').addEventListener('change', function() {
+            var selectedKriteria = this.value;
 
+            // Hide both options first
+            document.getElementById('periodeOptions').style.display = 'none';
+            document.getElementById('tanggalOptions').style.display = 'none';
+            document.getElementById('tanggalAkhirOptions').style.display = 'none';
 
+            // Show the appropriate options based on selection
+            if (selectedKriteria === 'periode') {
+                document.getElementById('periodeOptions').style.display = 'flex';
+            } else if (selectedKriteria === 'tanggal') {
+                document.getElementById('tanggalOptions').style.display = 'flex';
+                document.getElementById('tanggalAkhirOptions').style.display = 'flex';
+            }
+        });
+    </script>
 
-    </div>
-    </div>
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
@@ -413,8 +441,6 @@
     <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
-    <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
 </body>
 
 </html>

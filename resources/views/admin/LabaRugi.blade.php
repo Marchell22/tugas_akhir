@@ -316,84 +316,138 @@
                             <h4 class="text-black h4">Laporan Laba Rugi</h4>
                             <p class="mb-30">Kelola Laporan Laba Rugi</p>
                         </div>
-                        {{-- <div class="pull-right">
-                            <a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"
-                                data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
-                        </div> --}}
                     </div>
-                   <form>
+                    <form method="GET" action="{{ route('admin.LabaRugi') }}">
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option value="1">Periode</option>
-                                    <option value="2">Tanggal</option>
+                                <select class="custom-select col-12" id="kriteriaSelect" name="kriteria" required>
+                                    <option value="" selected>Pilih...</option>
+                                    <option value="periode">Periode</option>
+                                    <option value="tanggal">Tanggal</option>
                                 </select>
                             </div>
-
                         </div>
-                        <div class="form-group row">
+
+                        <div class="form-group row" id="periodeOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
+                                <select class="custom-select col-12" name="periode">
+                                    <option value="" selected>Pilih...</option>
                                     <option value="1">1 Tahun Terakhir</option>
                                     <option value="2">1 Bulan Terakhir</option>
                                     <option value="3">1 Minggu Terakhir</option>
                                 </select>
                             </div>
+                        </div>
 
+                        <!-- Tanggal options (hidden by default) -->
+                        <div class="form-group row" id="tanggalOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" id="tanggalAkhirOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-outline-info">Cari</button>
                         </div>
                     </form>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-info">Cari</button>
+                </div>
+            </div>
+            @if (request()->has('kriteria'))
+                <div class="card-box mb-30">
+                    <div class="pb-10 pd-2">
+                        @php
+                            $totalPendapatan = 0;
+                            $bebanPendapatan = 0;
+                            $total = 0;
+                        @endphp
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td colspan="3" style="font-weight:bold;">Pendapatan Perusahaan</td>
+                                </tr>
+                                @foreach ($akunTransaksi->where('kelompok_akun_id', 4) as $akun)
+                                    @php
+                                        $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                        $nilai = $aggregated ? $aggregated->nilai : 0;
+                                        $totalPendapatan += $nilai;
+                                    @endphp
+                                    <tr>
+                                        <td>&nbsp; &nbsp; &nbsp; &nbsp;{{ $akun->nama }}</td>
+                                        <td class="text-right kiri">Rp. {{ number_format($nilai, 0, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                                <tr>
+                                    <td style="text-align: end; font-weight:bold;">Jumlah Pendapatan</td>
+                                    <td class="text-right kiri">Rp. {{ number_format($totalPendapatan, 0, ',', '.') }}
+                                    </td>
+                                    <td class="text-right kanan" id="iktisar_laba_rugi_pendapatan">Rp.
+                                        {{ number_format($totalPendapatan, 0, ',', '.') }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="font-weight:bold;">Beban</td>
+                                </tr>
+                                @foreach ($akunTransaksi->where('kelompok_akun_id', 6) as $akun)
+                                    @php
+                                        $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                        $nilai = $aggregated ? $aggregated->nilai : 0;
+                                        $bebanPendapatan += $nilai;
+                                    @endphp
+                                    <tr>
+                                        <td>&nbsp; &nbsp; &nbsp; &nbsp; {{ $akun->nama }}</td>
+                                        <td class="text-right kiri">Rp. {{ number_format($nilai, 0, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                                <tr>
+                                    <td style="text-align: end; font-weight:bold;">Total Aktiva Tetap</td>
+                                    <td class="text-right kiri">Rp. {{ number_format($bebanPendapatan, 0, ',', '.') }}
+                                    </td>
+                                    <td class="text-right kanan" id="iktisar_laba_rugi_pendapatan">Rp.
+                                        {{ number_format($bebanPendapatan, 0, ',', '.') }}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-primary text-white">
+                                @php
+                                    $total = $totalPendapatan - $bebanPendapatan;
+                                @endphp
+                                <tr>
+                                    <th class="text-right" colspan="2">Total</th>
+                                    <th class="text-right">Rp. {{ number_format($total, 0, ',', '.') }}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
-            </div>
-            <div class="card-box mb-30">
-                <div class="pd-10">
-                </div>
-                <div class="pb-10 pd-2">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td>Pendapatan Perusahaan</td>
-                                <td class="text-right pendapatan kiri">Rp.0</td>
-                                <td class="text-right kanan">-</td>
-                            </tr>
-                            <tr>
-                                <td> &nbsp; &nbsp; &nbsp; &nbsp; Iktisar Laba-Rugi</td>
-                                <td class="text-right kiri">-</td>
-                                <td class="text-right kanan" id="iktisar_laba_rugi_pendapatan">Rp.0</td>
-                            </tr>
-                            <tr>
-                                <td>Iktisar Laba Rugi</td>
-                                <td class="text-right kiri">Rp.0</td>
-                                <td class="text-right kanan">-</td>
-                            </tr>
-                            <tr>
-                                <td> &nbsp; &nbsp; &nbsp; &nbsp; Beban Gaji</td>
-                                <td class="text-right kiri">-</td>
-                                <td class="text-right kanan">Rp.0</td>
-                            </tr>
-                        </tbody>
-                        <tfoot class="bg-primary text-white">
-                            <tr>
-                                <th class="text-right">Total</th>
-                                <th class="text-right">Rp.0</th>
-                                <th class="text-right">Rp.0</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
-    </div>
+    <script>
+        document.getElementById('kriteriaSelect').addEventListener('change', function() {
+            var selectedKriteria = this.value;
 
+            // Hide both options first
+            document.getElementById('periodeOptions').style.display = 'none';
+            document.getElementById('tanggalOptions').style.display = 'none';
+            document.getElementById('tanggalAkhirOptions').style.display = 'none';
 
-
-    </div>
-    </div>
+            // Show the appropriate options based on selection
+            if (selectedKriteria === 'periode') {
+                document.getElementById('periodeOptions').style.display = 'flex';
+            } else if (selectedKriteria === 'tanggal') {
+                document.getElementById('tanggalOptions').style.display = 'flex';
+                document.getElementById('tanggalAkhirOptions').style.display = 'flex';
+            }
+        });
+    </script>
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>

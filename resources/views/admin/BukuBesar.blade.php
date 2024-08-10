@@ -413,7 +413,7 @@
                                         if ($result['debit_atau_kredit'] == $akunTransaksi->post_saldo) {
                                             $nilai += $result['nilai'];
                                         } else {
-                                            $nilai -= $item['nilai'];
+                                            $nilai -= $result['nilai'];
                                         }
                                     @endphp
                                     <tr>
@@ -437,59 +437,6 @@
         @else
             <div></div>
         @endif
-        {{-- <div class="card-box mb-30">
-                <div class="pd-10">
-                </div>
-                <div class="pb-10 pd-2">
-                    <div class="container-fluid mt-7">
-                        <div class="card shadow">
-                            <div
-                                class="card-header d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
-                                <span class="font-weight-900">Nama Akun <span class="font-weight-900">Kode Akun
-                                    </span></span>
-
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;"
-                                                    width="100px">Tanggal</th>
-                                                <th rowspan="2"
-                                                    style="vertical-align: middle; text-align: center;">Keterangan</th>
-                                                <th rowspan="2"
-                                                    style="vertical-align: middle; text-align: center;">Debit</th>
-                                                <th rowspan="2"
-                                                    style="vertical-align: middle; text-align: center;">Kredit</th>
-                                                <th colspan="2" style="text-align: center;">Saldo</th>
-                                            </tr>
-                                            <tr>
-                                                <th style="vertical-align: middle; text-align: center;">Debit</th>
-                                                <th style="vertical-align: middle; text-align: center;">Kredit</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div> --}}
         <!-- Periode options (hidden by default) -->
         <script>
             document.getElementById('kriteriaSelect').addEventListener('change', function() {
@@ -508,7 +455,9 @@
                     document.getElementById('tanggalAkhirOptions').style.display = 'flex';
                 }
             });
+            
         </script>
+        
         <!-- js -->
         <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
         <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
