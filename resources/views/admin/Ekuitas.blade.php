@@ -414,7 +414,7 @@
                                         <tr>
                                             <td>{{ $akun->nama }}</td>
                                             <td class="text-right modal_neraca_saldo_debit">Rp.
-                                                {{ number_format($totalModal, 0, ',', '.') }}</td>
+                                                {{ number_format($nilai, 0, ',', '.') }}</td>
                                             <td class="text-right modal_neraca_saldo_kredit">-</td>
                                             <td></td>
                                         </tr>
@@ -423,13 +423,12 @@
                                             <td>{{ $akun->nama }}</td>
                                             <td class="text-right modal_neraca_saldo_debit">-</td>
                                             <td class="text-right modal_neraca_saldo_kredit">Rp.
-                                                {{ number_format($totalPrive, 0, ',', '.') }}</td>
+                                                {{ number_format($nilai, 0, ',', '.') }}</td>
                                             <td></td>
                                         </tr>
                                     @endif
                                 @endforeach
                                 <tr>
-
                                     <td>Laba Bersih</td>
                                     <td class="text-right modal_neraca_saldo_debit">Rp.
                                         {{ number_format($total, 0, ',', '.') }}</td>

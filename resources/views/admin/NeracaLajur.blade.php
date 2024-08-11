@@ -359,6 +359,9 @@
                         style="width: auto;padding : 22px; margin-right:20px">Neraca Saldo Disesuaikan</button>
                 </div>
                 <div class="pb-10 pd-2">
+                    @php
+                        $total = 0;
+                    @endphp
                     <table class="table table-bordered" style="width: 95%; margin-left: auto; margin-right: auto;">
                         <thead class="">
                             <tr>
@@ -371,12 +374,23 @@
                                 <th class="text-center">Kredit</th>
                             </tr>
                         </thead>
-                        @foreach ($data as $d)
+                        @foreach ($akunTransaksi as $d)
+                            @php
+                                $aggregated = $aggregatedUmumResults->where('akun_id', $d->id)->first();
+                                $nilai = $aggregated ? $aggregated->nilai : 0;
+                            @endphp
                             <tbody>
-                                <td>{{ $d->kode }}</th>
-                                <td>{{ $d->nama }}</td>
-                                <td>A</td>
-                                <td>A</td>
+                                @if ($d->post_saldo == 2)
+                                    <td>{{ $d->kode }}</th>
+                                    <td>{{ $d->nama }}</td>
+                                    <td></td>
+                                    <td>{{ number_format($nilai, 0, ',', '.') }}</td>
+                                @elseif($d->post_saldo == 1)
+                                    <td>{{ $d->kode }}</th>
+                                    <td>{{ $d->nama }}</td>
+                                    <td>{{ number_format($nilai, 0, ',', '.') }}</td>
+                                    <td></td>
+                                @endif
                             </tbody>
                         @endforeach
                         <tfoot class="">
