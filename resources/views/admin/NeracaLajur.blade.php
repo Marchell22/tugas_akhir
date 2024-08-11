@@ -350,10 +350,16 @@
                 </div>
             </div>
             <div class="card-box mb-30">
-                <div class="pd-10">
+                <div class="pd-10" style="display:flex padding : 30px 20px 20px 20px">
+                    <button type="button" class="btn btn-outline-primary"
+                        style="width: auto;padding : 22px; margin-right:20px">Neraca Saldo</button>
+                    <button type="button" class="btn btn-outline-primary"
+                        style="width: auto;padding : 22px; margin-right:20px">Penyesuaian</button>
+                    <button type="button" class="btn btn-outline-primary"
+                        style="width: auto;padding : 22px; margin-right:20px">Neraca Saldo Disesuaikan</button>
                 </div>
                 <div class="pb-10 pd-2">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" style="width: 95%; margin-left: auto; margin-right: auto;">
                         <thead class="">
                             <tr>
                                 <th rowspan="2" style="vertical-align: middle" class="text-center">Kode</th>
@@ -365,12 +371,14 @@
                                 <th class="text-center">Kredit</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <td>A</th>
-                            <td>B</td>
-                            <td>A</td>
-                            <td>A</td>
-                        </tbody>
+                        @foreach ($data as $d)
+                            <tbody>
+                                <td>{{ $d->kode }}</th>
+                                <td>{{ $d->nama }}</td>
+                                <td>A</td>
+                                <td>A</td>
+                            </tbody>
+                        @endforeach
                         <tfoot class="">
                             <tr>
                                 <th colspan="2" class="text-right">Jumlah</th>

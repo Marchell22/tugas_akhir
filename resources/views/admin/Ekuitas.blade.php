@@ -328,6 +328,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group row" id="periodeOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
@@ -339,6 +340,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <!-- Tanggal options (hidden by default) -->
                         <div class="form-group row" id="tanggalOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
@@ -360,48 +362,108 @@
                     </form>
                 </div>
             </div>
-            <div class="card-box mb-30">
-                <div class="pd-10">
-                </div>
-                <div class="pb-10 pd-2">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td>Modal</td>
-                                <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
-                                <td class="text-right modal_neraca_saldo_kredit"></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Prive</td>
-                                <td class="text-right modal_neraca_saldo_debit">-</td>
-                                <td class="text-right modal_neraca_saldo_kredit">Rp.0</td>
-                                <td></td>
-                            </tr>
-                            <tr>
+            @if (request()->has('kriteria'))
+                <div class="card-box mb-30">
+                    <div class="pd-10">
+                    </div>
+                    <div class="pb-10 pd-2">
+                        @php
+                            $totalPendapatan = 0;
+                            $bebanPendapatan = 0;
+                            $total = 0;
+                            $totalModal = 0;
+                            $totalPrive = 0;
+                        @endphp
+                        {{--  Perhitungan Untuk Laba Bersih --}}
+                        @php
+                            $totalPendapatan = 0;
+                            $bebanPendapatan = 0;
 
-                                <td>Laba Bersih</td>
-                                <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
-                                <td class="text-right modal_neraca_saldo_kredit">-</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th class="text-right">Total Modal</th>
-                                <th class="text-right" id="jumlah_modal_debit">Rp.0</th>
-                                <th class="text-right" id="jumlah_modal_kredit">Rp.0</th>
-                                <th class="text-right" id="jumlah_modal">Rp.0</th>
-                            </tr>
-                        </tbody>
-                        <tfoot class="bg-primary text-white">
-                            <tr>
-                                <th colspan="3" class="text-right">Total Modal</th>
-                                <th class="text-right" id="total_modal">Rp.0</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            // Menghitung total pendapatan
+                            $totalPendapatan = $akunTransaksi
+                                ->where('kelompok_akun_id', 4)
+                                ->sum(function ($akun) use ($aggregatedResults) {
+                                    $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                    return $aggregated ? $aggregated->nilai : 0;
+                                });
+
+                            // Menghitung total beban pendapatan
+                            $bebanPendapatan = $akunTransaksi
+                                ->where('kelompok_akun_id', 6)
+                                ->sum(function ($akun) use ($aggregatedResults) {
+                                    $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                    return $aggregated ? $aggregated->nilai : 0;
+                                });
+
+                            // Menghitung total
+                            $total = $totalPendapatan - $bebanPendapatan;
+                        @endphp
+                        <table class="table table-bordered">
+                            <tbody>
+                                @foreach ($akunTransaksi->where('kelompok_akun_id', 3) as $akun)
+                                    @php
+                                        $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                        $nilai = $aggregated ? $aggregated->nilai : 0;
+                                        if ($akun->post_saldo == 2) {
+                                            $totalModal += $nilai;
+                                        } elseif ($akun->post_saldo == 1) {
+                                            $totalPrive += $nilai;
+                                        }
+                                    @endphp
+                                    @if ($akun->post_saldo == 2)
+                                        <tr>
+                                            <td>{{ $akun->nama }}</td>
+                                            <td class="text-right modal_neraca_saldo_debit">Rp.
+                                                {{ number_format($totalModal, 0, ',', '.') }}</td>
+                                            <td class="text-right modal_neraca_saldo_kredit">-</td>
+                                            <td></td>
+                                        </tr>
+                                    @elseif($akun->post_saldo == 1)
+                                        <tr>
+                                            <td>{{ $akun->nama }}</td>
+                                            <td class="text-right modal_neraca_saldo_debit">-</td>
+                                            <td class="text-right modal_neraca_saldo_kredit">Rp.
+                                                {{ number_format($totalPrive, 0, ',', '.') }}</td>
+                                            <td></td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                                <tr>
+
+                                    <td>Laba Bersih</td>
+                                    <td class="text-right modal_neraca_saldo_debit">Rp.
+                                        {{ number_format($total, 0, ',', '.') }}</td>
+                                    <td class="text-right modal_neraca_saldo_kredit">-</td>
+                                    <td></td>
+                                </tr>
+                                @php
+                                    $totalDebit = $totalModal + $total;
+                                    $totalKredit = $totalPrive;
+                                    $totalSemua = $totalDebit - $totalKredit;
+                                @endphp
+                                <tr>
+                                    <th class="text-right">Total Modal</th>
+                                    <th class="text-right" id="jumlah_modal_debit">
+                                        {{ number_format($totalDebit, 0, ',', '.') }}</th>
+                                    <th class="text-right" id="jumlah_modal_kredit">
+                                        {{ number_format($totalKredit, 0, ',', '.') }}</th>
+                                    <th class="text-right" id="jumlah_modal">
+                                        {{ number_format($totalSemua, 0, ',', '.') }}</th>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-primary text-white">
+                                <tr>
+                                    <th colspan="3" class="text-right">Total Modal</th>
+                                    <th class="text-right" id="total_modal">
+                                        {{ number_format($totalSemua, 0, ',', '.') }}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
+
     </div>
     <script>
         document.getElementById('kriteriaSelect').addEventListener('change', function() {
