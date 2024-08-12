@@ -13,10 +13,8 @@ class NeracaLajurController extends Controller
     public function NeracaLajur(Request $request)
     {
         $akunTransaksi = AkunTransaksi::orderBy('kode', 'asc')->get();
-        $jurnalUmumResults = collect();
-        $jurnalPenyesuaianResults = collect();
-
         $kriteria = $request->input('kriteria');
+        $kategori = $request->input('kategori');
         $periode = $request->input('periode');
         $dateThreshold = null;
 
@@ -30,13 +28,12 @@ class NeracaLajurController extends Controller
                 $dateThreshold = Carbon::now()->subWeek();
             }
         }
+
+        // Query dan filter untuk Jurnal Umum
+        $jurnalUmumResults = collect();
         foreach ($akunTransaksi as $akun) {
-            $akunId = $akun->id;
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akun->id);
 
-            // Query Jurnal Umum berdasarkan akun_id
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId);
-
-            // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
                 $jurnalUmumQuery->where('created_at', '>=', $dateThreshold);
             } elseif ($kriteria === 'tanggal') {
@@ -48,13 +45,14 @@ class NeracaLajurController extends Controller
                 }
             }
 
-            // Gabungkan hasil query ke koleksi utama
             $jurnalUmumResults = $jurnalUmumResults->merge($jurnalUmumQuery->get());
+        }
 
-            // Query Jurnal Penyesuaian berdasarkan akun_id untuk kelompok_akun_id 4
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId);
+        // Query dan filter untuk Jurnal Penyesuaian
+        $jurnalPenyesuaianResults = collect();
+        foreach ($akunTransaksi as $akun) {
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akun->id);
 
-            // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
                 $jurnalPenyesuaianQuery->where('created_at', '>=', $dateThreshold);
             } elseif ($kriteria === 'tanggal') {
@@ -66,53 +64,63 @@ class NeracaLajurController extends Controller
                 }
             }
 
-            // Gabungkan hasil query ke koleksi utama
             $jurnalPenyesuaianResults = $jurnalPenyesuaianResults->merge($jurnalPenyesuaianQuery->get());
         }
+
+        // Lakukan agregasi berdasarkan kategori
         $aggregatedUmumResults = $jurnalUmumResults->groupBy('akun_id')->map(function ($group) {
-            return $group->reduce(function ($carry, $item) {
-                if (!isset($carry->nilai)) {
-                    $carry->nilai = 0;
-                }
-                if (!isset($carry->debit_atau_kredit)) {
-                    $carry->debit_atau_kredit = $item->debit_atau_kredit; // Atur sesuai item pertama
-                }
-
-                // Cek jika debit_atau_kredit berbeda, maka lakukan pengurangan
-                if ($item->debit_atau_kredit !== $carry->debit_atau_kredit && $carry->debit_atau_kredit !== null) {
-                    $carry->nilai -= $item->nilai;
-                } else {
-                    $carry->nilai += $item->nilai;
-                }
-
-                // Set debit_atau_kredit di awal agar nilai berikutnya dapat diperiksa
-                $carry->debit_atau_kredit = $item->debit_atau_kredit;
-
-                return $carry;
-            }, (object) ['akun_id' => $group->first()->akun_id, 'nilai' => 0]);
+            return $this->aggregateValues($group);
         });
+
         $aggregatedPenyesuaianResults = $jurnalPenyesuaianResults->groupBy('akun_id')->map(function ($group) {
-            return $group->reduce(function ($carry, $item) {
-                if (!isset($carry->nilai)) {
-                    $carry->nilai = 0;
-                }
-                if (!isset($carry->debit_atau_kredit)) {
-                    $carry->debit_atau_kredit = $item->debit_atau_kredit; // Atur sesuai item pertama
-                }
-
-                // Cek jika debit_atau_kredit berbeda, maka lakukan pengurangan
-                if ($item->debit_atau_kredit !== $carry->debit_atau_kredit && $carry->debit_atau_kredit !== null) {
-                    $carry->nilai -= $item->nilai;
-                } else {
-                    $carry->nilai += $item->nilai;
-                }
-
-                // Set debit_atau_kredit di awal agar nilai berikutnya dapat diperiksa
-                $carry->debit_atau_kredit = $item->debit_atau_kredit;
-
-                return $carry;
-            }, (object) ['akun_id' => $group->first()->akun_id, 'nilai' => 0]);
+            return $this->aggregateValues($group);
         });
-        return view('admin.NeracaLajur', compact('akunTransaksi', 'aggregatedUmumResults'));
+
+        $combinedResults = $jurnalUmumResults->merge($jurnalPenyesuaianResults);
+        $aggregatedResults = $combinedResults->groupBy('akun_id')->map(function ($group) {
+            return $this->aggregateValues($group);
+        });
+
+        // Pilih hasil berdasarkan kategori
+        switch ($kategori) {
+            case 1: // Neraca Lajur
+                $results = $aggregatedUmumResults;
+                break;
+            case 2: // Penyesuaian
+                $results = $aggregatedPenyesuaianResults;
+                break;
+            case 3: // Neraca Lajur yang Disesuaikan
+                $results = $aggregatedResults;
+                break;
+            default:
+                $results = collect();
+                break;
+        }
+
+        return view('admin.NeracaLajur', compact('akunTransaksi', 'results'));
     }
+
+    // Fungsi untuk mengagregasi nilai berdasarkan debit/kredit
+    private function aggregateValues($group)
+    {
+        return $group->reduce(function ($carry, $item) {
+            if (!isset($carry->nilai)) {
+                $carry->nilai = 0;
+            }
+            if (!isset($carry->debit_atau_kredit)) {
+                $carry->debit_atau_kredit = $item->debit_atau_kredit;
+            }
+
+            if ($item->debit_atau_kredit !== $carry->debit_atau_kredit && $carry->debit_atau_kredit !== null) {
+                $carry->nilai -= $item->nilai;
+            } else {
+                $carry->nilai += $item->nilai;
+            }
+
+            $carry->debit_atau_kredit = $item->debit_atau_kredit;
+
+            return $carry;
+        }, (object) ['akun_id' => $group->first()->akun_id, 'nilai' => 0]);
+    }
+
 }

@@ -321,100 +321,148 @@
                                 data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
                         </div> --}}
                     </div>
-                    <form>
+                    <form method="GET" action="{{ route('admin.NeracaLajur') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Kategori</label>
+                            <div class="col-sm-12 col-md-10">
+                                <select class="custom-select col-12" name="kategori">
+                                    <option value="" selected>Pilih...</option>
+                                    <option value="1">Neraca Lajur</option>
+                                    <option value="2">Penyesuaian</option>
+                                    <option value="3">Neraca Lajur yang Disesuaikan</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option value="1">Periode</option>
-                                    <option value="2">Tanggal</option>
+                                <select class="custom-select col-12" id="kriteriaSelect" name="kriteria" required>
+                                    <option value="" selected>Pilih...</option>
+                                    <option value="periode">Periode</option>
+                                    <option value="tanggal">Tanggal</option>
                                 </select>
                             </div>
-
                         </div>
-                        <div class="form-group row">
+
+                        <div class="form-group row" id="periodeOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
+                                <select class="custom-select col-12" name="periode">
+                                    <option value="" selected>Pilih...</option>
                                     <option value="1">1 Tahun Terakhir</option>
                                     <option value="2">1 Bulan Terakhir</option>
                                     <option value="3">1 Minggu Terakhir</option>
                                 </select>
                             </div>
+                        </div>
 
+                        <div class="form-group row" id="tanggalOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" id="tanggalAkhirOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-outline-info">Cari</button>
                         </div>
                     </form>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-info">Cari</button>
+                </div>
+            </div>
+            @if (request()->has('kriteria', 'kategori'))
+                <div class="card-box mb-30">
+                    <div class="pb-10 pd-2">
+                        @php
+                            $total = 0;
+                            $totalDebit = 0;
+                            $totalKredit = 0;
+                        @endphp
+                        <table class="table table-bordered"
+                            style="width: 95%; margin-left: auto; margin-right: auto;">
+                            <thead class="">
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: middle" class="text-center">Kode</th>
+                                    <th rowspan="2" style="vertical-align: middle" class="text-center">Nama</th>
+                                    <th colspan="2" class="text-center">Neraca Saldo</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Debit</th>
+                                    <th class="text-center">Kredit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($akunTransaksi as $d)
+                                    @php
+                                        $result = $results->where('akun_id', $d->id)->first();
+                                        $nilai = $result ? $result->nilai : 0;
+                                        if ($d->post_saldo == 2) {
+                                            $totalKredit += $nilai;
+                                        } elseif ($d->post_saldo == 1) {
+                                            $totalDebit += $nilai;
+                                        }
+                                    @endphp
+                                    <tr>
+                                        @if ($d->post_saldo == 2)
+                                            <td>{{ $d->kode }}</td>
+                                            <td>{{ $d->nama }}</td>
+                                            <td></td>
+                                            <td>{{ number_format($nilai, 0, ',', '.') }}</td>
+                                        @elseif($d->post_saldo == 1)
+                                            <td>{{ $d->kode }}</td>
+                                            <td>{{ $d->nama }}</td>
+                                            <td>{{ number_format($nilai, 0, ',', '.') }}</td>
+                                            <td></td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot class="">
+                                <tr>
+                                    <th colspan="2" class="text-right">Jumlah</th>
+                                    <th>{{ number_format($totalDebit, 0, ',', '.') }}</th>
+                                    <th>{{ number_format($totalKredit, 0, ',', '.') }}</th>
+                                </tr>
+                                <tr>
+                                    @php
+                                        $total = $totalDebit - $totalKredit;
+                                    @endphp
+                                    <th colspan="2" class="text-right">Selisih</th>
+                                    <th colspan="2" class="text-right" id="selisih_neraca_saldo">
+                                        {{ number_format($total, 0, ',', '.') }}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
-            </div>
-            <div class="card-box mb-30">
-                <div class="pd-10" style="display:flex padding : 30px 20px 20px 20px">
-                    <button type="button" class="btn btn-outline-primary"
-                        style="width: auto;padding : 22px; margin-right:20px">Neraca Saldo</button>
-                    <button type="button" class="btn btn-outline-primary"
-                        style="width: auto;padding : 22px; margin-right:20px">Penyesuaian</button>
-                    <button type="button" class="btn btn-outline-primary"
-                        style="width: auto;padding : 22px; margin-right:20px">Neraca Saldo Disesuaikan</button>
-                </div>
-                <div class="pb-10 pd-2">
-                    @php
-                        $total = 0;
-                    @endphp
-                    <table class="table table-bordered" style="width: 95%; margin-left: auto; margin-right: auto;">
-                        <thead class="">
-                            <tr>
-                                <th rowspan="2" style="vertical-align: middle" class="text-center">Kode</th>
-                                <th rowspan="2" style="vertical-align: middle" class="text-center">Nama</th>
-                                <th colspan="2" class="text-center">Neraca Saldo</th>
-                            </tr>
-                            <tr>
-                                <th class="text-center">Debit</th>
-                                <th class="text-center">Kredit</th>
-                            </tr>
-                        </thead>
-                        @foreach ($akunTransaksi as $d)
-                            @php
-                                $aggregated = $aggregatedUmumResults->where('akun_id', $d->id)->first();
-                                $nilai = $aggregated ? $aggregated->nilai : 0;
-                            @endphp
-                            <tbody>
-                                @if ($d->post_saldo == 2)
-                                    <td>{{ $d->kode }}</th>
-                                    <td>{{ $d->nama }}</td>
-                                    <td></td>
-                                    <td>{{ number_format($nilai, 0, ',', '.') }}</td>
-                                @elseif($d->post_saldo == 1)
-                                    <td>{{ $d->kode }}</th>
-                                    <td>{{ $d->nama }}</td>
-                                    <td>{{ number_format($nilai, 0, ',', '.') }}</td>
-                                    <td></td>
-                                @endif
-                            </tbody>
-                        @endforeach
-                        <tfoot class="">
-                            <tr>
-                                <th colspan="2" class="text-right">Jumlah</th>
-                                <th>A</th>
-                                <th>B</th>
-                            </tr>
-                            <tr>
-                                <th colspan="2" class="text-right">Selisih</th>
-                                <th colspan="2" class="text-right" id="selisih_neraca_saldo">B</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
-    </div>
+    <script>
+        document.getElementById('kriteriaSelect').addEventListener('change', function() {
+            var selectedKriteria = this.value;
 
+            // Hide both options first
+            document.getElementById('periodeOptions').style.display = 'none';
+            document.getElementById('tanggalOptions').style.display = 'none';
+            document.getElementById('tanggalAkhirOptions').style.display = 'none';
 
-
-    </div>
-    </div>
+            // Show the appropriate options based on selection
+            if (selectedKriteria === 'periode') {
+                document.getElementById('periodeOptions').style.display = 'flex';
+            } else if (selectedKriteria === 'tanggal') {
+                document.getElementById('tanggalOptions').style.display = 'flex';
+                document.getElementById('tanggalAkhirOptions').style.display = 'flex';
+            }
+        });
+    </script>
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
@@ -434,8 +482,6 @@
     <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
-    <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
 </body>
 
 </html>
