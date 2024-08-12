@@ -325,28 +325,45 @@
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
-                                    <option value="1">Periode</option>
-                                    <option value="2">Tanggal</option>
+                                <select class="custom-select col-12" id="kriteriaSelect" name="kriteria" required>
+                                    <option value="" selected>Pilih...</option>
+                                    <option value="periode">Periode</option>
+                                    <option value="tanggal">Tanggal</option>
                                 </select>
                             </div>
-
                         </div>
-                        <div class="form-group row">
+
+                        <div class="form-group row" id="periodeOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12">
+                                <select class="custom-select col-12" name="periode">
+                                    <option value="" selected>Pilih...</option>
                                     <option value="1">1 Tahun Terakhir</option>
                                     <option value="2">1 Bulan Terakhir</option>
                                     <option value="3">1 Minggu Terakhir</option>
                                 </select>
                             </div>
+                        </div>
 
+                        <!-- Tanggal options (hidden by default) -->
+                        <div class="form-group row" id="tanggalOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" id="tanggalAkhirOptions" style="display:none;">
+                            <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-outline-info">Cari</button>
                         </div>
                     </form>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-info">Cari</button>
-                    </div>
                 </div>
             </div>
             <div class="card-box mb-30">
@@ -365,21 +382,38 @@
                                     <tbody>
                                         <tr>
                                             <th colspan="5">Aktiva Lancar</th>
-
                                         </tr>
-
-                                        <tr>
-
-                                            <td colspan="2">A</td>
-                                            <td class="text-right aktiva_lancar_neraca_saldo_debit">
-                                                RP.0
-                                            </td>
-                                            <td class="text-right aktiva_lancar_neraca_saldo_kredit">
-                                                -
-                                            </td>
-                                            <td></td>
-                                        </tr>
-
+                                        @php
+                                            $totalAktiva = 0;
+                                            $totalAktivaLancar = 0;
+                                            $totalAktivaTetap = 0;
+                                        @endphp
+                                        @foreach ($akunTransaksi as $akun)
+                                            @if ($akun->kelompok_laporan_posisi_keuangan == 1 && $akun->kelompok_akun_id == 1)
+                                                @if ($akun->post_saldo == 1)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                            Rp.0
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @elseif($akun->post_saldo == 2)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                            -
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                            Rp.0
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                            @endif
+                                        @endforeach
                                         <tr>
                                             <th colspan="2" class="text-right">Total Aktiva Lancar</th>
                                             <th class="text-right" id="jumlah_aktiva_lancar_debit">Rp.0</th>
@@ -388,20 +422,33 @@
                                         </tr>
                                         <tr>
                                             <th colspan="5">Aktiva Tetap</th>
-
                                         </tr>
-
-                                        <tr>
-                                            <td colspan="2">B</td>
-                                            <td class="text-right aktiva_tetap_neraca_saldo_debit">
-                                                RP.0
-                                            </td>
-                                            <td class="text-right aktiva_tetap_neraca_saldo_kredit">
-                                                -
-                                            </td>
-                                            <td></td>
-                                        </tr>
-
+                                        @foreach ($akunTransaksi as $akun)
+                                            @if ($akun->kelompok_laporan_posisi_keuangan == 2 && $akun->kelompok_akun_id == 1)
+                                                @if ($akun->post_saldo == 1)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                            Rp.0
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @elseif($akun->post_saldo == 2)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                            -
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                            Rp.0
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                            @endif
+                                        @endforeach
                                         <tr>
                                             <th colspan="2" class="text-right">Total Aktiva Tetap</th>
                                             <th class="text-right" id="jumlah_aktiva_tetap_debit">RP.0</th>
@@ -430,12 +477,32 @@
                                         <tr>
                                             <th colspan="5">Utang Lancar</th>
                                         </tr>
-                                        <tr>
-                                            <td colspan="2">A</td>
-                                            <td class="text-right utang_lancar_neraca_saldo_debit">Rp.0</td>
-                                            <td class="text-right utang_lancar_neraca_saldo_kredit">-</td>
-                                            <td></td>
-                                        </tr>
+                                        @foreach ($akunTransaksi as $akun)
+                                            @if ($akun->kelompok_laporan_posisi_keuangan == 3 && $akun->kelompok_akun_id == 2)
+                                                @if ($akun->post_saldo == 2)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                            Rp.0
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @elseif($akun->post_saldo == 1)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                            -
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                            Rp.0
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                            @endif
+                                        @endforeach
                                         <tr>
                                             <th colspan="2" class="text-right">Total Utang Lancar</th>
                                             <th class="text-right" id="jumlah_utang_lancar_debit">Rp.0</th>
@@ -445,12 +512,32 @@
                                         <tr>
                                             <th colspan="5">Utang Tetap</th>
                                         </tr>
-                                        <tr>
-                                            <td colspan="2">B</td>
-                                            <td class="text-right utang_tetap_neraca_saldo_debit">Rp.0</td>
-                                            <td class="text-right utang_tetap_neraca_saldo_kredit">-</td>
-                                            <td></td>
-                                        </tr>
+                                        @foreach ($akunTransaksi as $akun)
+                                            @if ($akun->kelompok_laporan_posisi_keuangan == 4 && $akun->kelompok_akun_id == 2)
+                                                @if ($akun->post_saldo == 2)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                            Rp.0
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @elseif($akun->post_saldo == 1)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                            -
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                            Rp.0
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                            @endif
+                                        @endforeach
                                         <tr>
                                             <th colspan="2" class="text-right">Total Utang Tetap</th>
                                             <th class="text-right" id="jumlah_utang_tetap_debit">Rp.0</th>
@@ -460,18 +547,79 @@
                                         <tr>
                                             <th colspan="5">Modal</th>
                                         </tr>
+                                        @php
+                                            $totalPendapatan = 0;
+                                            $bebanPendapatan = 0;
+                                            $totalModal = 0;
+                                            $totalPrive = 0;
 
-                                        <tr>
-                                            <td colspan="2">C</td>
-                                            <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
-                                            <td class="text-right modal_neraca_saldo_kredit">-</td>
-                                            <td></td>
-                                        </tr>
+                                            // Menghitung total pendapatan
+                                            $totalPendapatan = $akunTransaksi
+                                                ->where('kelompok_akun_id', 4)
+                                                ->sum(function ($akun) use ($aggregatedResults) {
+                                                    $aggregated = $aggregatedResults
+                                                        ->where('akun_id', $akun->id)
+                                                        ->first();
+                                                    return $aggregated ? $aggregated->nilai : 0;
+                                                });
+
+                                            // Menghitung total beban pendapatan
+                                            $bebanPendapatan = $akunTransaksi
+                                                ->where('kelompok_akun_id', 6)
+                                                ->sum(function ($akun) use ($aggregatedResults) {
+                                                    $aggregated = $aggregatedResults
+                                                        ->where('akun_id', $akun->id)
+                                                        ->first();
+                                                    return $aggregated ? $aggregated->nilai : 0;
+                                                });
+
+                                            // Menghitung total
+                                            $total = $totalPendapatan - $bebanPendapatan;
+                                        @endphp
+                                        @foreach ($akunTransaksi as $akun)
+                                            @if ($akun->kelompok_akun_id == 3)
+                                                @php
+                                                    $aggregated = $aggregatedResults
+                                                        ->where('akun_id', $akun->id)
+                                                        ->first();
+                                                    $nilai = $aggregated ? $aggregated->nilai : 0;
+                                                    if ($akun->post_saldo == 2) {
+                                                        $totalModal += $nilai;
+                                                    } elseif ($akun->post_saldo == 1) {
+                                                        $totalPrive += $nilai;
+                                                    }
+                                                @endphp
+                                                @if ($akun->post_saldo == 2)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                            Rp.
+                                                            {{ number_format($nilai, 0, ',', '.') }}
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @elseif($akun->post_saldo == 1)
+                                                    <tr>
+                                                        <td colspan="2">{{ $akun->nama }}</td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_debit">
+                                                        </td>
+                                                        <td class="text-right aktiva_lancar_neraca_saldo_kredit">
+                                                            Rp.
+                                                            {{ number_format($nilai, 0, ',', '.') }}
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                            @endif
+                                        @endforeach
 
                                         <tr>
                                             <td colspan="2">Laba Bersih</td>
-                                            <td class="text-right modal_neraca_saldo_debit">Rp.0</td>
-                                            <td class="text-right modal_neraca_saldo_kredit">-</td>
+                                            <td class="text-right modal_neraca_saldo_debit">
+                                                {{ number_format($total, 0, ',', '.') }}</td>
+                                            <td class="text-right modal_neraca_saldo_kredit"></td>
                                             <td></td>
                                         </tr>
                                         <tr>
@@ -496,13 +644,24 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
+    <script>
+        document.getElementById('kriteriaSelect').addEventListener('change', function() {
+            var selectedKriteria = this.value;
 
+            // Hide both options first
+            document.getElementById('periodeOptions').style.display = 'none';
+            document.getElementById('tanggalOptions').style.display = 'none';
+            document.getElementById('tanggalAkhirOptions').style.display = 'none';
 
-
-    </div>
-    </div>
+            // Show the appropriate options based on selection
+            if (selectedKriteria === 'periode') {
+                document.getElementById('periodeOptions').style.display = 'flex';
+            } else if (selectedKriteria === 'tanggal') {
+                document.getElementById('tanggalOptions').style.display = 'flex';
+                document.getElementById('tanggalAkhirOptions').style.display = 'flex';
+            }
+        });
+    </script>
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
@@ -523,7 +682,6 @@
     <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
     <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
 </body>
 
 </html>
