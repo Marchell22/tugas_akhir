@@ -363,115 +363,116 @@
                     </form>
                 </div>
             </div>
-            <div class="card-box mb-30">
-                <div class="pd-10">
-                </div>
-                <div class="pb-10 pd-2">
-                    <table class="table table-bordered">
-                        @php
-                            $totalPendapatan = 0;
-                            $bebanPendapatan = 0;
-                            $total = 0;
-                            $totalModal = 0;
-                            $totalPrive = 0;
-                        @endphp
-                        <tbody>
-                            @foreach ($akunTransaksi->where('kelompok_akun_id', 4) as $akun)
-                                @php
-                                    $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
-                                    $nilai = $aggregated ? $aggregated->nilai : 0;
-                                    $totalPendapatan += $nilai;
-                                @endphp
+            @if (request()->has('kriteria'))
+                <div class="card-box mb-30">
+                    <div class="pb-10 pd-2">
+                        <table class="table table-bordered">
+                            @php
+                                $totalPendapatan = 0;
+                                $bebanPendapatan = 0;
+                                $total = 0;
+                                $totalModal = 0;
+                                $totalPrive = 0;
+                            @endphp
+                            <tbody>
+                                @foreach ($akunTransaksi->where('kelompok_akun_id', 4) as $akun)
+                                    @php
+                                        $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                        $nilai = $aggregated ? $aggregated->nilai : 0;
+                                        $totalPendapatan += $nilai;
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $akun->nama }}</td>
+                                        <td class="text-right kiri">Rp.
+                                            {{ number_format($nilai, 0, ',', '.') }}</td>
+                                        <td class="text-right kanan">-</td>
+                                    </tr>
+                                @endforeach
                                 <tr>
-                                    <td>{{ $akun->nama }}</td>
-                                    <td class="text-right kiri">Rp.
-                                        {{ number_format($nilai, 0, ',', '.') }}</td>
+                                    <td> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; Iktisar Laba-Rugi</td>
+                                    <td class="text-right kiri">-</td>
+                                    <td class="text-right kanan">Rp.
+                                        {{ number_format($totalPendapatan, 0, ',', '.') }}</td>
+                                </tr>
+                                @foreach ($akunTransaksi->where('kelompok_akun_id', 6) as $akun)
+                                    @php
+                                        $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                        $nilai = $aggregated ? $aggregated->nilai : 0;
+                                        $bebanPendapatan += $nilai;
+                                    @endphp
+                                @endforeach
+                                <tr>
+                                    <td>Iktisar Laba Rugi</td>
+                                    <td class="text-right kiri">Rp. {{ number_format($bebanPendapatan, 0, ',', '.') }}
+                                    </td>
                                     <td class="text-right kanan">-</td>
                                 </tr>
-                            @endforeach
-                            <tr>
-                                <td> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; Iktisar Laba-Rugi</td>
-                                <td class="text-right kiri">-</td>
-                                <td class="text-right kanan">Rp.
-                                    {{ number_format($totalPendapatan, 0, ',', '.') }}</td>
-                            </tr>
-                            @foreach ($akunTransaksi->where('kelompok_akun_id', 6) as $akun)
-                                @php
-                                    $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
-                                    $nilai = $aggregated ? $aggregated->nilai : 0;
-                                    $bebanPendapatan += $nilai;
-                                @endphp
-                            @endforeach
-                            <tr>
-                                <td>Iktisar Laba Rugi</td>
-                                <td class="text-right kiri">Rp. {{ number_format($bebanPendapatan, 0, ',', '.') }}
-                                </td>
-                                <td class="text-right kanan">-</td>
-                            </tr>
-                            @foreach ($akunTransaksi->where('kelompok_akun_id', 6) as $akun)
-                                @php
-                                    $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
-                                    $nilai = $aggregated ? $aggregated->nilai : 0;
-                                    $bebanPendapatan += $nilai;
-                                @endphp
+                                @foreach ($akunTransaksi->where('kelompok_akun_id', 6) as $akun)
+                                    @php
+                                        $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                        $nilai = $aggregated ? $aggregated->nilai : 0;
+                                        $bebanPendapatan += $nilai;
+                                    @endphp
+                                    <tr>
+                                        <td> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; {{ $akun->nama }}</td>
+                                        <td class="text-right kiri">-</td>
+                                        <td class="text-right kanan">Rp. {{ number_format($nilai, 0, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                                @foreach ($akunTransaksi->where('nama', 'Modal') as $akun)
+                                    @php
+                                        $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                        $nilai = $aggregated ? $aggregated->nilai : 0;
+                                        $totalModal += $nilai;
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $akun->nama }}</td>
+                                        <td class="text-right kiri">Rp. {{ number_format($nilai, 0, ',', '.') }}</td>
+                                        <td class="text-right kanan">-</td>
+                                    </tr>
+                                @endforeach
                                 <tr>
-                                    <td> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; {{ $akun->nama }}</td>
+                                    <td> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Iktisar Laba Rugi</td>
                                     <td class="text-right kiri">-</td>
-                                    <td class="text-right kanan">Rp. {{ number_format($nilai, 0, ',', '.') }}</td>
+                                    <td class="text-right kanan">Rp. {{ number_format($totalModal, 0, ',', '.') }}
+                                    </td>
                                 </tr>
-                            @endforeach
-                            @foreach ($akunTransaksi->where('nama', 'Modal') as $akun)
-                                @php
-                                    $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
-                                    $nilai = $aggregated ? $aggregated->nilai : 0;
-                                    $totalModal += $nilai;
-                                @endphp
+                                @foreach ($akunTransaksi->where('nama', 'Prive') as $akun)
+                                    @php
+                                        $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                        $nilai = $aggregated ? $aggregated->nilai : 0;
+                                    @endphp
+                                @endforeach
                                 <tr>
-                                    <td>{{ $akun->nama }}</td>
+                                    <td>Modal</td>
                                     <td class="text-right kiri">Rp. {{ number_format($nilai, 0, ',', '.') }}</td>
                                     <td class="text-right kanan">-</td>
                                 </tr>
-                            @endforeach
-                            <tr>
-                                <td> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Iktisar Laba Rugi</td>
-                                <td class="text-right kiri">-</td>
-                                <td class="text-right kanan">Rp. {{ number_format($totalModal, 0, ',', '.') }}</td>
-                            </tr>
-                            @foreach ($akunTransaksi->where('nama', 'Prive') as $akun)
-                                @php
-                                    $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
-                                    $nilai = $aggregated ? $aggregated->nilai : 0;
-                                @endphp
-                            @endforeach
-                            <tr>
-                                <td>Modal</td>
-                                <td class="text-right kiri">Rp. {{ number_format($nilai, 0, ',', '.') }}</td>
-                                <td class="text-right kanan">-</td>
-                            </tr>
-                            @foreach ($akunTransaksi->where('nama', 'Prive') as $akun)
-                                @php
-                                    $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
-                                    $nilai = $aggregated ? $aggregated->nilai : 0;
-                                    $totalPrive += $nilai;
-                                @endphp
+                                @foreach ($akunTransaksi->where('nama', 'Prive') as $akun)
+                                    @php
+                                        $aggregated = $aggregatedResults->where('akun_id', $akun->id)->first();
+                                        $nilai = $aggregated ? $aggregated->nilai : 0;
+                                        $totalPrive += $nilai;
+                                    @endphp
+                                    <tr>
+                                        <td> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{ $akun->nama }}</td>
+                                        <td class="text-right kiri">-</td>
+                                        <td class="text-right kanan">Rp. {{ number_format($totalPrive, 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot class="bg-primary text-white">
                                 <tr>
-                                    <td> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{ $akun->nama }}</td>
-                                    <td class="text-right kiri">-</td>
-                                    <td class="text-right kanan">Rp. {{ number_format($totalPrive, 0, ',', '.') }}
-                                    </td>
+                                    <th class="text-right">Total</th>
+                                    <th class="text-right kiri">Rp.0</th>
+                                    <th class="text-right kanan">Rp.0</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot class="bg-primary text-white">
-                            <tr>
-                                <th class="text-right">Total</th>
-                                <th class="text-right kiri">Rp.0</th>
-                                <th class="text-right kanan">Rp.0</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
     <script>
@@ -493,31 +494,31 @@
         });
     </script>
     <script>
-    $(document).ready(function () {
-        let totalKiri = 0;
-        let totalKanan = 0;
+        $(document).ready(function() {
+            let totalKiri = 0;
+            let totalKanan = 0;
 
-        // Menjumlahkan nilai di dalam elemen dengan class 'kiri'
-        $(".kiri").each(function () {
-            let nilai = parseInt($(this).text().replace(/[^0-9]/g, ''), 10);
-            if (!isNaN(nilai)) {
-                totalKiri += nilai;
-            }
+            // Menjumlahkan nilai di dalam elemen dengan class 'kiri'
+            $(".kiri").each(function() {
+                let nilai = parseInt($(this).text().replace(/[^0-9]/g, ''), 10);
+                if (!isNaN(nilai)) {
+                    totalKiri += nilai;
+                }
+            });
+
+            // Menjumlahkan nilai di dalam elemen dengan class 'kanan'
+            $(".kanan").each(function() {
+                let nilai = parseInt($(this).text().replace(/[^0-9]/g, ''), 10);
+                if (!isNaN(nilai)) {
+                    totalKanan += nilai;
+                }
+            });
+
+            // Menampilkan hasil total di dalam elemen footer
+            $("tfoot tr:first th:nth-child(2)").text('Rp.' + totalKiri.toLocaleString('id-ID'));
+            $("tfoot tr:first th:nth-child(3)").text('Rp.' + totalKanan.toLocaleString('id-ID'));
         });
-
-        // Menjumlahkan nilai di dalam elemen dengan class 'kanan'
-        $(".kanan").each(function () {
-            let nilai = parseInt($(this).text().replace(/[^0-9]/g, ''), 10);
-            if (!isNaN(nilai)) {
-                totalKanan += nilai;
-            }
-        });
-
-        // Menampilkan hasil total di dalam elemen footer
-        $("tfoot tr:first th:nth-child(2)").text('Rp.' + totalKiri.toLocaleString('id-ID'));
-        $("tfoot tr:first th:nth-child(3)").text('Rp.' + totalKanan.toLocaleString('id-ID'));
-    });
-</script>
+    </script>
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
