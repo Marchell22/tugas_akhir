@@ -2,7 +2,6 @@
 <html>
 
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
@@ -25,9 +24,9 @@
         href="{{ asset('tmplt/src/plugins/datatables/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('tmplt/src/plugins/datatables/css/responsive.bootstrap4.min.css') }}">
-
     <link rel="stylesheet" type="text/css" href="{{ asset('tmplt/vendors/styles/style.css') }}">
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -40,100 +39,110 @@
         gtag('config', 'UA-119386393-1');
     </script>
     <style>
-        /* Styling for the popup */
-        .popup {
-            display: none;
-            /* Initially hidden */
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            height: 50%;
-            max-width: 600px;
-            /* Lebar maksimum */
-            max-height: 50%;
-            /* Tinggi maksimum */
-            overflow-y: auto;
-            /* Tambahkan scrollbar jika konten terlalu tinggi */
-            padding: 40px;
-            z-index: 1000;
-
-
-        }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        /* Overlay styling */
-        #overlay {
-            display: none;
-            /* Initially hidden */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        @media (max-width: 768px) {
-            #popup {
-                width: 80%;
-                height: auto;
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            #popup {
-                width: 90%;
-                height: auto;
-                padding: 15px;
-            }
-        }
-    </style>
-    <style>
         /* Mengubah ukuran font pada .user-name */
         .user-name-header {
-            font-size: 20px;
+            font-size: 25px;
             /* Ganti dengan ukuran yang diinginkan */
             font-weight: bold;
             /* Membuat teks menjadi bold, jika diperlukan */
-            text-align: center;
         }
+    </style>
+</head>
+<style>
+    /* Styling for the popup */
+    .popup {
+        display: none;
+        /* Initially hidden */
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        height: 50%;
+        max-width: 600px;
+        /* Lebar maksimum */
+        max-height: 50%;
+        /* Tinggi maksimum */
+        overflow-y: auto;
+        /* Tambahkan scrollbar jika konten terlalu tinggi */
+        padding: 40px;
+        z-index: 1000;
 
-        .container {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-end;
+
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    /* Overlay styling */
+    #overlay {
+        display: none;
+        /* Initially hidden */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+        #popup {
+            width: 80%;
+            height: auto;
+            padding: 20px;
         }
+    }
 
-        .search-container {
-            /* margin: 20px; */
-            margin-top: 20px;
+    @media (max-width: 480px) {
+        #popup {
+            width: 90%;
+            height: auto;
+            padding: 15px;
         }
+    }
+</style>
+<style>
+    /* Mengubah ukuran font pada .user-name */
+    .user-name-header {
+        font-size: 20px;
+        /* Ganti dengan ukuran yang diinginkan */
+        font-weight: bold;
+        /* Membuat teks menjadi bold, jika diperlukan */
+        text-align: center;
+    }
 
-        /*
+    .container {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .search-container {
+        /* margin: 20px; */
+        margin-top: 20px;
+    }
+
+    /*
   .form-control {
   width: 200px;
   padding: 5px;
   font-size: 14px;
   } */
-    </style>
+</style>
 
 <body>
     <div class="pre-loader">
@@ -159,16 +168,8 @@
                 </div>
             </div>
 
-
         </div>
         <div class="header-right">
-            <div class="container">
-                <div class="search-container">
-                    <label>
-                        <input type="search" class="form-control form-control-sm" placeholder="Search">
-                    </label>
-                </div>
-            </div>
             <div class="dashboard-setting user-notification">
                 <div class="dropdown">
                     <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
@@ -178,11 +179,11 @@
             </div>
             <div class="user-info-dropdown">
                 <div class="dropdown">
-                    <a class="dropdown-toggle no-arrow" role="" data-toggle="dropdown">
+                    <a class="dropdown-toggle no-arrow" href="#" role="" data-toggle="dropdown">
                         <span class="user-icon">
                             <i class="icon-copy fa fa-user-circle-o" aria-hidden="true"></i>
                         </span>
-                        <span class="user-name">Admin</span>
+                        <span class="user-name">User</span>
                     </a>
                 </div>
             </div>
@@ -218,8 +219,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
@@ -284,7 +284,7 @@
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="#">
+            <a href="index.html">
                 <img src="{{ asset('tmplt/vendors/images/accounting.svg') }}" alt="" class="dark-logo">
                 <img src="{{ asset('tmplt/vendors/images/accounting-white.svg') }}" alt=""
                     class="light-logo">
@@ -296,69 +296,19 @@
         <div class="menu-block customscroll">
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
-                    <li class="dropdown show" style="display: block;">
-                        <a href="javascript:;" class="dropdown-toggle" data-option="on">
-                            <span class="micon dw dw-list3"></span><span class="mtext">Data Akun Transaksi</span>
+                    <li>
+                        <a href="{{ route('user.AkunTransaksi') }}" class="dropdown-toggle no-arrow active">
+                            <span class="micon dw dw-list3"></span><span class="mtext">Akun Transaksi</span>
                         </a>
-                        <ul class="submenu" style="display: block;">
-                            <li><a href="{{ route('admin.AkunTransaksi') }}" class="active">Kelola Akun Transaksi</a>
-                            </li>
-                            <li><a href="{{ route('admin.ValidasiTransaksi') }}">Menu Validasi</a></li>
-                        </ul>
-
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle" data-option="on">
+					<li>
+                        <a href="" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Umum</span>
                         </a>
-                        <ul class="submenu">
-                            <li><a href="{{ route('admin.JurnalUmum') }}">Kelola Jurnal Umum</a></li>
-                            <li><a href="{{ route('admin.ValidasiJurnalUmum') }}">Menu Validasi</a></li>
-                        </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
+					<li>
+                        <a href="" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penyesuaian</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="{{ route('admin.JurnalPenyesuaian') }}">Kelola Jurnal Penyesuaian</a></li>
-                            <li><a href="{{ route('admin.ValidasiJurnalPenyesuaian') }}">Menu Validasi</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.BukuBesar') }}" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-list3"></span><span class="mtext">Buku Besar</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.NeracaLajur') }}" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-list3"></span><span class="mtext">Neraca Lajur</span>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-list3"></span><span class="mtext">Laporan</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="{{ route('admin.Ekuitas') }}">Perubahan Ekuitas</a></li>
-                            <li><a href="{{ route('admin.LabaRugi') }}">Laba Rugi</a></li>
-                            <li><a href="{{ route('admin.PosisiKeuangan') }}">Posisi Keuangan</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.JurnalPenutup') }}" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penutup</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.RencanaAnggaranBiaya') }}" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-list3"></span><span class="mtext">Rencana Anggaran Biaya</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.AkunPengguna') }}" class="dropdown-toggle no-arrow">
-                            <span class="micon fa fa-user-o"></span><span class="mtext">Akun Pengguna</span>
-
                         </a>
                     </li>
                     <li>
@@ -367,7 +317,6 @@
                         </a>
 
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -375,7 +324,7 @@
     <div class="mobile-menu-overlay"></div>
 
     <div class="main-container">
-        <div class="pd-ltr-20 xs-pd-20-10">
+                <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
                 <div class="page-header">
                     <div class="row">
@@ -414,7 +363,6 @@
                                     <th class="table-plus datatable-nosort">Post Saldo</th>
                                     <th class="table-plus datatable-nosort">Post Penyesuaian</th>
                                     <th class="table-plus datatable-nosort">Post Laporan</th>
-                                    <th class="datatable-nosort">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -425,20 +373,6 @@
                                         <td>{{ $d->post_saldo == 1 ? 'Debit' : 'Kredit' }} </td>
                                         <td>{{ $d->post_penyesuaian == 1 ? 'Debit' : 'Kredit' }}</td>
                                         <td>{{ $d->post_laporan == 1 ? 'Neraca' : 'Laba Rugi' }}</td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                    href="#" role="button" data-toggle="dropdown">
-                                                    <i class="dw dw-more"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                    <a class="dropdown-item"
-                                                        onclick="openPopup('popup2', '{{ $d->id }}','{{ $d->kelompok_akun_id }}', '{{ $d->kelompok_laporan_posisi_keuangan }}','{{ $d->kode }}','{{ $d->nama }}', '{{ $d->post_saldo }}', '{{ $d->post_penyesuaian }}', '{{ $d->post_laporan }}')"><i
-                                                            class="dw dw-edit2"></i>
-                                                        Edit</a>
-                                                </div>
-                                            </div>
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -447,11 +381,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div id="overlay" onclick="closePopup('popup1')"></div>
+		 <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form id="addForm" class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <form id="addForm" class="model-popup" action="" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
             <h4 class="modal-title">Tambah Akun Transaksi</h4>
             <div class="form-group row">
@@ -468,17 +401,6 @@
                 </div>
             </div>
             <div id="kelompok_laporan">
-                {{-- <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
-                        Laporan Posisi Keuangan</label>
-                    <div class="col-sm-12 col-md-10">
-                        <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan"
-                            id="kelompok_laporan_posisi_keuangan">
-                            <option value="1">Aktiva Lancar</option>
-                            <option value="2">Aktiva Tetap</option>
-                        </select>
-                    </div>
-                </div> --}}
             </div>
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label" for="kode">Kode</label>
@@ -544,135 +466,34 @@
             <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>
     </div>
-    <div id="overlay" onclick="closePopup('popup2')"></div>
-    <div id="popup2" class="popup" style="width: 50%;">
-        <span class="close" onclick="closePopup('popup2')">&times;</span>
-        <form id="editForm" class="model-popup" method="POST">
-            @csrf
-            @method('PUT')
-            <h4 class="modal-title">Edit Akun Transaksi</h4>
-            <input type="hidden" id="editUserId" name="id">
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Kelompok Akun</label>
-                <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12" id="editKelompokAkun" name="kelompok_akun_id">
-                        @foreach (App\Models\KelompokAkun::all() as $item)
-                            <option value="{{ $item->id }}"
-                                {{ old('kelompok_akun_id', $item->kelompok_akun_id) == $item->id ? 'selected' : '' }}>
-                                {{ $item->nama }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div id="edit_kelompok_laporan">
-                <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label">Kelompok Laporan Posisi Keuangan</label>
-                    <div class="col-sm-12 col-md-10">
-                        <select class="custom-select col-12" id="editKelompokLaporanPosisiKeuangan"
-                            name="kelompok_laporan_posisi_keuangan">
-                            <option value="1">Aktiva Lancar</option>
-                            <option value="2">Aktiva Tetap</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Kode</label>
-                <div class="col-sm-12 col-md-10">
-                    <input type="number" class="form-control" id="editKode" name="kode"
-                        placeholder="Masukan Kode">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Name</label>
-                <div class="col-sm-12 col-md-10">
-                    <input type="text" class="form-control" id="editNama" name="nama"
-                        placeholder="Masukan Nama">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Post Saldo</label>
-                <div class="col-sm-12 col-md-10">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="postSaldoDebit" name="post_saldo"
-                            value="1">
-                        <label class="form-check-label" for="postSaldoDebit">Debit</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="postSaldoKredit" name="post_saldo"
-                            value="2">
-                        <label class="form-check-label" for="postSaldoKredit">Kredit</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Post Penyesuaian</label>
-                <div class="col-sm-12 col-md-10">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="postPenyesuaianDebit"
-                            name="post_penyesuaian" value="1">
-                        <label class="form-check-label" for="postPenyesuaianDebit">Debit</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="postPenyesuaianKredit"
-                            name="post_penyesuaian" value="2">
-                        <label class="form-check-label" for="postPenyesuaianKredit">Kredit</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Post Laporan</label>
-                <div class="col-sm-12 col-md-10">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="postLaporanNeraca" name="post_laporan"
-                            value="1">
-                        <label class="form-check-label" for="postLaporanNeraca">Neraca</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="postLaporanLabaRugi" name="post_laporan"
-                            value="2">
-                        <label class="form-check-label" for="postLaporanLabaRugi">Laba Rugi</label>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" style="width:100px;" class="btn btn-primary">Edit</button>
-        </form>
-    </div>
-
-    <script>
-        function openPopup(popupId, userId, userKelompokAkun, userKelompokLaporanPosisiKeuangan, userKode, userNama,
-            postSaldo, postPenyesuaian, postLaporan) {
-            $('#editForm')[0].reset();
-            $('#addForm')[0].reset();
+	<script>
+        function openPopup(popupId) {
+            // $('#editForm')[0].reset();
+            // $('#addForm')[0].reset();
 
             document.getElementById(popupId).style.display = 'block';
             document.getElementById("overlay").style.display = "block";
 
-            $('#editUserId').val(userId);
-            $('#editKelompokAkun').val(userKelompokAkun).change();
-            $('#editKelompokLaporanPosisiKeuangan').val(userKelompokLaporanPosisiKeuangan);
-            $('#editKode').val(userKode);
-            $('#editNama').val(userNama);
+            // $('#editUserId').val(userId);
+            // $('#editKelompokAkun').val(userKelompokAkun).change();
+            // $('#editKelompokLaporanPosisiKeuangan').val(userKelompokLaporanPosisiKeuangan);
+            // $('#editKode').val(userKode);
+            // $('#editNama').val(userNama);
 
-            // Set radio buttons
-            $('input[name="post_saldo"][value="' + postSaldo + '"]').prop('checked', true);
-            $('input[name="post_penyesuaian"][value="' + postPenyesuaian + '"]').prop('checked', true);
-            $('input[name="post_laporan"][value="' + postLaporan + '"]').prop('checked', true);
+            // // Set radio buttons
+            // $('input[name="post_saldo"][value="' + postSaldo + '"]').prop('checked', true);
+            // $('input[name="post_penyesuaian"][value="' + postPenyesuaian + '"]').prop('checked', true);
+            // $('input[name="post_laporan"][value="' + postLaporan + '"]').prop('checked', true);
 
-            // Set form action
-            $('#editForm').attr('action', "{{ url('admin/AkunTransaksi/update') }}/" + userId);
+            // // Set form action
+            // $('#editForm').attr('action', "{{ url('admin/AkunTransaksi/update') }}/" + userId);
         }
 
 
         function closePopup(popupId) {
-            $('#editForm')[0].reset();
-            $('#addForm')[0].reset();
-             $("#kelompok_akun_id").val(0).trigger('change');
+            // $('#editForm')[0].reset();
+            // $('#addForm')[0].reset();
+            //  $("#kelompok_akun_id").val(0).trigger('change');
             document.getElementById(popupId).style.display = 'none';
             document.getElementById("overlay").style.display = "none";
         }
@@ -780,8 +601,7 @@
             });
         });
     </script>
-
-
+    </div>
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
@@ -793,14 +613,6 @@
     <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/dashboard.js') }}"></script>
-    <!-- buttons for Export datatable -->
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
 </body>
 
 </html>

@@ -23,7 +23,7 @@ class LoginController extends Controller
             if (Auth::user()->role == 'admin') {
                 return redirect()->route('admin.AkunTransaksi');
             } elseif (Auth::user()->role == 'user') {
-                return redirect()->route('user.landingUser');
+                return redirect()->route('user.AkunTransaksi');
     }
         }else{
             return redirect()->route('login')->with('failed', 'Email atau Password Salah');

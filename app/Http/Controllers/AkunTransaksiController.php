@@ -106,4 +106,9 @@ class AkunTransaksiController extends Controller
     $user->save();
     return redirect()->route('admin.AkunTransaksi')->with('success', 'Data pengguna berhasil diperbarui.');
   }
+  public function UserAkunTransaksi()
+  {
+    $data = AkunTransaksi::get();
+    return view('user.AkunTransaksi',compact('data'));
+  }
 }
