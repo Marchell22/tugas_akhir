@@ -361,7 +361,7 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-outline-info">Cari</button>
+                            <button type="submit" class="btn btn-outline-info"style="width: 10%">Cari</button>
                         </div>
                     </form>
                 </div>
