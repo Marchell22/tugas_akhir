@@ -20,6 +20,11 @@ class JurnalUmumController extends Controller
         $data = JurnalUmum::get();
         return view('admin.JurnalUmum', compact('data'));
     }
+    public function userJurnalUmum(Request $request)
+    {
+        $data = JurnalUmum::get();
+        return view('user.JurnalUmum', compact('data'));
+    }
     public function JurnalUmumFilter(Request $request)
     {
         // Ambil parameter tanggal dari request

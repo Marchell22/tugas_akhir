@@ -468,17 +468,7 @@
                 </div>
             </div>
             <div id="kelompok_laporan">
-                {{-- <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
-                        Laporan Posisi Keuangan</label>
-                    <div class="col-sm-12 col-md-10">
-                        <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan"
-                            id="kelompok_laporan_posisi_keuangan">
-                            <option value="1">Aktiva Lancar</option>
-                            <option value="2">Aktiva Tetap</option>
-                        </select>
-                    </div>
-                </div> --}}
+               
             </div>
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label" for="kode">Kode</label>
