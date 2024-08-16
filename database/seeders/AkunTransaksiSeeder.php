@@ -21,6 +21,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 1,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -31,6 +32,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 1,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -41,6 +43,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 1,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -51,6 +54,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 1,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -61,6 +65,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 1,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -71,6 +76,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 2,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -81,6 +87,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 2,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -91,6 +98,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 2,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -101,6 +109,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 2,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -111,6 +120,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 2,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -121,6 +131,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 2,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -131,6 +142,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 2,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -141,6 +153,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 3,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -151,6 +164,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => 4,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -161,6 +175,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -171,6 +186,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 1,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -181,6 +197,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 2,
             "post_laporan" => 2,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -191,6 +208,8 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 1,
             "post_laporan" => 2,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
+        
         ]);
 
         AkunTransaksi::create([
@@ -201,6 +220,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 1,
             "post_laporan" => 2,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -211,6 +231,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 1,
             "post_laporan" => 2,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -221,6 +242,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 1,
             "post_laporan" => 2,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -231,6 +253,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 1,
             "post_laporan" => 2,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -241,6 +264,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 1,
             "post_laporan" => 2,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
         ]);
 
         AkunTransaksi::create([
@@ -251,6 +275,7 @@ class AkunTransaksiSeeder extends Seeder
             "post_penyesuaian" => 1,
             "post_laporan" => 2,
             "kelompok_laporan_posisi_keuangan" => null,
+            "status" => "approved",
         ]);
     }
 

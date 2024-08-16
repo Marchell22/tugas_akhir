@@ -18,6 +18,7 @@ class AkunTransaksi extends Model
         'post_penyesuaian' ,
         'post_laporan',
         'kelompok_laporan_posisi_keuangan',
+        'status'
     ];
 
 }
