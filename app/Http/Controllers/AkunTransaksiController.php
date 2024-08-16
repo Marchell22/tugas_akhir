@@ -24,7 +24,7 @@ class AkunTransaksiController extends Controller
     Log::info('Update Status Request:', ['id' => $id, 'request_data' => $request->all()]);
 
     $validated = $request->validate([
-      'status' => 'required|in:approved,rejected',
+      'status' => 'required|in:approved,rejected,pending',
     ]);
 
     $akun = AkunTransaksi::find($id);

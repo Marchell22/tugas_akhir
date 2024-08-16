@@ -406,7 +406,6 @@
                     </div>
                     <div class="pb-10 pd-2">
                         @if ($data->isEmpty())
-                            <p>Tidak ada data yang ditemukan untuk rentang tanggal ini.</p>
                         @else
                             <table class="data-table table ">
                                 <thead>
@@ -472,7 +471,7 @@
                 <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12" name="akun_id" id="akun_id">
-                        @foreach (App\Models\AkunTransaksi::orderBy('kode')->get() as $item)
+                        @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
                             <option value="{{ $item->id }}" {{ old('akun_id') == $item->id ? 'selected' : '' }}>
                                 {{ $item->kode }} - {{ $item->nama }}</option>
                         @endforeach
