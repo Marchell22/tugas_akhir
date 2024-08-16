@@ -372,7 +372,7 @@
                                         <tr>
                                             <td>{{ $d->tanggal }}</td>
                                             <td>{{ $d->keterangan }}</td>
-                                            <td>{{ $d->akuntransaksi ? $d->akuntransaksi->kode : 'Tidak Ditemukan' }}
+                                            <td>{{ $d->akuntransaksi ? $d->akuntransaksi->nama : 'Tidak Ditemukan' }}
                                             </td>
                                             <td>{{ $d->debit_atau_kredit == 1 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
                                             </td>
