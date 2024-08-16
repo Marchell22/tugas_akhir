@@ -468,7 +468,7 @@
         <form id="addForm" class="model-popup" action="{{ route('admin.JurnalPenyesuaianstore') }}"
             method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
             @csrf
-            <h4 class="modal-title">Tambah Jurnal Umum</h4>
+            <h4 class="modal-title">Tambah Jurnal Penyesuaian</h4>
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">

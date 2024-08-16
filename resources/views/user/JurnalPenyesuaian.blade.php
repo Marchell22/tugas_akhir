@@ -297,17 +297,17 @@
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
                     <li>
-                        <a href="{{ route('user.AkunTransaksi') }}" class="dropdown-toggle no-arrow active">
+                        <a href="{{ route('user.AkunTransaksi') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Akun Transaksi</span>
                         </a>
                     </li>
-					<li>
+                    <li>
                         <a href="{{ route('user.JurnalUmum') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Umum</span>
                         </a>
                     </li>
-					<li>
-                        <a href="{{ route('user.JurnalPenyesuaian') }}" class="dropdown-toggle no-arrow">
+                    <li>
+                        <a href="{{ route('user.JurnalPenyesuaian') }}" class="dropdown-toggle no-arrow active">
                             <span class="micon dw dw-list3"></span><span class="mtext">Jurnal Penyesuaian</span>
                         </a>
                     </li>
@@ -324,7 +324,7 @@
     <div class="mobile-menu-overlay"></div>
 
     <div class="main-container">
-                <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
                 <div class="page-header">
                     <div class="row">
@@ -334,9 +334,9 @@
                                     class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                                     <div class="mb-3">
                                         <a class="dropdown-toggle no-arrow" role="">
-                                            <span class="user-name-header">Akun Transaksi</span>
+                                            <span class="user-name-header">Jurnal Penyesuaian</span>
                                         </a>
-                                        <p class="mb-0 text-sm">Kelola Akun Transaksi</p>
+                                        <p class="mb-0 text-sm">Kelola Jurnal Penyesuaian</p>
                                     </div>
                                     <div class="mb-3">
                                         <a class="btn btn-success show-modal"
@@ -344,7 +344,6 @@
                                                 class="icon-copy ion-plus-round"
                                                 style="font-size: 30px; color:white"></i></a>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -354,119 +353,111 @@
                     <div class="pd-10">
                     </div>
                     <div class="pb-10 pd-2">
-                        <table class="data-table table ">
-                            <thead>
-                                <tr>
-                                    {{-- <th class="table-plus datatable-nosort">Name</th> --}}
-                                    <th class="table-plus sort_disabled">Kode</th>
-                                    <th class="table-plus datatable-nosort">Nama</th>
-                                    <th class="table-plus datatable-nosort">Post Saldo</th>
-                                    <th class="table-plus datatable-nosort">Post Penyesuaian</th>
-                                    <th class="table-plus datatable-nosort">Post Laporan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $d)
+                        @if ($data->isEmpty())
+                            <p>Tidak ada data yang ditemukan untuk rentang tanggal ini.</p>
+                        @else
+                            <table class="data-table table ">
+                                <thead>
                                     <tr>
-                                        <td class="">{{ $d->kode }}</td>
-                                        <td>{{ $d->nama }}</td>
-                                        <td>{{ $d->post_saldo == 1 ? 'Debit' : 'Kredit' }} </td>
-                                        <td>{{ $d->post_penyesuaian == 1 ? 'Debit' : 'Kredit' }}</td>
-                                        <td>{{ $d->post_laporan == 1 ? 'Neraca' : 'Laba Rugi' }}</td>
+                                        {{-- <th class="table-plus datatable-nosort">Name</th> --}}
+                                        <th class="table-plus sort_disabled">Tanggal</th>
+                                        <th class="table-plus datatable-nosort">Keterangan</th>
+                                        <th class="table-plus datatable-nosort">Akun</th>
+                                        <th class="table-plus datatable-nosort">Debit</th>
+                                        <th class="table-plus datatable-nosort">Kredit</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $d)
+                                        <tr>
+                                            <td>{{ $d->tanggal }}</td>
+                                            <td>{{ $d->keterangan }}</td>
+                                            <td>{{ $d->akuntransaksi ? $d->akuntransaksi->kode : 'Tidak Ditemukan' }}
+                                            </td>
+                                            <td>{{ $d->debit_atau_kredit == 1 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                            </td>
+                                            <td>{{ $d->debit_atau_kredit == 2 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-		 <div id="overlay" onclick="closePopup('popup1')"></div>
+    </div>
+    <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form id="addForm" class="model-popup" action="" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <form id="addForm" class="model-popup" action="{{ route('admin.JurnalPenyesuaianstore') }}" method="POST"
+            onsubmit="return validateForm()" enctype="multipart/form-data">
             @csrf
-            <h4 class="modal-title">Tambah Akun Transaksi</h4>
+            <h4 class="modal-title">Tambah Jurnal Penyesuaian</h4>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_akun_id">Kelompok Akun</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12" name="kelompok_akun_id" id="kelompok_akun_id">
-                        <option selected>Pilih...</option>
-                        @foreach (App\Models\KelompokAkun::all() as $item)
-                            <option value="{{ $item->id }}"
-                                {{ old('kelompok_akun_id') == $item->id ? 'selected' : '' }}>{{ $item->nama }}
-                            </option>
+                    <select class="custom-select col-12" name="akun_id" id="akun_id">
+                        @foreach (App\Models\AkunTransaksi::orderBy('kode')->get() as $item)
+                            <option value="{{ $item->id }}" {{ old('akun_id') == $item->id ? 'selected' : '' }}>
+                                {{ $item->kode }} - {{ $item->nama }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
-            <div id="kelompok_laporan">
-            </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label" for="kode">Kode</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="tanggal">Tanggal</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="number" name="kode" class="form-control" placeholder="Masukan Kode"
-                        id="kode" value="{{ old('kode') }}">
+                    <input class="form-control " type="date" name="tanggal" id="tanggal" name="Tanggal"
+                        value="{{ old('tanggal') }}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label" for="nama">Name</label>
+                <label class=" col-sm-12 col-md-2 col-form-label" for="keterangan">Keterangan</label>
                 <div class="col-sm-12 col-md-10">
-                    <input type="text" class="form-control" name="nama" placeholder="Masukan Nama"
-                        id="nama" value="{{ old('nama') }}">
+                    <input class="form-control" placeholder="Masukan Keterangan" name="keterangan" id="keterangan"
+                        value="{{ old('keterangan') }}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label" for="post_saldo">Post Saldo</label>
+                <label for="formFile" class="col-sm-12 col-md-2 col-form-label" for="bukti">Bukti</label>
                 <div class="col-sm-12 col-md-10">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="post_saldo1" name="post_saldo"
-                            value="1" {{ old('post_saldo') == 1 ? 'checked' : '' }}>
-                        <label class="form-check-label" for="post_saldo1">Debit</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="post_saldo2" name="post_saldo"
-                            value="2" {{ old('post_saldo') == 2 ? 'checked' : '' }}>
-                        <label class="form-check-label" for="post_saldo2">Kredit</label>
-                    </div>
+                    <input class="form-control" type="file" name="bukti" id="bukti"
+                        value="{{ old('bukti') }}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label" for="post_penyesuaian">Post Penyesuaian</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="debit_atau_kredit">Debit/Kredit</label>
                 <div class="col-sm-12 col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="post_penyesuaian1"
-                            name="post_penyesuaian" value="1"
-                            {{ old('post_penyesuaian') == 1 ? 'checked' : '' }}>
-                        <label class="form-check-label" for="post_penyesuaian1">Debit</label>
+                        <input class="form-check-input" type="radio" name="debit_atau_kredit"
+                            id="debit_atau_kredit1" value="1"
+                            {{ old('debit_atau_kredit') == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="debit_atau_kredit1">
+                            Debit
+                        </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="post_penyesuaian2"
-                            name="post_penyesuaian" value="2"
-                            {{ old('post_penyesuaian') == 2 ? 'checked' : '' }}>
-                        <label class="form-check-label" for="post_penyesuaian2">Kredit</label>
+                        <input class="form-check-input" type="radio"name="debit_atau_kredit"
+                            id="debit_atau_kredit2" value="2"
+                            {{ old('debit_atau_kredit') == 2 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="debit_atau_kredit2">
+                            Kredit
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label" for="post_laporan">Post Laporan</label>
+                <label class="col-sm-12 col-md-2 col-form-label"for="nilai">Nilai</label>
                 <div class="col-sm-12 col-md-10">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="post_laporan1" name="post_laporan"
-                            value="1" {{ old('post_laporan') == 1 ? 'checked' : '' }}>
-                        <label class="form-check-label" for="post_laporan1">Neraca</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="post_laporan2" name="post_laporan"
-                            value="2" {{ old('post_laporan') == 2 ? 'checked' : '' }}>
-                        <label class="form-check-label" for="post_laporan2">Laba Rugi</label>
-                    </div>
+                    <input type="number" class="form-control" name="nilai" id="nilai"
+                        placeholder="Masukan Nilai" value="{{ old('nilai') }}">
                 </div>
             </div>
             <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>
     </div>
-	<script>
+    <script>
         function openPopup(popupId) {
             // $('#editForm')[0].reset();
             // $('#addForm')[0].reset();
@@ -474,134 +465,20 @@
             document.getElementById(popupId).style.display = 'block';
             document.getElementById("overlay").style.display = "block";
 
-            // $('#editUserId').val(userId);
-            // $('#editKelompokAkun').val(userKelompokAkun).change();
-            // $('#editKelompokLaporanPosisiKeuangan').val(userKelompokLaporanPosisiKeuangan);
-            // $('#editKode').val(userKode);
-            // $('#editNama').val(userNama);
 
-            // // Set radio buttons
-            // $('input[name="post_saldo"][value="' + postSaldo + '"]').prop('checked', true);
-            // $('input[name="post_penyesuaian"][value="' + postPenyesuaian + '"]').prop('checked', true);
-            // $('input[name="post_laporan"][value="' + postLaporan + '"]').prop('checked', true);
-
-            // // Set form action
-            // $('#editForm').attr('action', "{{ url('admin/AkunTransaksi/update') }}/" + userId);
         }
 
 
         function closePopup(popupId) {
-            // $('#editForm')[0].reset();
-            // $('#addForm')[0].reset();
-            //  $("#kelompok_akun_id").val(0).trigger('change');
+
             document.getElementById(popupId).style.display = 'none';
             document.getElementById("overlay").style.display = "none";
         }
     </script>
-    <script>
-        function validateForm() {
-            // Get form fields
-            var kelompokAkun = document.getElementById('kelompok_akun_id').value;
-            var kelompokLaporan = document.getElementById('kelompok_laporan_posisi_keuangan').value;
-            var kode = document.getElementById('kode').value;
-            var nama = document.getElementById('nama').value;
-            var postSaldo = document.querySelector('input[name="post_saldo"]:checked');
-            var postPenyesuaian = document.querySelector('input[name="post_penyesuaian"]:checked');
-            var postLaporan = document.querySelector('input[name="post_laporan"]:checked');
-
-            // Check if all fields are filled
-            if (kelompokAkun === "" || kelompokLaporan === "" || kode === "" || nama === "" || !postSaldo || !
-                postPenyesuaian || !postLaporan) {
-                alert("Semua field harus diisi.");
-                return false; // Prevent form submission
-            }
-
-            // Additional validation if needed
-            // For example, check email format or password strength
-
-            return true; // Allow form submission
-        }
-    </script>
 
 
-    <script>
-        $(document).ready(function() {
-            console.log("Document ready and script loaded"); // Debugging
 
-            $("#kelompok_akun_id").change(function() {
-                console.log("kelompok_akun_id changed to", $(this).val()); // Debugging
 
-                if ($(this).val() == 1) {
-                    $("#kelompok_laporan").html(`
-                     <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
-                            Laporan Posisi Keuangan</label>
-                        <div class="col-sm-12 col-md-10">
-                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
-                                <option value="1">Aktiva Lancar</option>
-                                <option value="2">Aktiva Tetap</option>
-                            </select>
-                        </div>
-                    </div>
-                `);
-                } else if ($(this).val() == 2) {
-                    $("#kelompok_laporan").html(`
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
-                            Laporan Posisi Keuangan</label>
-                        <div class="col-sm-12 col-md-10">
-                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
-                                <option value="3">Hutang Lancar</option>
-                                <option value="4">Hutang Tetap</option>
-                            </select>
-                        </div>
-                    </div>
-                `);
-                } else {
-                    $("#kelompok_laporan").html('');
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Event listener for kelompok_akun_id change
-            $("#editKelompokAkun").change(function() {
-                console.log("editKelompokAkun changed to", $(this).val()); // Debugging
-
-                if ($(this).val() == 1) {
-                    $("#edit_kelompok_laporan").html(`
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
-                            Laporan Posisi Keuangan</label>
-                        <div class="col-sm-12 col-md-10">
-                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
-                                <option value="1">Aktiva Lancar</option>
-                                <option value="2">Aktiva Tetap</option>
-                            </select>
-                        </div>
-                    </div>
-                `);
-                } else if ($(this).val() == 2) {
-                    $("#edit_kelompok_laporan").html(`
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
-                            Laporan Posisi Keuangan</label>
-                        <div class="col-sm-12 col-md-10">
-                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
-                                <option value="3">Hutang Lancar</option>
-                                <option value="4">Hutang Tetap</option>
-                            </select>
-                        </div>
-                    </div>
-                `);
-                } else {
-                    $("#edit_kelompok_laporan").html('');
-                }
-            });
-        });
-    </script>
-    </div>
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>

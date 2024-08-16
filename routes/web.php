@@ -58,4 +58,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function(){
     Route::get('/AkunTransaksi', [AkunTransaksiController::class, 'userAkunTransaksi'])->name('AkunTransaksi');
     Route::get('/JurnalUmum', [JurnalUmumController::class, 'userJurnalUmum'])->name('JurnalUmum');
+    Route::get('/JurnalPenyesuaian', [JurnalPenyesuaianController::class, 'userJurnalPenyesuaian'])->name('JurnalPenyesuaian');
 });
