@@ -414,6 +414,7 @@
                                     <th class="table-plus datatable-nosort">Post Saldo</th>
                                     <th class="table-plus datatable-nosort">Post Penyesuaian</th>
                                     <th class="table-plus datatable-nosort">Post Laporan</th>
+     
                                     <th class="datatable-nosort">Action</th>
                                 </tr>
                             </thead>
@@ -530,6 +531,7 @@
                         <label class="form-check-label" for="post_laporan2">Laba Rugi</label>
                     </div>
                 </div>
+                <input type="hidden" name="status" value="approved">
             </div>
             <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>

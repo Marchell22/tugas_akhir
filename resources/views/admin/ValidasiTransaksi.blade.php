@@ -3,6 +3,11 @@
 
 <head>
     <!-- Basic Page Info -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <meta charset="utf-8">
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
 
@@ -373,8 +378,6 @@
     <div class="mobile-menu-overlay"></div>
 
     <div class="main-container">
-
-
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
                 <div class="page-header">
@@ -404,6 +407,17 @@
                     <div class="pd-10">
                     </div>
                     <div class="pb-10 pd-2">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <table class="data-table table ">
                             <thead>
                                 <tr>
@@ -413,52 +427,39 @@
                                     <th class="table-plus datatable-nosort">Post Saldo</th>
                                     <th class="table-plus datatable-nosort">Post Penyesuaian</th>
                                     <th class="table-plus datatable-nosort">Post Laporan</th>
+                                    <th class="table-plus datatable-nosort">Status</th>
                                     <th class="datatable-nosort">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="">1101</td>
-                                    <td>Kas</td>
-                                    <td>Debit </td>
-                                    <td>Kredit</td>
-                                    <td>Neraca</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
-                                                    View</a>
-                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i>
-                                                    Edit</a>
+                                @foreach ($data as $d)
+                                    <tr>
+                                        <td class="">{{ $d->kode }}</td>
+                                        <td>{{ $d->nama }}</td>
+                                        <td>{{ $d->post_saldo == 1 ? 'Debit' : 'Kredit' }} </td>
+                                        <td>{{ $d->post_penyesuaian == 1 ? 'Debit' : 'Kredit' }}</td>
+                                        <td>{{ $d->post_laporan == 1 ? 'Neraca' : 'Laba Rugi' }}</td>
+                                        <td>{{ $d->status }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                    href="#" role="button" data-toggle="dropdown">
+                                                    <i class="dw dw-more"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                    <a class="dropdown-item" href="#"
+                                                        onclick="changeStatus({{ $d->id }}, 'approved')">
+                                                        <i class="dw dw-check"></i> Approved
+                                                    </a>
+                                                    <a class="dropdown-item" href="#"
+                                                        onclick="changeStatus({{ $d->id }}, 'rejected')">
+                                                        <i class="dw dw-cancel"></i> Rejected
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="">1102</td>
-                                    <td>Pendapatan</td>
-                                    <td>Debit </td>
-                                    <td>Kredit</td>
-                                    <td>Neraca</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>
-                                                    View</a>
-                                                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i>
-                                                    Edit</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -466,81 +467,205 @@
             </div>
         </div>
     </div>
-        <div id="overlay" onclick="closePopup('popup1')"></div>
+    <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
-
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form class="model-popup">
+        <form id="addForm" class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST"
+            enctype="multipart/form-data" onsubmit="return validateForm()">
+            @csrf
+            <h4 class="modal-title">Tambah Akun Transaksi</h4>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_akun_id">Kelompok Akun</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="custom-select col-12" name="kelompok_akun_id" id="kelompok_akun_id">
+                        <option selected>Pilih...</option>
+                        @foreach (App\Models\KelompokAkun::all() as $item)
+                            <option value="{{ $item->id }}"
+                                {{ old('kelompok_akun_id') == $item->id ? 'selected' : '' }}>{{ $item->nama }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
+            <div id="kelompok_laporan">
+
+            </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="kode">Kode</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <input type="number" name="kode" class="form-control" placeholder="Masukan Kode"
+                        id="kode" value="{{ old('kode') }}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="nama">Name</label>
                 <div class="col-sm-12 col-md-10">
-                    <select class="custom-select col-12">
-                        <option selected="">Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-            </div>
-
-            <button style="width:100px;" class="btn btn-success">Update</button>
-
-        </form>
-    </div>
-    <div id="overlay" onclick="closePopup('popup2')"></div>
-    <div id="popup2" class="popup" style="width: 50%;">
-
-        <span class="close" onclick="closePopup('popup2')">&times;</span>
-        <h4 class="modal-title">Waktu</h4>
-        <form class="model-popup">
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
-                <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="awal" required>
+                    <input type="text" class="form-control" name="nama" placeholder="Masukan Nama"
+                        id="nama" value="{{ old('nama') }}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
+                <label class="col-sm-12 col-md-2 col-form-label" for="post_saldo">Post Saldo</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="akhir" required>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="post_saldo1" name="post_saldo"
+                            value="1" {{ old('post_saldo') == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_saldo1">Debit</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="post_saldo2" name="post_saldo"
+                            value="2" {{ old('post_saldo') == 2 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_saldo2">Kredit</label>
+                    </div>
                 </div>
             </div>
-            <button style="width:100px;" class="btn btn-primary">Update</button>
-
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label" for="post_penyesuaian">Post Penyesuaian</label>
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="post_penyesuaian1"
+                            name="post_penyesuaian" value="1"
+                            {{ old('post_penyesuaian') == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_penyesuaian1">Debit</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="post_penyesuaian2"
+                            name="post_penyesuaian" value="2"
+                            {{ old('post_penyesuaian') == 2 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_penyesuaian2">Kredit</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label" for="post_laporan">Post Laporan</label>
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="post_laporan1" name="post_laporan"
+                            value="1" {{ old('post_laporan') == 1 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_laporan1">Neraca</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="post_laporan2" name="post_laporan"
+                            value="2" {{ old('post_laporan') == 2 ? 'checked' : '' }}>
+                        <label class="form-check-label" for="post_laporan2">Laba Rugi</label>
+                    </div>
+                </div>
+                <input type="hidden" name="status" value="approved">
+            </div>
+            <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>
     </div>
 
     <script>
         function openPopup(popupId) {
+            $('#addForm')[0].reset();
+
             document.getElementById(popupId).style.display = 'block';
+            document.getElementById("overlay").style.display = "block";
         }
 
+
         function closePopup(popupId) {
+            $('#addForm')[0].reset();
+            $("#kelompok_akun_id").val(0).trigger('change');
             document.getElementById(popupId).style.display = 'none';
+            document.getElementById("overlay").style.display = "none";
         }
     </script>
+    <script>
+        function validateForm() {
+            // Get form fields
+            var kelompokAkun = document.getElementById('kelompok_akun_id').value;
+            var kelompokLaporan = document.getElementById('kelompok_laporan_posisi_keuangan').value;
+            var kode = document.getElementById('kode').value;
+            var nama = document.getElementById('nama').value;
+            var postSaldo = document.querySelector('input[name="post_saldo"]:checked');
+            var postPenyesuaian = document.querySelector('input[name="post_penyesuaian"]:checked');
+            var postLaporan = document.querySelector('input[name="post_laporan"]:checked');
+
+            // Check if all fields are filled
+            if (kelompokAkun === "" || kelompokLaporan === "" || kode === "" || nama === "" || !postSaldo || !
+                postPenyesuaian || !postLaporan) {
+                alert("Semua field harus diisi.");
+                return false; // Prevent form submission
+            }
+
+            // Additional validation if needed
+            // For example, check email format or password strength
+
+            return true; // Allow form submission
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            console.log("Document ready and script loaded"); // Debugging
+
+            $("#kelompok_akun_id").change(function() {
+                console.log("kelompok_akun_id changed to", $(this).val()); // Debugging
+
+                if ($(this).val() == 1) {
+                    $("#kelompok_laporan").html(`
+                     <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
+                            Laporan Posisi Keuangan</label>
+                        <div class="col-sm-12 col-md-10">
+                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
+                                <option value="1">Aktiva Lancar</option>
+                                <option value="2">Aktiva Tetap</option>
+                            </select>
+                        </div>
+                    </div>
+                `);
+                } else if ($(this).val() == 2) {
+                    $("#kelompok_laporan").html(`
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label" for="kelompok_laporan_posisi_keuangan">Kelompok
+                            Laporan Posisi Keuangan</label>
+                        <div class="col-sm-12 col-md-10">
+                            <select class="custom-select col-12" name="kelompok_laporan_posisi_keuangan" id="kelompok_laporan_posisi_keuangan">
+                                <option value="3">Hutang Lancar</option>
+                                <option value="4">Hutang Tetap</option>
+                            </select>
+                        </div>
+                    </div>
+                `);
+                } else {
+                    $("#kelompok_laporan").html('');
+                }
+            });
+        });
+    </script>
+    <script>
+        function changeStatus(id, status) {
+            if (confirm('Are you sure you want to change the status to ' + status + '?')) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route('admin.ValidasiTransaksiStatus', ':id') }}'.replace(':id', id);
+
+                var csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = '{{ csrf_token() }}';
+                form.appendChild(csrfInput);
+
+                var methodInput = document.createElement('input');
+                methodInput.type = 'hidden';
+                methodInput.name = '_method';
+                methodInput.value = 'PUT'; // Menentukan metode PUT
+                form.appendChild(methodInput);
+
+                var statusInput = document.createElement('input');
+                statusInput.type = 'hidden';
+                statusInput.name = 'status';
+                statusInput.value = status;
+                form.appendChild(statusInput);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
@@ -560,8 +685,6 @@
     <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
-    <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
 </body>
 
 </html>
