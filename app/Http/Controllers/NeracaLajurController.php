@@ -12,7 +12,7 @@ class NeracaLajurController extends Controller
 {
     public function NeracaLajur(Request $request)
     {
-        $akunTransaksi = AkunTransaksi::orderBy('kode', 'asc')->get();
+        $akunTransaksi = AkunTransaksi::where('status', 'approved')->orderBy('kode', 'asc')->get();
         $kriteria = $request->input('kriteria');
         $kategori = $request->input('kategori');
         $periode = $request->input('periode');
@@ -32,7 +32,7 @@ class NeracaLajurController extends Controller
         // Query dan filter untuk Jurnal Umum
         $jurnalUmumResults = collect();
         foreach ($akunTransaksi as $akun) {
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akun->id);
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akun->id)->where('status', 'approved');;
 
             if ($dateThreshold) {
                 $jurnalUmumQuery->where('created_at', '>=', $dateThreshold);
@@ -51,7 +51,7 @@ class NeracaLajurController extends Controller
         // Query dan filter untuk Jurnal Penyesuaian
         $jurnalPenyesuaianResults = collect();
         foreach ($akunTransaksi as $akun) {
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akun->id);
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akun->id)->where('status', 'approved');;
 
             if ($dateThreshold) {
                 $jurnalPenyesuaianQuery->where('created_at', '>=', $dateThreshold);
