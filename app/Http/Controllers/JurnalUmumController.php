@@ -12,11 +12,7 @@ class JurnalUmumController extends Controller
 {
     public function JurnalUmum(Request $request)
     {
-        // if ($request->hasFile('bukti')) {
-        //     // Simpan file dan ambil nama file
-        //     $path = $request->file('bukti')->store('public/bukti');
-        //     $data['bukti'] = basename($path); // Simpan hanya nama file di database
-        // }
+       
         $data = JurnalUmum::where('status', 'approved')->get();
         return view('admin.JurnalUmum', compact('data'));
     }
@@ -45,6 +41,7 @@ class JurnalUmumController extends Controller
         // }
 
         // Ambil data
+        $query->where('status', 'approved');
         $data = $query->get();
 
         // Kembalikan view dengan data
@@ -105,17 +102,17 @@ class JurnalUmumController extends Controller
             'nilai' => 'required|numeric',
             'status' => 'required|string|in:pending,approved,rejected',
         ]);
-        // if ($validator->fails()) {
-        //     // Log kesalahan untuk debugging
-        //     Log::error('Validation failed', ['errors' => $validator->errors()]);
+        if ($validator->fails()) {
+            // Log kesalahan untuk debugging
+            Log::error('Validation failed', ['errors' => $validator->errors()]);
 
-        //     // Kembali dengan respons JSON jika validasi gagal
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'errors' => $validator->errors()
-        //     ], 422);
-        // }
-        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+            // Kembali dengan respons JSON jika validasi gagal
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        // if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
         $data = $request->only([
             'akun_id',
             'tanggal',
@@ -123,7 +120,7 @@ class JurnalUmumController extends Controller
             'debit_atau_kredit',
             'nilai',
         ]);
-        $data['status'] = $request->input('status', 'approved');
+        $data['status'] = $request->input('status', 'pending');
 
         if ($request->hasFile('bukti')) {
             // Simpan file dan ambil nama file
@@ -203,6 +200,6 @@ class JurnalUmumController extends Controller
         Log::info('Akun before save:', ['akun' => $akun]);
         Log::info('Status update result:', ['updated' => $updated]);
 
-        return redirect()->route('admin.ValidasiJurnalUmum')->with('success', 'Status updated successfully.');
+        return redirect()->route('admin.JurnalUmum')->with('success', 'Status updated successfully.');
     }
 }

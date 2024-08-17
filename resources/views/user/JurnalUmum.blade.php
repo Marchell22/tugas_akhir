@@ -479,7 +479,7 @@
     <script>
         function openPopup(popupId) {
             // $('#editForm')[0].reset();
-            // $('#addForm')[0].reset();
+            $('#addForm')[0].reset();
 
             document.getElementById(popupId).style.display = 'block';
             document.getElementById("overlay").style.display = "block";
@@ -487,6 +487,7 @@
 
 
         function closePopup(popupId) {
+              $('#addForm')[0].reset();
             document.getElementById(popupId).style.display = 'none';
             document.getElementById("overlay").style.display = "none";
         }

@@ -418,6 +418,7 @@
                                         <th class="table-plus datatable-nosort">Akun</th>
                                         <th class="table-plus datatable-nosort">Debit</th>
                                         <th class="table-plus datatable-nosort">Kredit</th>
+                                        <th class="table-plus datatable-nosort">Status</th>
                                         <th class="datatable-nosort">Action</th>
                                     </tr>
                                 </thead>
@@ -432,6 +433,7 @@
                                             </td>
                                             <td>{{ $d->debit_atau_kredit == 2 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
                                             </td>
+                                            <td>{{ $d->status }}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -473,7 +475,7 @@
                 <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12" name="akun_id" id="akun_id">
-                        @foreach (App\Models\AkunTransaksi::orderBy('kode')->get() as $item)
+                         @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
                             <option value="{{ $item->id }}" {{ old('akun_id') == $item->id ? 'selected' : '' }}>
                                 {{ $item->kode }} - {{ $item->nama }}</option>
                         @endforeach
@@ -527,6 +529,7 @@
                     <input type="number" class="form-control" name="nilai" id="nilai"
                         placeholder="Masukan Nilai" value="{{ old('nilai') }}">
                 </div>
+                 <input type="hidden" name="status" value="approved">
             </div>
             <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>

@@ -414,7 +414,7 @@
                                     <th class="table-plus datatable-nosort">Post Saldo</th>
                                     <th class="table-plus datatable-nosort">Post Penyesuaian</th>
                                     <th class="table-plus datatable-nosort">Post Laporan</th>
-     
+                                    <th class="table-plus datatable-nosort">Status</th>
                                     <th class="datatable-nosort">Action</th>
                                 </tr>
                             </thead>
@@ -426,6 +426,7 @@
                                         <td>{{ $d->post_saldo == 1 ? 'Debit' : 'Kredit' }} </td>
                                         <td>{{ $d->post_penyesuaian == 1 ? 'Debit' : 'Kredit' }}</td>
                                         <td>{{ $d->post_laporan == 1 ? 'Neraca' : 'Laba Rugi' }}</td>
+                                         <td>{{ $d->status }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -452,7 +453,8 @@
     <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form id="addForm" class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <form id="addForm" class="model-popup" action="{{ route('admin.AkunTransaksistore') }}" method="POST"
+            enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
             <h4 class="modal-title">Tambah Akun Transaksi</h4>
             <div class="form-group row">
@@ -469,7 +471,7 @@
                 </div>
             </div>
             <div id="kelompok_laporan">
-               
+
             </div>
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label" for="kode">Kode</label>
@@ -664,7 +666,7 @@
         function closePopup(popupId) {
             $('#editForm')[0].reset();
             $('#addForm')[0].reset();
-             $("#kelompok_akun_id").val(0).trigger('change');
+            $("#kelompok_akun_id").val(0).trigger('change');
             document.getElementById(popupId).style.display = 'none';
             document.getElementById("overlay").style.display = "none";
         }

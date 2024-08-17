@@ -45,6 +45,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::post('/JurnalPenyesuaian/store', [JurnalPenyesuaianController::class, 'store'])->name('JurnalPenyesuaianstore');
     Route::put('/JurnalPenyesuaian/update/{id}', [JurnalPenyesuaianController::class, 'update'])->name('JurnalPenyesuaianupdate');
     Route::get('/ValidasiJurnalPenyesuaian', [JurnalPenyesuaianController::class, 'ValidasiJurnalPenyesuaian'])->name('ValidasiJurnalPenyesuaian');
+    Route::put('/ValidasiJurnalPenyesuaian/status/{id}', [JurnalPenyesuaianController::class, 'updateStatus'])->name('ValidasiJurnalPenyesuaianStatus');
     Route::get('/BukuBesar', [BukuBesarController::class, 'BukuBesar'])->name('BukuBesar');
     Route::get('/NeracaLajur', [NeracaLajurController::class, 'NeracaLajur'])->name('NeracaLajur');
     Route::get('/Ekuitas', [LaporanController::class, 'Ekuitas'])->name('Ekuitas');
@@ -63,4 +64,5 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'web', 'cekRole:user'
     Route::get('/JurnalUmum', [JurnalUmumController::class, 'userJurnalUmum'])->name('JurnalUmum');
     Route::post('/JurnalUmum/store', [JurnalUmumController::class, 'userStore'])->name('JurnalUmumstore');
     Route::get('/JurnalPenyesuaian', [JurnalPenyesuaianController::class, 'userJurnalPenyesuaian'])->name('JurnalPenyesuaian');
+    Route::post('/JurnalPenyesuaian/store', [JurnalPenyesuaianController::class, 'userStore'])->name('JurnalPenyesuaianstore');
 });

@@ -365,6 +365,8 @@
                                         <th class="table-plus datatable-nosort">Akun</th>
                                         <th class="table-plus datatable-nosort">Debit</th>
                                         <th class="table-plus datatable-nosort">Kredit</th>
+                                        <th class="table-plus datatable-nosort">Status</th>
+                                        <th class="datatable-nosort">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -377,6 +379,22 @@
                                             <td>{{ $d->debit_atau_kredit == 1 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
                                             </td>
                                             <td>{{ $d->debit_atau_kredit == 2 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
+                                            </td>
+                                            <td>{{ $d->status }}</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                        href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div
+                                                        class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="#"
+                                                            onclick="showImagePopup('{{ asset('storage/bukti/' . $d->bukti) }}')"><i
+                                                                class="dw dw-eye"></i>
+                                                            Gambar</a>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -391,15 +409,15 @@
     <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form id="addForm" class="model-popup" action="{{ route('admin.JurnalPenyesuaianstore') }}" method="POST"
-            onsubmit="return validateForm()" enctype="multipart/form-data">
+        <form id="addForm" class="model-popup" action="{{ route('user.JurnalPenyesuaianstore') }}"
+            method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
             @csrf
             <h4 class="modal-title">Tambah Jurnal Penyesuaian</h4>
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12" name="akun_id" id="akun_id">
-                        @foreach (App\Models\AkunTransaksi::orderBy('kode')->get() as $item)
+                         @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
                             <option value="{{ $item->id }}" {{ old('akun_id') == $item->id ? 'selected' : '' }}>
                                 {{ $item->kode }} - {{ $item->nama }}</option>
                         @endforeach
@@ -453,26 +471,93 @@
                     <input type="number" class="form-control" name="nilai" id="nilai"
                         placeholder="Masukan Nilai" value="{{ old('nilai') }}">
                 </div>
+                <input type="hidden" name="status" value="pending">
             </div>
             <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>
     </div>
     <script>
         function openPopup(popupId) {
-            // $('#editForm')[0].reset();
-            // $('#addForm')[0].reset();
-
+            $('#addForm')[0].reset();
             document.getElementById(popupId).style.display = 'block';
             document.getElementById("overlay").style.display = "block";
-
-
         }
 
 
         function closePopup(popupId) {
-
+            $('#addForm')[0].reset();
             document.getElementById(popupId).style.display = 'none';
             document.getElementById("overlay").style.display = "none";
+        }
+    </script>
+    <script>
+        function showImagePopup(imageUrl) {
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            overlay.style.zIndex = '999';
+            overlay.style.cursor = 'pointer';
+
+            // Create a popup element
+            const popup = document.createElement('div');
+            popup.style.position = 'fixed';
+            popup.style.top = '50%';
+            popup.style.left = '60%';
+            popup.style.transform = 'translate(-50%, -50%)';
+            popup.style.backgroundColor = '#fff';
+            popup.style.padding = '10px';
+            popup.style.zIndex = '1000';
+            popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.5)';
+            popup.style.maxWidth = '15%';
+            popup.style.maxHeight = '90%';
+            popup.style.overflow = 'hidden';
+
+            // Create an image element
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+
+            // Create a close button
+            const closeBtn = document.createElement('button');
+            closeBtn.innerText = 'Close';
+            closeBtn.style.display = 'block';
+            closeBtn.style.marginTop = '10px';
+            closeBtn.style.marginLeft = 'auto';
+            closeBtn.style.marginRight = 'auto';
+            closeBtn.style.border = 'none';
+            closeBtn.style.backgroundColor = '#f00';
+            closeBtn.style.color = '#fff';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.style.padding = '5px 10px';
+            closeBtn.style.borderRadius = '5px';
+            closeBtn.onclick = function() {
+                document.body.removeChild(overlay);
+                document.body.removeChild(popup);
+            };
+
+            // Append elements to the popup
+            popup.appendChild(img);
+            popup.appendChild(closeBtn);
+
+            // Append the popup and overlay to the body
+            document.body.appendChild(overlay);
+            document.body.appendChild(popup);
+
+            // Close the popup when clicking on the overlay
+            overlay.onclick = function() {
+                document.body.removeChild(overlay);
+                document.body.removeChild(popup);
+            };
+        }
+
+        function closeImagePopup() {
+            document.getElementById('imagePopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
         }
     </script>
 
