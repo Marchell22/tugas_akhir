@@ -16,6 +16,7 @@ class JurnalUmum extends Model
         'bukti',
         'debit_atau_kredit',
         'nilai',
+        'status'
     ];
     public function akuntransaksi()
     {

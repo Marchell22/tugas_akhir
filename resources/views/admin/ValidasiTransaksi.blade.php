@@ -455,10 +455,6 @@
                                                         onclick="changeStatus({{ $d->id }}, 'rejected')">
                                                         <i class="dw dw-cancel"></i> Rejected
                                                     </a>
-                                                    <a class="dropdown-item" href="#"
-                                                        onclick="changeStatus({{ $d->id }}, 'pending')">
-                                                        <i class="icon-copy dw dw-reload"></i> Pending
-                                                    </a>
                                                 </div>
                                             </div>
                                         </td>

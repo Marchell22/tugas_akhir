@@ -17,12 +17,12 @@ class JurnalUmumController extends Controller
         //     $path = $request->file('bukti')->store('public/bukti');
         //     $data['bukti'] = basename($path); // Simpan hanya nama file di database
         // }
-        $data = JurnalUmum::get();
+        $data = JurnalUmum::where('status', 'approved')->get();
         return view('admin.JurnalUmum', compact('data'));
     }
     public function userJurnalUmum(Request $request)
     {
-        $data = JurnalUmum::get();
+        $data = JurnalUmum::all();
         return view('user.JurnalUmum', compact('data'));
     }
     public function JurnalUmumFilter(Request $request)
@@ -52,7 +52,8 @@ class JurnalUmumController extends Controller
     }
     public function ValidasiJurnalUmum()
     {
-        return view('admin.ValidasiJurnalUmum');
+        $data = JurnalUmum::whereIn('status', ['pending', 'rejected'])->get();
+        return view('admin.ValidasiJurnalUmum', compact('data'));
     }
     public function store(Request $request)
     {
@@ -63,6 +64,7 @@ class JurnalUmumController extends Controller
             'bukti' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg',
             'debit_atau_kredit' => 'required|numeric',
             'nilai' => 'required|numeric',
+            'status' => 'required|string|in:pending,approved,rejected',
         ]);
         // if ($validator->fails()) {
         //     // Log kesalahan untuk debugging
@@ -82,6 +84,7 @@ class JurnalUmumController extends Controller
             'debit_atau_kredit',
             'nilai',
         ]);
+        $data['status'] = $request->input('status', 'approved');
 
         if ($request->hasFile('bukti')) {
             // Simpan file dan ambil nama file
@@ -90,6 +93,45 @@ class JurnalUmumController extends Controller
         }
         JurnalUmum::create($data);
         return redirect()->route('admin.JurnalUmum');
+    }
+    public function userStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'akun_id' => 'required|exists:akunTransaksi,id',
+            'tanggal' => 'required|date',
+            'keterangan' => 'required|string',
+            'bukti' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg',
+            'debit_atau_kredit' => 'required|numeric',
+            'nilai' => 'required|numeric',
+            'status' => 'required|string|in:pending,approved,rejected',
+        ]);
+        // if ($validator->fails()) {
+        //     // Log kesalahan untuk debugging
+        //     Log::error('Validation failed', ['errors' => $validator->errors()]);
+
+        //     // Kembali dengan respons JSON jika validasi gagal
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'errors' => $validator->errors()
+        //     ], 422);
+        // }
+        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+        $data = $request->only([
+            'akun_id',
+            'tanggal',
+            'keterangan',
+            'debit_atau_kredit',
+            'nilai',
+        ]);
+        $data['status'] = $request->input('status', 'approved');
+
+        if ($request->hasFile('bukti')) {
+            // Simpan file dan ambil nama file
+            $path = $request->file('bukti')->store('public/bukti');
+            $data['bukti'] = basename($path); // Simpan hanya nama file di database
+        }
+        JurnalUmum::create($data);
+        return redirect()->route('user.JurnalUmum');
     }
     public function update(Request $request, $id)
     {
@@ -139,5 +181,28 @@ class JurnalUmumController extends Controller
         $jurnal->save();
 
         return redirect()->route('admin.JurnalUmum')->with('success', 'Data berhasil diperbarui.');
+    }
+    public function updateStatus(Request $request, $id)
+    {
+        Log::info('Update Status Request:', ['id' => $id, 'request_data' => $request->all()]);
+
+        $validated = $request->validate([
+            'status' => 'required|in:approved,rejected,pending',
+        ]);
+
+        $akun = JurnalUmum::find($id);
+
+        if (!$akun) {
+            Log::info('Data not found');
+            return redirect()->route('admin.ValidasiJurnalUmum')->with('error', 'Data not found.');
+        }
+
+        $akun->status = $validated['status'];
+        $updated = $akun->save();
+
+        Log::info('Akun before save:', ['akun' => $akun]);
+        Log::info('Status update result:', ['updated' => $updated]);
+
+        return redirect()->route('admin.ValidasiJurnalUmum')->with('success', 'Status updated successfully.');
     }
 }
