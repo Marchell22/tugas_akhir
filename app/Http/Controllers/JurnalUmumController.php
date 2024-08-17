@@ -41,7 +41,7 @@ class JurnalUmumController extends Controller
         // }
 
         // Ambil data
-        $query->where('status', 'approved');
+        $query->where('status', 'approved'); 
         $data = $query->get();
 
         // Kembalikan view dengan data

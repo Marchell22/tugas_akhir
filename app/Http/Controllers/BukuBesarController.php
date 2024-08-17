@@ -12,7 +12,7 @@ class BukuBesarController extends Controller
 {
     public function BukuBesar(Request $request)
     {
-        $akunTransaksiList = AkunTransaksi::orderBy('kode')->get(); // Get the list of AkunTransaksi
+        $akunTransaksiList = AkunTransaksi::where('status', 'approved')->orderBy('kode')->get(); // Get the list of AkunTransaksi
         $results = collect(); // This will hold the search results
 
         // Check if the search form is submitted
@@ -21,10 +21,10 @@ class BukuBesarController extends Controller
             $kriteria = $request->input('kriteria');
 
             // Query for Jurnal Umum
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId);
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId)->where('status', 'approved');;
 
             // Query for Jurnal Penyesuaian
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId);
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId)->where('status', 'approved');;
 
             if ($kriteria === 'periode') {
                 // Filter by period (1 Year, 1 Month, 1 Week)
