@@ -389,6 +389,9 @@
                                         <p class="mb-0 text-sm">Menu Validasi</p>
                                     </div>
                                     <div class="mb-3">
+                                        <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
+                                                class="icon-copy ion-ios-calendar-outline"
+                                                style="font-size: 30px; color:white"></i></a>
                                         <a class="btn btn-success show-modal"
                                             onclick="openPopup('popup1')"title="Tambah"><i
                                                 class="icon-copy ion-plus-round"
@@ -465,7 +468,7 @@
                 <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12" name="akun_id" id="akun_id">
-                          @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
+                        @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
                             <option value="{{ $item->id }}" {{ old('akun_id') == $item->id ? 'selected' : '' }}>
                                 {{ $item->kode }} - {{ $item->nama }}</option>
                         @endforeach
@@ -524,6 +527,29 @@
             <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>
     </div>
+    <div id="overlay" onclick="closePopup('popup2')"></div>
+    <div id="popup2" class="popup" style="width: 50%;">
+
+        <span class="close" onclick="closePopup('popup2')">&times;</span>
+        <form class="model-popup" action="{{ route('admin.ValidasiJurnalPenyesuaianFilter') }}" method="GET">
+            <h4 class="modal-title">Waktu</h4>
+
+            <div class="form-group row">
+                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
+                <div class="col-sm-12 col-md-10">
+                    <input class="form-control " type="date" name="awal" value="{{ request('awal') }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
+                <div class="col-sm-12 col-md-10">
+                    <input class="form-control " type="date" name="akhir" value="{{ request('akhir') }}">
+                </div>
+            </div>
+            <button type='submit' style="width:100px;" class="btn btn-primary">Cari</button>
+
+        </form>
+    </div>
 
     <script>
         function openPopup(popupId) {
@@ -538,7 +564,7 @@
             document.getElementById("overlay").style.display = "none";
         }
     </script>
-     <script>
+    <script>
         function validateForm() {
             console.log("validateForm called"); // Debugging
 

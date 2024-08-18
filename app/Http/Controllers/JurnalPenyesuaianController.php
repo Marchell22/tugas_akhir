@@ -45,6 +45,57 @@ class JurnalPenyesuaianController extends Controller
         $data = $query->get();
 
         // Kembalikan view dengan data
+        return view('user.JurnalPenyesuaian', compact('data'));
+    }
+    public function ValidasiJurnalPenyesuaianFilter(Request $request)
+    {
+        // Ambil parameter tanggal dari request
+        $awal = $request->input('awal');
+        $akhir = $request->input('akhir');
+
+        // Query untuk mengambil data
+        $query = JurnalPenyesuaian::query();
+
+        // Tambahkan filter berdasarkan tanggal jika parameter ada
+        if ($awal && $akhir) {
+            $query->whereBetween('tanggal', [$awal, $akhir]);
+        }
+        // if ($request->hasFile('bukti')) {
+        //     // Simpan file dan ambil nama file
+        //     $path = $request->file('bukti')->store('public/bukti');
+        //     $data['bukti'] = basename($path); // Simpan hanya nama file di database
+        // }
+
+        // Ambil data
+        $query->whereIn('status', ['rejected','pending']);
+        $data = $query->get();
+
+        // Kembalikan view dengan data
+        return view('admin.ValidasiJurnalPenyesuaian', compact('data'));
+    }
+    public function userJurnalPenyesuaianFilter(Request $request)
+    {
+        // Ambil parameter tanggal dari request
+        $awal = $request->input('awal');
+        $akhir = $request->input('akhir');
+
+        // Query untuk mengambil data
+        $query = JurnalPenyesuaian::query();
+
+        // Tambahkan filter berdasarkan tanggal jika parameter ada
+        if ($awal && $akhir) {
+            $query->whereBetween('tanggal', [$awal, $akhir]);
+        }
+        // if ($request->hasFile('bukti')) {
+        //     // Simpan file dan ambil nama file
+        //     $path = $request->file('bukti')->store('public/bukti');
+        //     $data['bukti'] = basename($path); // Simpan hanya nama file di database
+        // }
+
+        // Ambil data
+        $data = $query->get();
+
+        // Kembalikan view dengan data
         return view('admin.JurnalPenyesuaian', compact('data'));
     }
     public function ValidasiJurnalPenyesuaian()

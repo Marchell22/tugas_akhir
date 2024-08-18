@@ -327,7 +327,7 @@
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12" name="akun" required>
                                     <option value="" selected>Pilih...</option>
-                                    @foreach (App\Models\AkunTransaksi::orderBy('kode')->get() as $item)
+                                    @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
                                         <option value="{{ $item->id }}">{{ $item->kode }} -
                                             {{ $item->nama }}</option>
                                     @endforeach

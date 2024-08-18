@@ -339,6 +339,9 @@
                                         <p class="mb-0 text-sm">Kelola Jurnal Umum</p>
                                     </div>
                                     <div class="mb-3">
+                                        <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
+                                                class="icon-copy ion-ios-calendar-outline"
+                                                style="font-size: 30px; color:white"></i></a>
                                         <a class="btn btn-success show-modal"
                                             onclick="openPopup('popup1')"title="Tambah"><i
                                                 class="icon-copy ion-plus-round"
@@ -380,7 +383,7 @@
                                             </td>
                                             <td>{{ $d->debit_atau_kredit == 2 ? 'Rp. ' . substr(number_format($d->nilai, 2, ',', '.'), 0, -3) : '-' }}
                                             </td>
-                                             <td>{{ $d->status }}</td>
+                                            <td>{{ $d->status }}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -476,6 +479,30 @@
             <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>
     </div>
+    {{-- Pop Up Penampilan Data Berdasarkan Tanggal --}}
+    <div id="overlay" onclick="closePopup('popup2')"></div>
+    <div id="popup2" class="popup" style="width: 50%;">
+
+        <span class="close" onclick="closePopup('popup2')">&times;</span>
+        <form class="model-popup" action="{{ route('user.JurnalUmumFilter') }}" method="GET">
+            <h4 class="modal-title">Waktu</h4>
+
+            <div class="form-group row">
+                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
+                <div class="col-sm-12 col-md-10">
+                    <input class="form-control " type="date" name="awal" value="{{ request('awal') }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
+                <div class="col-sm-12 col-md-10">
+                    <input class="form-control " type="date" name="akhir" value="{{ request('akhir') }}">
+                </div>
+            </div>
+            <button type='submit' style="width:100px;" class="btn btn-primary">Cari</button>
+
+        </form>
+    </div>
     <script>
         function openPopup(popupId) {
             // $('#editForm')[0].reset();
@@ -487,7 +514,7 @@
 
 
         function closePopup(popupId) {
-              $('#addForm')[0].reset();
+            $('#addForm')[0].reset();
             document.getElementById(popupId).style.display = 'none';
             document.getElementById("overlay").style.display = "none";
         }
