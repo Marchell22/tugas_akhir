@@ -51,7 +51,7 @@ class NeracaLajurController extends Controller
         // Query dan filter untuk Jurnal Penyesuaian
         $jurnalPenyesuaianResults = collect();
         foreach ($akunTransaksi as $akun) {
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akun->id)->where('status', 'approved');;
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akun->id)->where('status', 'approved');
 
             if ($dateThreshold) {
                 $jurnalPenyesuaianQuery->where('created_at', '>=', $dateThreshold);

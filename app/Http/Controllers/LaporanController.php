@@ -13,7 +13,7 @@ class LaporanController extends Controller
 {
     public function Ekuitas(Request $request)
     {
-        $akunTransaksi = AkunTransaksi::all();
+        $akunTransaksi =  AkunTransaksi::where('status', 'approved')->get();
         $jurnalUmumResults = collect();
         $jurnalPenyesuaianResults = collect();
 
@@ -35,7 +35,7 @@ class LaporanController extends Controller
             $akunId = $akun->id;
 
             // Query Jurnal Umum berdasarkan akun_id
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId);
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -53,7 +53,7 @@ class LaporanController extends Controller
             $jurnalUmumResults = $jurnalUmumResults->merge($jurnalUmumQuery->get());
 
             // Query Jurnal Penyesuaian berdasarkan akun_id untuk kelompok_akun_id 4
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId);
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -76,7 +76,7 @@ class LaporanController extends Controller
             $akunId = $akun->id;
 
             // Query Jurnal Umum berdasarkan akun_id
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId);
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -94,7 +94,7 @@ class LaporanController extends Controller
             $jurnalUmumResults = $jurnalUmumResults->merge($jurnalUmumQuery->get());
 
             // Query Jurnal Penyesuaian berdasarkan akun_id untuk kelompok_akun_id 4
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId);
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -117,7 +117,7 @@ class LaporanController extends Controller
             $akunId = $akun->id;
 
             // Query Jurnal Penyesuaian berdasarkan akun_id
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId);
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -135,7 +135,7 @@ class LaporanController extends Controller
             $jurnalPenyesuaianResults = $jurnalPenyesuaianResults->merge($jurnalPenyesuaianQuery->get());
 
             // Query Jurnal Umum berdasarkan akun_id untuk kelompok_akun_id 6
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId);
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -184,7 +184,7 @@ class LaporanController extends Controller
     }
     public function LabaRugi(Request $request)
     {
-        $akunTransaksi = AkunTransaksi::whereIn('kelompok_akun_id', [4, 6])->get();
+        $akunTransaksi = AkunTransaksi::whereIn('kelompok_akun_id', [4, 6])->where('status', 'approved')->get();
 
         // Koleksi untuk menyimpan hasil query dari semua akun
         $jurnalUmumResults = collect();
@@ -210,7 +210,7 @@ class LaporanController extends Controller
             $akunId = $akun->id;
 
             // Query Jurnal Umum berdasarkan akun_id
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId);
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -228,7 +228,7 @@ class LaporanController extends Controller
             $jurnalUmumResults = $jurnalUmumResults->merge($jurnalUmumQuery->get());
 
             // Query Jurnal Penyesuaian berdasarkan akun_id untuk kelompok_akun_id 4
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId);
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -251,7 +251,7 @@ class LaporanController extends Controller
             $akunId = $akun->id;
 
             // Query Jurnal Penyesuaian berdasarkan akun_id
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId);
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -269,7 +269,7 @@ class LaporanController extends Controller
             $jurnalPenyesuaianResults = $jurnalPenyesuaianResults->merge($jurnalPenyesuaianQuery->get());
 
             // Query Jurnal Umum berdasarkan akun_id untuk kelompok_akun_id 6
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId);
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId)->where('status', 'approved');
 
             // Filter berdasarkan kriteria dan periode
             if ($dateThreshold) {
@@ -320,7 +320,7 @@ class LaporanController extends Controller
 
     public function PosisiKeuangan(Request $request)
     {
-        $akunTransaksi = AkunTransaksi::all();
+        $akunTransaksi = AkunTransaksi::where('status', 'approved')->get();
         $jurnalUmumResults = collect();
         $jurnalPenyesuaianResults = collect();
 
@@ -342,8 +342,8 @@ class LaporanController extends Controller
             $akunId = $akun->id;
 
             // Query Jurnal Umum berdasarkan akun_id
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId);
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId);
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId)->where('status', 'approved');
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId)->where('status', 'approved');
 
 
             // Filter berdasarkan kriteria dan periode

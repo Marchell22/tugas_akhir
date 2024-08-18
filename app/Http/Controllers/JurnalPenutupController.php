@@ -12,7 +12,7 @@ class JurnalPenutupController extends Controller
 {
     public function JurnalPenutup(Request $request)
     {
-        $akunTransaksi = AkunTransaksi::all();
+        $akunTransaksi = AkunTransaksi::where('status', 'approved')->get();
         $jurnalUmumResults = collect();
         $jurnalPenyesuaianResults = collect();
 
@@ -34,8 +34,8 @@ class JurnalPenutupController extends Controller
             $akunId = $akun->id;
 
             // Query Jurnal Umum berdasarkan akun_id
-            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId);
-            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId);
+            $jurnalUmumQuery = JurnalUmum::where('akun_id', $akunId)->where('status', 'approved');
+            $jurnalPenyesuaianQuery = JurnalPenyesuaian::where('akun_id', $akunId)->where('status', 'approved');
 
 
             // Filter berdasarkan kriteria dan periode
