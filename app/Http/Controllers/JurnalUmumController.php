@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AkunTransaksi;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -115,31 +116,33 @@ class JurnalUmumController extends Controller
             'nilai' => 'required|numeric',
             'status' => 'required|string|in:pending,approved,rejected',
         ]);
-        // if ($validator->fails()) {
-        //     // Log kesalahan untuk debugging
-        //     Log::error('Validation failed', ['errors' => $validator->errors()]);
 
-        //     // Kembali dengan respons JSON jika validasi gagal
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'errors' => $validator->errors()
-        //     ], 422);
-        // }
-        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+
+        $akun = AkunTransaksi::findOrFail($request->akun_id);
+        $nilai = $request->nilai;
+
+        // Jika post_saldo tidak sama dengan debit_atau_kredit, berikan nilai negatif
+        if ($akun->post_saldo != $request->debit_atau_kredit) {
+            $nilai = -abs($nilai); // Ubah nilai menjadi negatif
+        }
+
         $data = $request->only([
             'akun_id',
             'tanggal',
             'keterangan',
             'debit_atau_kredit',
-            'nilai',
         ]);
+        $data['nilai'] = $nilai;
         $data['status'] = $request->input('status', 'approved');
 
         if ($request->hasFile('bukti')) {
-            // Simpan file dan ambil nama file
             $path = $request->file('bukti')->store('public/bukti');
             $data['bukti'] = basename($path); // Simpan hanya nama file di database
         }
+
         JurnalUmum::create($data);
         return redirect()->route('admin.JurnalUmum');
     }
@@ -154,17 +157,24 @@ class JurnalUmumController extends Controller
             'nilai' => 'required|numeric',
             'status' => 'required|string|in:pending,approved,rejected',
         ]);
-        if ($validator->fails()) {
-            // Log kesalahan untuk debugging
-            Log::error('Validation failed', ['errors' => $validator->errors()]);
+        // if ($validator->fails()) {
+        //     // Log kesalahan untuk debugging
+        //     Log::error('Validation failed', ['errors' => $validator->errors()]);
 
-            // Kembali dengan respons JSON jika validasi gagal
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
+        //     // Kembali dengan respons JSON jika validasi gagal
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'errors' => $validator->errors()
+        //     ], 422);
+        // }
+        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+        $akun = AkunTransaksi::findOrFail($request->akun_id);
+        $nilai = $request->nilai;
+
+        // Jika post_saldo tidak sama dengan debit_atau_kredit, berikan nilai negatif
+        if ($akun->post_saldo != $request->debit_atau_kredit) {
+            $nilai = -abs($nilai); // Ubah nilai menjadi negatif
         }
-        // if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
         $data = $request->only([
             'akun_id',
             'tanggal',
@@ -172,6 +182,7 @@ class JurnalUmumController extends Controller
             'debit_atau_kredit',
             'nilai',
         ]);
+        $data['nilai'] = $nilai;
         $data['status'] = $request->input('status', 'pending');
 
         if ($request->hasFile('bukti')) {
@@ -185,11 +196,11 @@ class JurnalUmumController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'akun_id' => 'required',
+            'akun_id' => 'required|exists:akunTransaksi,id',
             'tanggal' => 'required|date',
             'keterangan' => 'required|string',
-            'bukti' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'debit_atau_kredit' => 'required|in:1,2',
+            'bukti' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg',
+            'debit_atau_kredit' => 'required|numeric',
             'nilai' => 'required|numeric',
         ]);
 
@@ -203,9 +214,15 @@ class JurnalUmumController extends Controller
                 'errors' => $validator->errors()
             ], 422);
         }
-
+        $akun = AkunTransaksi::findOrFail($request->akun_id);
+        $nilai = $request->nilai;
         $jurnal = JurnalUmum::find($id);
-
+        // Jika post_saldo tidak sama dengan debit_atau_kredit, berikan nilai negatif
+        if ($akun->post_saldo != $request->debit_atau_kredit) {
+            $nilai = -abs($nilai); // Ubah nilai menjadi negatif
+        }else{
+            $nilai = abs($nilai);
+        }
         if (!$jurnal) {
             return redirect()->back()->with('error', 'Data tidak ditemukan.');
         }
@@ -214,7 +231,7 @@ class JurnalUmumController extends Controller
         $jurnal->tanggal = $request->input('tanggal');
         $jurnal->keterangan = $request->input('keterangan');
         $jurnal->debit_atau_kredit = $request->input('debit_atau_kredit');
-        $jurnal->nilai = $request->input('nilai');
+        $jurnal->nilai = $nilai;
 
         if ($request->hasFile('bukti')) {
             // Hapus gambar lama jika ada
