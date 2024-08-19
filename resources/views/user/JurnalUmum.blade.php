@@ -589,6 +589,24 @@
             document.getElementById('overlay').style.display = 'none';
         }
     </script>
+     <script>
+        function validateForm() {
+            console.log("validateForm called"); // Debugging
+
+            var akun_id = document.getElementById('akun_id').value;
+            var tanggal = document.getElementById('tanggal').value;
+            var keterangan = document.getElementById('keterangan').value;
+            var bukti = document.getElementById('bukti').value;
+            var debit_atau_kredit = document.querySelector('input[name="debit_atau_kredit"]:checked');
+
+            if (akun_id === "" || tanggal === "" || keterangan === "" || bukti === "" || !debit_atau_kredit) {
+                alert("Semua field harus diisi.");
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
 
 
 

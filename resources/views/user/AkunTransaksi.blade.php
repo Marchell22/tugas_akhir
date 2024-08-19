@@ -508,7 +508,6 @@
             function validateForm() {
                 // Get form fields
                 var kelompokAkun = document.getElementById('kelompok_akun_id').value;
-                var kelompokLaporan = document.getElementById('kelompok_laporan_posisi_keuangan').value;
                 var kode = document.getElementById('kode').value;
                 var nama = document.getElementById('nama').value;
                 var postSaldo = document.querySelector('input[name="post_saldo"]:checked');
@@ -516,14 +515,10 @@
                 var postLaporan = document.querySelector('input[name="post_laporan"]:checked');
 
                 // Check if all fields are filled
-                if (kelompokAkun === "" || kelompokLaporan === "" || kode === "" || nama === "" || !postSaldo || !
-                    postPenyesuaian || !postLaporan) {
+                if (kelompokAkun === "" || kode === "" || nama === "" || !postSaldo || !postPenyesuaian || !postLaporan) {
                     alert("Semua field harus diisi.");
                     return false; // Prevent form submission
                 }
-
-                // Additional validation if needed
-                // For example, check email format or password strength
 
                 return true; // Allow form submission
             }

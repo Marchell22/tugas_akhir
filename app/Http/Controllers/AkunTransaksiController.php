@@ -44,8 +44,6 @@ class AkunTransaksiController extends Controller
   }
 
 
-
-
   public function store(Request $request)
   {
 
@@ -61,17 +59,17 @@ class AkunTransaksiController extends Controller
       'status' => 'required|string|in:pending,approved,rejected',
     ]);
 
-    if ($validator->fails()) {
-      // Log kesalahan untuk debugging
-      Log::error('Validation failed', ['errors' => $validator->errors()]);
+    // if ($validator->fails()) {
+    //   // Log kesalahan untuk debugging
+    //   Log::error('Validation failed', ['errors' => $validator->errors()]);
 
-      // Kembali dengan respons JSON jika validasi gagal
-      return response()->json([
-        'status' => 'error',
-        'errors' => $validator->errors()
-      ], 422);
-    }
-    // if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+    //   // Kembali dengan respons JSON jika validasi gagal
+    //   return response()->json([
+    //     'status' => 'error',
+    //     'errors' => $validator->errors()
+    //   ], 422);
+    // }
+    if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
     // Data input yang diterima
 
     $data = $request->only([
@@ -104,17 +102,17 @@ class AkunTransaksiController extends Controller
       'status' => 'required|string|in:pending,approved,rejected',
     ]);
 
-    if ($validator->fails()) {
-      // Log kesalahan untuk debugging
-      Log::error('Validation failed', ['errors' => $validator->errors()]);
+    // if ($validator->fails()) {
+    //   // Log kesalahan untuk debugging
+    //   Log::error('Validation failed', ['errors' => $validator->errors()]);
 
-      // Kembali dengan respons JSON jika validasi gagal
-      return response()->json([
-        'status' => 'error',
-        'errors' => $validator->errors()
-      ], 422);
-    }
-    // if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+    //   // Kembali dengan respons JSON jika validasi gagal
+    //   return response()->json([
+    //     'status' => 'error',
+    //     'errors' => $validator->errors()
+    //   ], 422);
+    // }
+    if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
     // Data input yang diterima
 
     $data = $request->only([
