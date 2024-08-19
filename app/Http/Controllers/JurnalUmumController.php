@@ -180,7 +180,7 @@ class JurnalUmumController extends Controller
             'tanggal',
             'keterangan',
             'debit_atau_kredit',
-            'nilai',
+
         ]);
         $data['nilai'] = $nilai;
         $data['status'] = $request->input('status', 'pending');
@@ -204,16 +204,17 @@ class JurnalUmumController extends Controller
             'nilai' => 'required|numeric',
         ]);
 
-          if ($validator->fails()) {
-            // Log kesalahan untuk debugging
-            Log::error('Validation failed', ['errors' => $validator->errors()]);
+        //   if ($validator->fails()) {
+        //     // Log kesalahan untuk debugging
+        //     Log::error('Validation failed', ['errors' => $validator->errors()]);
 
-            // Kembali dengan respons JSON jika validasi gagal
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
+        //     // Kembali dengan respons JSON jika validasi gagal
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'errors' => $validator->errors()
+        //     ], 422);
+        // }
+        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
         $akun = AkunTransaksi::findOrFail($request->akun_id);
         $nilai = $request->nilai;
         $jurnal = JurnalUmum::find($id);
