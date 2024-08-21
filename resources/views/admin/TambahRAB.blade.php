@@ -62,6 +62,7 @@
             padding: 40px;
             z-index: 1000;
         }
+
         #popup1 {
             display: none;
             /* Initially hidden */
@@ -394,10 +395,7 @@
         </div>
     </div>
     <div class="mobile-menu-overlay"></div>
-
     <div class="main-container">
-
-
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
                 <div class="page-header">
@@ -413,13 +411,11 @@
                                         <p class="mb-0 text-sm">Kelola Rencana Anggaran Biaya</p>
                                     </div>
                                     <div class="mb-3">
-                                        <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
-                                                class="icon-copy ion-ios-calendar-outline"
-                                                style="font-size: 30px; color:white"></i></a>
                                         <a class="btn btn-success show-modal"
-                                            href="{{ route('admin.TambahRAB') }}" title="Tambah"><i
-                                                class="icon-copy ion-plus-round"
-                                                style="font-size: 30px; color:white"></i></a>
+                                            href="{{ route('admin.RencanaAnggaranBiaya') }}" title="Tambah">
+                                            <i class="icon-copy ion-arrow-left-c"
+                                                style="font-size: 30px; color:white"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -427,115 +423,129 @@
                     </div>
                 </div>
                 <div class="card-box mb-30">
-                    <div class="pd-10">
-                    </div>
                     <div class="pb-10 pd-2">
-                        <table class="data-table table ">
-                            <thead>
-                                <tr>
-                                    {{-- <th class="table-plus datatable-nosort">Name</th> --}}
-                                    <th class="table-plus sort_disabled">Kode</th>
-                                    <th class="table-plus datatable-nosort">Nama</th>
-                                    <th class="table-plus datatable-nosort">Post Saldo</th>
-                                    <th class="table-plus datatable-nosort">Post Penyesuaian</th>
-                                    <th class="table-plus datatable-nosort">Post Laporan</th>
-                                    <th class="datatable-nosort">Action</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col">
+                                    <table>
+                                        <form class="model-popup" action="{{ route('admin.RencanaAnggaranBiayastore') }}"
+                                            method="POST">
+                                            @csrf
+                                            <h4 class="modal-title">Tambah Rencana Anggaran Biaya</h4>
+                                            <div class="form-group row">
+                                                <label class="col-sm-12 col-md-2 col-form-label">Bidang</label>
+                                                <div class="col-sm-12 col-md-10">
+                                                    <input type="text" name="bidang" class="form-control"
+                                                        placeholder="Masukan Nama">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-12 col-md-2 col-form-label">Kegiatan</label>
+                                                <div class="col-sm-12 col-md-10">
+                                                    <input type="text" name="kegiatan" class="form-control"
+                                                        placeholder="Masukan Kegiatan">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-12 col-md-2 col-form-label">Waktu
+                                                    Pelakasanan</label>
+                                                <div class="col-sm-12 col-md-10">
+                                                    <input type="text" name="waktu_pelaksanaan"
+                                                        class="form-control" placeholder="Masukan Waktu Pelaksanaan">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-sm-12 col-md-2 col-form-label">Output/Keluaran</label>
+                                                <div class="col-sm-12 col-md-10">
+                                                    <input type="text" name="output" class="form-control"
+                                                        placeholder="Masukan Keluaran">
+                                                </div>
+                                            </div>
+
+                                            <table class="table table-bordered bordered" id="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Uraian Pekerjaan</th>
+                                                        <th>Satuan</th>
+                                                        <th>Volume</th>
+                                                        <th>Harga Satuan</th>
+                                                        <th>Total Harga</th>
+                                                        <th><a href="javascript:void(0)"
+                                                                class="btn btn-success btn-sm addRowCategory"
+                                                                style="font-size: 10px; width: 100px; height: 60px; display: flex; align-items: center; justify-content: center;">Add
+                                                                Row</a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input type="text" name="uraian_pekerjaan[]"
+                                                                class="form-control"></td>
+                                                        <td><input type="text" name="satuan[]"
+                                                                class="form-control"></td>
+                                                        <td><input type="text" name="volume[]"
+                                                                class="form-control"></td>
+                                                        <td><input type="text" name="harga_satuan[]"
+                                                                class="form-control"></td>
+                                                        <td><input type="text" name="total_harga[]"
+                                                                class="form-control"></td>
+                                                        <td><a href="javascript:void(0)"
+                                                                class="btn btn-danger btn-sm deleteRow">-</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <button style="width:100px;" class="btn btn-success">Tambah</button>
+                                        </form>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="overlay" onclick="closePopup('popup2')"></div>
-    <div id="popup2" class="popup" style="width: 50%;">
 
-        <span class="close" onclick="closePopup('popup2')">&times;</span>
-        <h4 class="modal-title">Waktu</h4>
-        <form class="model-popup">
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
-                <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="awal" required>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
-                <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="akhir" required>
-                </div>
-            </div>
-            <button style="width:100px;" class="btn btn-primary">Update</button>
 
-        </form>
-    </div>
-    <div id="overlay" onclick="closePopup('popup3')"></div>
-    <div id="popup3" class="popup" style="width: 50%;">
-
-        <span class="close" onclick="closePopup('popup3')">&times;</span>
-        <form class="model-popup">
-            <h4 class="modal-title">Edit Rencana Anggaran Biaya</h4>
-            <button style="width:100px;" class="btn btn-primary">Edit</button>
-        </form>
-    </div>
-
-    <script>
-        function openPopup(popupId) {
-            document.getElementById(popupId).style.display = 'block';
-        }
-
-        function closePopup(popupId) {
-            document.getElementById(popupId).style.display = 'none';
-        }
-    </script>
-    <script>
-        // Using ID selector for the table
-        $('#table').find('thead').on('click', '.addRow', function() {
-            var tr = `<tr>
-            <td>
-                <input type='text' name="name[]" placeholder="Masukan uraian Pekerjaan" class="form-control">        
-            </td>
-            <td>
-                <input type='text' name="name[]" placeholder="Masukan satuan" class="form-control">        
-            </td>
-            <td>
-                <input type='text' name="name[]" placeholder="Masukan biaya per satuan" class="form-control">        
-            </td>
-            <td>
-                <input type='text' name="value[]" placeholder="Masukan total harga" class="form-control">
-            </td>
+       <script>
+    // Using ID selector for the table
+    $('#table').find('thead').on('click', '.addRowCategory', function () {
+        var tr = `<tr>
+            <td><input type='text' name="uraian_pekerjaan[]" class="form-control"></td>
+            <td><input type='text' name="satuan[]" class="form-control"></td>
+            <td><input type='text' name="volume[]" class="form-control"></td>
+            <td><input type='text' name="harga_satuan[]" class="form-control"></td>
+            <td><input type='text' name="total_harga[]" class="form-control"></td>
             <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
         </tr>`;
-            $('#table').find('tbody').append(tr);
-        });
+        $('#table').find('tbody').append(tr);
+    });
 
-        // Using ID selector for the table's body
-        $('#table').find('tbody').on('click', '.deleteRow', function() {
-            $(this).closest('tr').remove();
-        });
-    </script>
-    <!-- js -->
-    <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
-    <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
-    <script src="{{ asset('tmplt/vendors/scripts/process.js') }}"></script>
-    <script src="{{ asset('tmplt/vendors/scripts/layout-settings.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('tmplt/vendors/scripts/dashboard.js') }}"></script>
-    <!-- buttons for Export datatable -->
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
-    <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
+    // Using ID selector for the table's body
+    $('#table').find('tbody').on('click', '.deleteRow', function () {
+        $(this).closest('tr').remove();
+    });
+</script>
+        <!-- js -->
+        <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
+        <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
+        <script src="{{ asset('tmplt/vendors/scripts/process.js') }}"></script>
+        <script src="{{ asset('tmplt/vendors/scripts/layout-settings.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/apexcharts/apexcharts.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('tmplt/vendors/scripts/dashboard.js') }}"></script>
+        <!-- buttons for Export datatable -->
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/dataTables.buttons.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.print.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.html5.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
+        <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
 </body>
 
 </html>
