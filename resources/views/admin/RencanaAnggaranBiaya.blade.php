@@ -62,6 +62,7 @@
             padding: 40px;
             z-index: 1000;
         }
+
         #popup1 {
             display: none;
             /* Initially hidden */
@@ -416,9 +417,8 @@
                                         <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
                                                 class="icon-copy ion-ios-calendar-outline"
                                                 style="font-size: 30px; color:white"></i></a>
-                                        <a class="btn btn-success show-modal"
-                                            href="{{ route('admin.TambahRAB') }}" title="Tambah"><i
-                                                class="icon-copy ion-plus-round"
+                                        <a class="btn btn-success show-modal" href="{{ route('admin.TambahRAB') }}"
+                                            title="Tambah"><i class="icon-copy ion-plus-round"
                                                 style="font-size: 30px; color:white"></i></a>
                                     </div>
                                 </div>
@@ -430,54 +430,49 @@
                     <div class="pd-10">
                     </div>
                     <div class="pb-10 pd-2">
-                        <table class="data-table table ">
+                        <table class=" table ">
                             <thead>
                                 <tr>
                                     {{-- <th class="table-plus datatable-nosort">Name</th> --}}
-                                    <th class="table-plus sort_disabled">Kode</th>
-                                    <th class="table-plus datatable-nosort">Nama</th>
-                                    <th class="table-plus datatable-nosort">Post Saldo</th>
-                                    <th class="table-plus datatable-nosort">Post Penyesuaian</th>
-                                    <th class="table-plus datatable-nosort">Post Laporan</th>
+                                    <th class="table-plus sort_disabled">Bidang</th>
+                                    <th class="table-plus datatable-nosort">Kegiatan</th>
+                                    <th class="table-plus datatable-nosort">Waktu Pelakasanan</th>
+                                    <th class="table-plus datatable-nosort">Output</th>
                                     <th class="datatable-nosort">Action</th>
                                 </tr>
                             </thead>
+                            @foreach ($data as $d)
+                                <tr>
+                                    <td>{{ $d->bidang }}</td>
+                                    <td>{{ $d->kegiatan }}</td>
+                                    <td>{{ $d->waktu_pelaksanaan }}
+                                    </td>
+                                    <td>{{ $d->output }}
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                href="#" role="button" data-toggle="dropdown">
+                                                <i class="dw dw-more"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                <a class="dropdown-item" href="#"><i
+                                                        class="dw dw-eye"></i>
+                                                    Detail Data</a>
+                                                <a class="dropdown-item"
+                                                   ><i
+                                                        class="dw dw-edit2"></i>
+                                                    Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="overlay" onclick="closePopup('popup2')"></div>
-    <div id="popup2" class="popup" style="width: 50%;">
-
-        <span class="close" onclick="closePopup('popup2')">&times;</span>
-        <h4 class="modal-title">Waktu</h4>
-        <form class="model-popup">
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
-                <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="awal" required>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
-                <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="akhir" required>
-                </div>
-            </div>
-            <button style="width:100px;" class="btn btn-primary">Update</button>
-
-        </form>
-    </div>
-    <div id="overlay" onclick="closePopup('popup3')"></div>
-    <div id="popup3" class="popup" style="width: 50%;">
-
-        <span class="close" onclick="closePopup('popup3')">&times;</span>
-        <form class="model-popup">
-            <h4 class="modal-title">Edit Rencana Anggaran Biaya</h4>
-            <button style="width:100px;" class="btn btn-primary">Edit</button>
-        </form>
     </div>
 
     <script>

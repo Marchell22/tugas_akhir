@@ -11,7 +11,6 @@ use App\Http\Controllers\NeracaLajurController;
 use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\RencanaAnggaranBiayaController;
-use App\Models\AkunTransaksi;
 use Illuminate\Support\Facades\Route;
 
 /*

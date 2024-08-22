@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 class RencanaAnggaranBiayaController extends Controller
 {
     public function RencanaAnggaranBiaya(){
-       return view('admin.RencanaAnggaranBiaya');
+        $data = RencanaAnggaranBiaya::all();
+       return view('admin.RencanaAnggaranBiaya',compact('data'));
     }
     public function TambahRAB()
     {
@@ -17,6 +18,7 @@ class RencanaAnggaranBiayaController extends Controller
     }
     public function store(Request $request)
     {
+        Log::info('Received store request: ', $request->all()); // Log the request data
         $validatedData = $request->validate([
             'bidang' => 'required|string|max:255',
             'kegiatan' => 'required|string|max:255',

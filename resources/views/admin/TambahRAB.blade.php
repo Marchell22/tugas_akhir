@@ -428,8 +428,8 @@
                             <div class="row">
                                 <div class="col">
                                     <table>
-                                        <form class="model-popup" action="{{ route('admin.RencanaAnggaranBiayastore') }}"
-                                            method="POST">
+                                        <form class="model-popup"
+                                            action="{{ route('admin.RencanaAnggaranBiayastore') }}" method="POST">
                                             @csrf
                                             <h4 class="modal-title">Tambah Rencana Anggaran Biaya</h4>
                                             <div class="form-group row">
@@ -479,20 +479,16 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td><input type="text" name="uraian_pekerjaan[]"
-                                                                class="form-control"></td>
-                                                        <td><input type="text" name="satuan[]"
-                                                                class="form-control"></td>
-                                                        <td><input type="text" name="volume[]"
-                                                                class="form-control"></td>
-                                                        <td><input type="text" name="harga_satuan[]"
-                                                                class="form-control"></td>
-                                                        <td><input type="text" name="total_harga[]"
-                                                                class="form-control"></td>
-                                                        <td><a href="javascript:void(0)"
-                                                                class="btn btn-danger btn-sm deleteRow">-</a></td>
-                                                    </tr>
+                                                    <td><input type="text" name="uraian_pekerjaan[]"
+                                                            class="form-control"></td>
+                                                    <td><input type="text" name="satuan[]" class="form-control">
+                                                    </td>
+                                                    <td><input type="number" name="volume[]"
+                                                            class="form-control volume"></td>
+                                                    <td><input type="number" name="harga_satuan[]"
+                                                            class="form-control harga_satuan"></td>
+                                                    <td><input type="number" name="total_harga[]"
+                                                            class="form-control total_harga" readonly></td>
                                                 </tbody>
                                             </table>
 
@@ -508,25 +504,40 @@
         </div>
 
 
-       <script>
-    // Using ID selector for the table
-    $('#table').find('thead').on('click', '.addRowCategory', function () {
-        var tr = `<tr>
-            <td><input type='text' name="uraian_pekerjaan[]" class="form-control"></td>
-            <td><input type='text' name="satuan[]" class="form-control"></td>
-            <td><input type='text' name="volume[]" class="form-control"></td>
-            <td><input type='text' name="harga_satuan[]" class="form-control"></td>
-            <td><input type='text' name="total_harga[]" class="form-control"></td>
+        <script>
+            function calculateTotal(row) {
+                var volume = row.find('.volume').val();
+                var harga_satuan = row.find('.harga_satuan').val();
+                var total_harga = row.find('.total_harga');
+
+                var total = (volume * harga_satuan) || 0; // Multiply volume by unit price
+                total_harga.val(total); // Set the calculated total price
+            }
+
+            // Automatically calculate total when volume or unit price changes
+            $('#table').on('input', '.volume, .harga_satuan', function() {
+                var row = $(this).closest('tr');
+                calculateTotal(row);
+            });
+
+            // Using ID selector for the table
+            $('#table').find('thead').on('click', '.addRowCategory', function() {
+                var tr = `<tr>
+            <td><input type="text" name="uraian_pekerjaan[]" class="form-control"></td>
+            <td><input type="text" name="satuan[]" class="form-control"></td>
+            <td><input type="number" name="volume[]" class="form-control volume"></td>
+            <td><input type="number" name="harga_satuan[]" class="form-control harga_satuan"></td>
+            <td><input type="number" name="total_harga[]" class="form-control total_harga" readonly></td>
             <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
         </tr>`;
-        $('#table').find('tbody').append(tr);
-    });
+                $('#table').find('tbody').append(tr);
+            });
 
-    // Using ID selector for the table's body
-    $('#table').find('tbody').on('click', '.deleteRow', function () {
-        $(this).closest('tr').remove();
-    });
-</script>
+            // Using ID selector for the table's body
+            $('#table').find('tbody').on('click', '.deleteRow', function() {
+                $(this).closest('tr').remove();
+            });
+        </script>
         <!-- js -->
         <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
         <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
