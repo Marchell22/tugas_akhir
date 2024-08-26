@@ -507,86 +507,109 @@
                 </div>
             </div>
         </div>
-    <script>
-    $(document).ready(function() {
-        function calculateTotal(row) {
-            var volume = row.find('.volume').val();
-            var harga_satuan = row.find('.harga_satuan').val();
-            var total_harga = row.find('.total_harga');
-            var total = (volume * harga_satuan) || 0;
-            total_harga.val(total);
-        }
+        <script>
+            $(document).ready(function() {
+                let nextId = 1; // Initialize ID counter
 
-        $('#table').on('input', '.volume, .harga_satuan', function() {
-            var row = $(this).closest('tr');
-            calculateTotal(row);
-        });
-
-        $('#table').on('click', '.addRowCategory', function(e) {
-            e.preventDefault(); // Prevent default link behavior
-            var tr = `<tr>
-                <td><input type="text" name="uraian_pekerjaan[]" class="form-control"></td>
-                <td><input type="text" name="satuan[]" class="form-control"></td>
-                <td><input type="number" name="volume[]" class="form-control volume"></td>
-                <td><input type="number" name="harga_satuan[]" class="form-control harga_satuan"></td>
-                <td><input type="number" name="total_harga[]" class="form-control total_harga" readonly></td>
-                <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
-            </tr>`;
-            $('#table').find('tbody').append(tr);
-        });
-
-        $('#table').on('click', '.deleteRow', function(e) {
-            e.preventDefault(); // Prevent default link behavior
-            $(this).closest('tr').remove();
-        });
-
-        $('.model-popup').on('submit', function(e) {
-            e.preventDefault();
-
-            var formData = $(this).serializeArray();
-            var formObject = {};
-            var uraianPekerjaan = [];
-
-            // Gather data from each row in the table
-            $('#table tbody tr').each(function() {
-                var row = $(this);
-                var rowObject = {
-                    uraian_pekerjaan: row.find('input[name="uraian_pekerjaan[]"]').val(),
-                    satuan: row.find('input[name="satuan[]"]').val(),
-                    volume: row.find('input[name="volume[]"]').val(),
-                    harga_satuan: row.find('input[name="harga_satuan[]"]').val(),
-                    total_harga: row.find('input[name="total_harga[]"]').val()
-                };
-                uraianPekerjaan.push(rowObject);
-            });
-
-            // Add other form data to formObject
-            formData.forEach(function(item) {
-                if (item.name !== 'uraian_pekerjaan[]' && item.name !== 'satuan[]' && item.name !== 'volume[]' && item.name !== 'harga_satuan[]' && item.name !== 'total_harga[]') {
-                    formObject[item.name] = item.value;
+                function calculateTotal(row) {
+                    var volume = row.find('.volume').val();
+                    var harga_satuan = row.find('.harga_satuan').val();
+                    var total_harga = row.find('.total_harga');
+                    var total = (volume * harga_satuan) || 0;
+                    total_harga.val(total);
                 }
+
+                // Event listener for calculating total price
+                $('#table').on('input', '.volume, .harga_satuan', function() {
+                    var row = $(this).closest('tr');
+                    calculateTotal(row);
+                });
+
+                // Event listener for adding a new row
+                $('#table').on('click', '.addRowCategory', function(e) {
+                    e.preventDefault(); // Prevent default link behavior
+
+                    // Create new row with unique ID
+                    var tr = `<tr>
+            <td><input type="hidden" name="uraian_pekerjaan[${nextId}][id]" value="${nextId}"><input type="text" name="uraian_pekerjaan[${nextId}][uraian_pekerjaan]" class="form-control"></td>
+            <td><input type="text" name="uraian_pekerjaan[${nextId}][satuan]" class="form-control"></td>
+            <td><input type="number" name="uraian_pekerjaan[${nextId}][volume]" class="form-control volume"></td>
+            <td><input type="number" name="uraian_pekerjaan[${nextId}][harga_satuan]" class="form-control harga_satuan"></td>
+            <td><input type="number" name="uraian_pekerjaan[${nextId}][total_harga]" class="form-control total_harga" readonly></td>
+            <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
+        </tr>`;
+
+                    // Append new row to table
+                    $('#table').find('tbody').append(tr);
+
+                    // Increment ID counter for next row
+                    nextId++;
+                });
+
+                // Event listener for deleting a row
+                $('#table').on('click', '.deleteRow', function(e) {
+                    e.preventDefault(); // Prevent default link behavior
+                    $(this).closest('tr').remove();
+                });
+
+                // Event listener for form submission
+                $('.model-popup').on('submit', function(e) {
+                    e.preventDefault();
+
+                    var formData = $(this).serializeArray();
+                    var formObject = {};
+                    var uraianPekerjaan = [];
+
+                    // Gather data from each row in the table
+                    $('#table tbody tr').each(function() {
+                        var row = $(this);
+                        var rowObject = {
+                            id: row.find('input[name$="[id]"]')
+                                .val(), // Extract the ID from the input field
+                            uraian_pekerjaan: row.find('input[name$="[uraian_pekerjaan]"]').val(),
+                            satuan: row.find('input[name$="[satuan]"]').val(),
+                            volume: row.find('input[name$="[volume]"]').val(),
+                            harga_satuan: row.find('input[name$="[harga_satuan]"]').val(),
+                            total_harga: row.find('input[name$="[total_harga]"]').val()
+                        };
+                        uraianPekerjaan.push(rowObject);
+                    });
+
+                    // Add other form data to formObject
+                    formData.forEach(function(item) {
+                        if (!item.name.startsWith('uraian_pekerjaan[')) {
+                            formObject[item.name] = item.value;
+                        }
+                    });
+
+                    // Combine form data and uraianPekerjaan
+                    formObject['uraian_pekerjaan'] = JSON.stringify(uraianPekerjaan);
+
+                    console.log('Formatted form data:', formObject);
+
+                    // Submit the form data via AJAX
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: JSON.stringify(formObject), // Stringify the entire formObject
+                        contentType: 'application/json', // Set content type to JSON
+                        success: function(response) {
+                            if (response.redirect) {
+                                // Redirect to the specified URL
+                                window.location.href = response.redirect;
+                            } else {
+                                console.log('Form submitted successfully');
+                                // Optionally, handle success without a redirect
+                            }   
+                        },
+                        error: function(xhr) {
+                            console.log('Error:', xhr.responseText);
+                        }
+                    });
+                });
             });
+        </script>
 
-            // Combine form data and uraianPekerjaan
-            formObject['uraian_pekerjaan'] = JSON.stringify(uraianPekerjaan);
-
-            console.log('Formatted form data:', formObject);
-
-            // Submit the form data via AJAX
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: formObject,
-                success: function(response) {
-                    console.log('Form submitted successfully');
-                },
-                error: function(xhr) {
-                    console.log('Error:', xhr.responseText);
-                }
-            });
-        });
-    });
-</script>
 
 
         <!-- js -->

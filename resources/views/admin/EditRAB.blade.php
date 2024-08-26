@@ -6,6 +6,8 @@
     <meta charset="utf-8">
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('tmplt/vendors/images/apple-touch-icon.png') }}">
@@ -428,7 +430,8 @@
                             <div class="row">
                                 <div class="col">
                                     <table>
-                                        <form action="{{ route('admin.UpdateRAB', $rencanaAnggaranBiaya->id) }}"
+                                        <form class="model-popup"
+                                            action="{{ route('admin.UpdateRAB', $rencanaAnggaranBiaya->id) }}"
                                             method="POST">
                                             @csrf
                                             @method('PUT')
@@ -469,39 +472,44 @@
                                                         <th>Volume</th>
                                                         <th>Harga Satuan</th>
                                                         <th>Total Harga</th>
-                                                        <th><a href="javascript:void(0)"
+                                                        <th>
+                                                            <a href="javascript:void(0)"
                                                                 class="btn btn-success btn-sm addRowCategory"
-                                                                style="font-size: 10px; width: 100px; height: 60px; display: flex; align-items: center; justify-content: center;">Add
-                                                                Row</a></th>
+                                                                style="font-size: 10px; width: 100px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                                                                Add Row
+                                                            </a>
+                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($rencanaAnggaranBiaya->uraian_pekerjaan as $index => $uraian)
+                                                    @foreach ($uraianPekerjaan as $uraian)
                                                         <tr>
                                                             <td><input type="text" name="uraian_pekerjaan[]"
-                                                                    class="form-control"
                                                                     value="{{ $uraian['uraian_pekerjaan'] }}"
-                                                                    required></td>
+                                                                    class="form-control"></td>
                                                             <td><input type="text" name="satuan[]"
-                                                                    class="form-control"
-                                                                    value="{{ $uraian['satuan'] }}" required></td>
+                                                                    value="{{ $uraian['satuan'] }}"
+                                                                    class="form-control"></td>
                                                             <td><input type="number" name="volume[]"
-                                                                    class="form-control volume"
-                                                                    value="{{ $uraian['volume'] }}" required></td>
+                                                                    value="{{ $uraian['volume'] }}"
+                                                                    class="form-control volume"></td>
                                                             <td><input type="number" name="harga_satuan[]"
-                                                                    class="form-control harga_satuan"
-                                                                    value="{{ $uraian['harga_satuan'] }}" required>
-                                                            </td>
+                                                                    value="{{ $uraian['harga_satuan'] }}"
+                                                                    class="form-control harga_satuan"></td>
                                                             <td><input type="number" name="total_harga[]"
-                                                                    class="form-control total_harga"
-                                                                    value="{{ $uraian['total_harga'] }}" readonly
-                                                                    required></td>
-
+                                                                    value="{{ $uraian['total_harga'] }}"
+                                                                    class="form-control total_harga" readonly></td>
+                                                            <td><input type="hidden" name="id[]"
+                                                                    value="{{ $uraian['id'] }}"></td>
+                                                            <!-- Add this line -->
+                                                            <td><a href="javascript:void(0)"
+                                                                    class="btn btn-danger btn-sm deleteRow">-</a></td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                             <button type="submit" class="btn btn-primary">Update</button>
+
                                         </form>
 
                                     </table>
@@ -515,6 +523,12 @@
 
 
         <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             function calculateTotal(row) {
                 var volume = row.find('.volume').val();
                 var harga_satuan = row.find('.harga_satuan').val();
@@ -530,24 +544,74 @@
                 calculateTotal(row);
             });
 
-            // Using ID selector for the table
+            // Add row
             $('#table').find('thead').on('click', '.addRowCategory', function() {
                 var tr = `<tr>
-           <td><input type="text" name="uraian_pekerjaan[]" class="form-control" required></td>
-        <td><input type="text" name="satuan[]" class="form-control" required></td>
-        <td><input type="number" name="volume[]" class="form-control volume" required></td>
-        <td><input type="number" name="harga_satuan[]" class="form-control harga_satuan" required></td>
-        <td><input type="number" name="total_harga[]" class="form-control total_harga" readonly required></td>
+        <td><input type="text" name="uraian_pekerjaan[]" class="form-control"></td>
+        <td><input type="text" name="satuan[]" class="form-control"></td>
+        <td><input type="number" name="volume[]" class="form-control volume"></td>
+        <td><input type="number" name="harga_satuan[]" class="form-control harga_satuan"></td>
+        <td><input type="number" name="total_harga[]" class="form-control total_harga" readonly></td>
+        <td><input type="hidden" name="id[]" value=""></td> <!-- Add this line -->
         <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
-        </tr>`;
+    </tr>`;
                 $('#table').find('tbody').append(tr);
             });
 
-            // Using ID selector for the table's body
+            // Delete row
             $('#table').find('tbody').on('click', '.deleteRow', function() {
                 $(this).closest('tr').remove();
             });
+
+            $(document).ready(function() {
+                $('.model-popup').on('submit', function(e) {
+                    e.preventDefault();
+
+                    var formData = $(this).serializeArray();
+                    var formObject = {};
+                    var uraianPekerjaan = [];
+
+                    $('#table tbody tr').each(function() {
+                        var row = $(this);
+                        var rowObject = {
+                            id: row.find('input[name="id[]"]').val(), // Include ID
+                            uraian_pekerjaan: row.find('input[name="uraian_pekerjaan[]"]').val(),
+                            satuan: row.find('input[name="satuan[]"]').val(),
+                            volume: row.find('input[name="volume[]"]').val(),
+                            harga_satuan: row.find('input[name="harga_satuan[]"]').val(),
+                            total_harga: row.find('input[name="total_harga[]"]').val()
+                        };
+                        uraianPekerjaan.push(rowObject);
+                    });
+
+                    formData.forEach(function(item) {
+                        if (item.name !== 'uraian_pekerjaan[]' && item.name !== 'satuan[]' && item
+                            .name !== 'volume[]' && item.name !== 'harga_satuan[]' && item.name !==
+                            'total_harga[]' && item.name !== 'id[]') {
+                            formObject[item.name] = item.value;
+                        }
+                    });
+
+                    formObject['uraian_pekerjaan'] = uraianPekerjaan;
+
+                    console.log('Formatted form data:', formObject);
+
+                    $.ajax({
+                        type: 'PUT',
+                        url: $(this).attr('action'),
+                        data: formObject,
+                        success: function(response) {
+                            console.log('Form submitted successfully');
+                            window.location.href = response.redirect_url;
+                        },
+                        error: function(xhr) {
+                            console.log('Error:', xhr.responseText);
+                        }
+                    });
+                });
+            }); 
         </script>
+
         <!-- js -->
         <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
         <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
