@@ -414,9 +414,6 @@
                                         <p class="mb-0 text-sm">Kelola Rencana Anggaran Biaya</p>
                                     </div>
                                     <div class="mb-3">
-                                        <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
-                                                class="icon-copy ion-ios-calendar-outline"
-                                                style="font-size: 30px; color:white"></i></a>
                                         <a class="btn btn-success show-modal" href="{{ route('admin.TambahRAB') }}"
                                             title="Tambah"><i class="icon-copy ion-plus-round"
                                                 style="font-size: 30px; color:white"></i></a>
@@ -460,7 +457,7 @@
                                                         class="dw dw-eye"></i>
                                                     Detail Data</a>
                                                 <a class="dropdown-item"
-                                                   ><i
+                                                    href="{{ route('admin.EditRAB', $d->id) }}"><i
                                                         class="dw dw-edit2"></i>
                                                     Edit</a>
                                             </div>
@@ -484,32 +481,7 @@
             document.getElementById(popupId).style.display = 'none';
         }
     </script>
-    <script>
-        // Using ID selector for the table
-        $('#table').find('thead').on('click', '.addRow', function() {
-            var tr = `<tr>
-            <td>
-                <input type='text' name="name[]" placeholder="Masukan uraian Pekerjaan" class="form-control">        
-            </td>
-            <td>
-                <input type='text' name="name[]" placeholder="Masukan satuan" class="form-control">        
-            </td>
-            <td>
-                <input type='text' name="name[]" placeholder="Masukan biaya per satuan" class="form-control">        
-            </td>
-            <td>
-                <input type='text' name="value[]" placeholder="Masukan total harga" class="form-control">
-            </td>
-            <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
-        </tr>`;
-            $('#table').find('tbody').append(tr);
-        });
 
-        // Using ID selector for the table's body
-        $('#table').find('tbody').on('click', '.deleteRow', function() {
-            $(this).closest('tr').remove();
-        });
-    </script>
     <!-- js -->
     <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
@@ -528,9 +500,7 @@
     <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
     <script src="{{ asset('tmplt/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
-    <!-- Datatable Setting js -->
-    <script src="vendors/scripts/datatable-setting.js"></script>
+    <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script> 
 </body>
 
 </html>

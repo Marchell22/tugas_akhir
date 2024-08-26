@@ -11,6 +11,7 @@ use App\Http\Controllers\NeracaLajurController;
 use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\RencanaAnggaranBiayaController;
+use App\Models\RencanaAnggaranBiaya;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,8 +59,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::delete('/AkunPengguna/delete/{id}', [AkunPenggunaController::class, 'delete'])->name('AkunPenggunadelete');
     Route::put('/AkunPengguna/update/{id}', [AkunPenggunaController::class, 'update'])->name('AkunPenggunaupdate');
     Route::get('/RencanaAnggaranBiaya', [RencanaAnggaranBiayaController::class, 'RencanaAnggaranBiaya'])->name('RencanaAnggaranBiaya');
-    Route::post('/RencanaAnggaranBiayaStore', [RencanaAnggaranBiayaController::class, 'store'])->name('RencanaAnggaranBiayastore');
+    Route::post('/RencanaAnggaranBiaya/Store', [RencanaAnggaranBiayaController::class, 'store'])->name('RencanaAnggaranBiayastore');
     Route::get('/TambahRAB', [RencanaAnggaranBiayaController::class, 'TambahRAB'])->name('TambahRAB');
+    Route::get('/EditRAB/Edit/{id}', [RencanaAnggaranBiayaController::class, 'edit'])->name('EditRAB');
+    Route::put('/UpdateRAB/update/{id}', [RencanaAnggaranBiayaController::class, 'update'])->name('UpdateRAB');
+
 });
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function () {
     Route::get('/AkunTransaksi', [AkunTransaksiController::class, 'userAkunTransaksi'])->name('AkunTransaksi');
