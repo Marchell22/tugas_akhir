@@ -575,24 +575,36 @@
             $('#table').find('tbody').on('click', '.deleteRow', function() {
                 var $row = $(this).closest('tr');
                 var id = $(this).data('id');
+                var rowId = $row.find('input[name="id[]"]').val(); // Get ID from hidden input
                 console.log('Deleting row with ID:', id);
 
-                if (confirm('Are you sure you want to delete this row?')) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '/admin/DeleteRAB/' + id,
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(response) {
-                            console.log('Row deleted successfully');
-                            $row.remove();
-                        },
-                        error: function(xhr) {
-                            console.log('Error:', xhr.responseText);
-                        }
-                    });
+                if (!id) {
+                    // If no data-id attribute, treat it as a temporary row
+                    $row.remove();
+                } else {
+                    // If there is a data-id, it's a server record
+                    console.log('Deleting row with ID:', id);
+
+                    if (confirm('Are you sure you want to delete this row?')) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/admin/DeleteRAB/' + id,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(response) {
+                                console.log('Row deleted successfully');
+                                $row.remove();
+                            },
+                            error: function(xhr) {
+                                console.log('Error:', xhr.responseText);
+                            }
+                        });
+                    }
                 }
+            });
+            $('#table').find('tbody').on('click', '.deleteRow', function() {
+                $(this).closest('tr').remove();
             });
 
             $(document).ready(function() {

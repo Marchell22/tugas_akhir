@@ -158,5 +158,11 @@ class RencanaAnggaranBiayaController extends Controller
             return response()->json(['message' => 'Record not found'], 404);
         }
     }
+    public function LaporanRAB($id)
+    {
+        $rencanaAnggaranBiaya = RencanaAnggaranBiaya::findOrFail($id);
+        $uraianPekerjaan = $rencanaAnggaranBiaya->uraian_pekerjaan ?? [];
+        return view('admin.LaporanRAB', compact('rencanaAnggaranBiaya', 'uraianPekerjaan'));
+    }
 
 }
