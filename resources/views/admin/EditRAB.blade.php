@@ -7,6 +7,7 @@
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
     <!-- Site favicon -->
@@ -241,8 +242,8 @@
                 <h4 class="weight-600 font-18 pb-10">Menu Dropdown Icon</h4>
                 <div class="sidebar-radio-group pb-10 mb-10">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
-                            value="icon-style-1" checked="">
+                        <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon"
+                            class="custom-control-input" value="icon-style-1" checked="">
                         <label class="custom-control-label" for="sidebaricon-1"><i
                                 class="fa fa-angle-down"></i></label>
                     </div>
@@ -499,11 +500,13 @@
                                                             <td><input type="number" name="total_harga[]"
                                                                     value="{{ $uraian['total_harga'] }}"
                                                                     class="form-control total_harga" readonly></td>
-                                                            <td><input type="hidden" name="id[]"
-                                                                    value="{{ $uraian['id'] }}"></td>
+                                                            <input type="hidden" name="id[]"
+                                                                value="{{ $uraian['id'] }}">
+
                                                             <!-- Add this line -->
                                                             <td><a href="javascript:void(0)"
-                                                                    class="btn btn-danger btn-sm deleteRow">-</a></td>
+                                                                    class="btn btn-danger btn-sm deleteRow"
+                                                                    data-id="{{ $uraian['id'] }}">-</a></td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -522,51 +525,79 @@
         </div>
 
 
+
         <script>
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            console.log('CSRF Token:', $('meta[name="csrf-token"]').attr('content'));
+
+            function getNextId() {
+                var highestId = 0;
+                $('#table tbody tr').each(function() {
+                    var id = $(this).find('input[name="id[]"]').val();
+                    if (id) {
+                        highestId = Math.max(highestId, parseInt(id));
+                    }
+                });
+                return highestId + 1;
+            }
 
             function calculateTotal(row) {
                 var volume = row.find('.volume').val();
                 var harga_satuan = row.find('.harga_satuan').val();
                 var total_harga = row.find('.total_harga');
-
-                var total = (volume * harga_satuan) || 0; // Multiply volume by unit price
-                total_harga.val(total); // Set the calculated total price
+                var total = (volume * harga_satuan) || 0;
+                total_harga.val(total);
             }
 
-            // Automatically calculate total when volume or unit price changes
             $('#table').on('input', '.volume, .harga_satuan', function() {
                 var row = $(this).closest('tr');
                 calculateTotal(row);
             });
 
-            // Add row
             $('#table').find('thead').on('click', '.addRowCategory', function() {
+                var newId = getNextId();
                 var tr = `<tr>
-        <td><input type="text" name="uraian_pekerjaan[]" class="form-control"></td>
-        <td><input type="text" name="satuan[]" class="form-control"></td>
-        <td><input type="number" name="volume[]" class="form-control volume"></td>
-        <td><input type="number" name="harga_satuan[]" class="form-control harga_satuan"></td>
-        <td><input type="number" name="total_harga[]" class="form-control total_harga" readonly></td>
-        <td><input type="hidden" name="id[]" value=""></td> <!-- Add this line -->
-        <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
-    </tr>`;
+                <td><input type="text" name="uraian_pekerjaan[]" class="form-control"></td>
+                <td><input type="text" name="satuan[]" class="form-control"></td>
+                <td><input type="number" name="volume[]" class="form-control volume"></td>
+                <td><input type="number" name="harga_satuan[]" class="form-control harga_satuan"></td>
+                <td><input type="number" name="total_harga[]" class="form-control total_harga" readonly></td>
+                <input type="hidden" name="id[]" value="${newId}">
+                <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow" data-id="${newId}">-</a></td>
+            </tr>`;
                 $('#table').find('tbody').append(tr);
             });
 
-            // Delete row
             $('#table').find('tbody').on('click', '.deleteRow', function() {
-                $(this).closest('tr').remove();
+                var $row = $(this).closest('tr');
+                var id = $(this).data('id');
+                console.log('Deleting row with ID:', id);
+
+                if (confirm('Are you sure you want to delete this row?')) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/DeleteRAB/' + id,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            console.log('Row deleted successfully');
+                            $row.remove();
+                        },
+                        error: function(xhr) {
+                            console.log('Error:', xhr.responseText);
+                        }
+                    });
+                }
             });
 
             $(document).ready(function() {
                 $('.model-popup').on('submit', function(e) {
                     e.preventDefault();
-
                     var formData = $(this).serializeArray();
                     var formObject = {};
                     var uraianPekerjaan = [];
@@ -574,8 +605,9 @@
                     $('#table tbody tr').each(function() {
                         var row = $(this);
                         var rowObject = {
-                            id: row.find('input[name="id[]"]').val(), // Include ID
-                            uraian_pekerjaan: row.find('input[name="uraian_pekerjaan[]"]').val(),
+                            id: row.find('input[name="id[]"]').val(),
+                            uraian_pekerjaan: row.find('input[name="uraian_pekerjaan[]"]')
+                                .val(),
                             satuan: row.find('input[name="satuan[]"]').val(),
                             volume: row.find('input[name="volume[]"]').val(),
                             harga_satuan: row.find('input[name="harga_satuan[]"]').val(),
@@ -609,7 +641,7 @@
                         }
                     });
                 });
-            }); 
+            });
         </script>
 
         <!-- js -->

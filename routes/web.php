@@ -63,6 +63,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/TambahRAB', [RencanaAnggaranBiayaController::class, 'TambahRAB'])->name('TambahRAB');
     Route::get('/EditRAB/Edit/{id}', [RencanaAnggaranBiayaController::class, 'edit'])->name('EditRAB');
     Route::put('/UpdateRAB/update/{id}', [RencanaAnggaranBiayaController::class, 'update'])->name('UpdateRAB');
+    Route::delete('/DeleteRAB/{id}', [RencanaAnggaranBiayaController::class, 'delete'])->name('DeleteRAB');
 
 });
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function () {

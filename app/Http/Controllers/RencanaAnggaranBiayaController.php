@@ -52,6 +52,7 @@ class RencanaAnggaranBiayaController extends Controller
             'waktu_pelaksanaan' => 'required|string|max:255',
             'output' => 'required|string|max:255',
             'uraian_pekerjaan' => 'required|array',
+            'uraian_pekerjaan.*.id' => 'nullable|integer',
             'uraian_pekerjaan.*.uraian_pekerjaan' => 'required|string',
             'uraian_pekerjaan.*.satuan' => 'required|string',
             'uraian_pekerjaan.*.volume' => 'required|numeric',
@@ -60,51 +61,49 @@ class RencanaAnggaranBiayaController extends Controller
         ]);
 
         $rencanaAnggaranBiaya = RencanaAnggaranBiaya::findOrFail($id);
-
-        // Existing uraian_pekerjaan data
         $existingData = $rencanaAnggaranBiaya->uraian_pekerjaan;
 
-        // Map existing data to easily find matching entries
+        // Create a map of existing data keyed by ID
         $existingDataMap = [];
         foreach ($existingData as $entry) {
-            $key = implode('-', [
-                $entry['uraian_pekerjaan'],
-                $entry['satuan'],
-                $entry['volume'],
-                $entry['harga_satuan'],
-                $entry['total_harga']
-            ]);
-            $existingDataMap[$key] = $entry;
+            $existingDataMap[$entry['id']] = $entry;
         }
 
         $newData = $validatedData['uraian_pekerjaan'];
-        $updatedData = [];
-        $newEntries = [];
+        $finalData = [];
 
         foreach ($newData as $newEntry) {
-            $key = implode('-', [
-                $newEntry['uraian_pekerjaan'],
-                $newEntry['satuan'],
-                $newEntry['volume'],
-                $newEntry['harga_satuan'],
-                $newEntry['total_harga']
-            ]);
+            $entryId = $newEntry['id'] ?? null;
 
-            if (isset($existingDataMap[$key])) {
-                // Compare existing and new data
-                if ($existingDataMap[$key] !== $newEntry) {
-                    $updatedData[] = $newEntry; // Collect updated entries
+            if ($entryId && isset($existingDataMap[$entryId])) {
+                // Jika data ada dalam entri yang ada, periksa perubahan
+                $existingEntry = $existingDataMap[$entryId];
+
+                if (
+                    $existingEntry['uraian_pekerjaan'] !== $newEntry['uraian_pekerjaan'] ||
+                    $existingEntry['satuan'] !== $newEntry['satuan'] ||
+                    $existingEntry['volume'] !== $newEntry['volume'] ||
+                    $existingEntry['harga_satuan'] !== $newEntry['harga_satuan'] ||
+                    $existingEntry['total_harga'] !== $newEntry['total_harga']
+                ) {
+                    // Update hanya jika ada perubahan
+                    $finalData[] = $newEntry;
+                } else {
+                    // Jika tidak ada perubahan, simpan entri asli
+                    $finalData[] = $existingEntry;
                 }
-                // Remove this key from existing map to keep track of which ones were updated
-                unset($existingDataMap[$key]);
+                // Hapus dari peta karena sudah diproses
+                unset($existingDataMap[$entryId]);
             } else {
-                // New entry
-                $newEntries[] = $newEntry;
+                // Tambah entri baru (tanpa ID atau ID tidak ditemukan dalam existing data)
+                $finalData[] = $newEntry;
             }
         }
 
-        // Add remaining old data that was not updated
-        $finalData = array_merge(array_values($existingDataMap), $updatedData, $newEntries);
+        // Tambahkan data lama yang tidak terhapus atau diubah
+        foreach ($existingDataMap as $remainingEntry) {
+            $finalData[] = $remainingEntry;
+        }
 
         // Update the model
         $rencanaAnggaranBiaya->update([
@@ -119,6 +118,45 @@ class RencanaAnggaranBiayaController extends Controller
             'message' => 'Data successfully updated.',
             'redirect_url' => route('admin.RencanaAnggaranBiaya')
         ]);
+    }
+    public function delete($id)
+    {
+        // Retrieve the record that contains the JSON data
+        $rencanaAnggaranBiaya = RencanaAnggaranBiaya::first(); // Adjust this to match your query logic
+
+        if ($rencanaAnggaranBiaya) {
+            // Check if the column is already an array or still a JSON string
+            $data = $rencanaAnggaranBiaya->uraian_pekerjaan;
+
+            // Decode the JSON data only if it's a valid JSON string
+            if (is_string($data)) {
+                $data = json_decode($data, true);
+            }
+
+            if (!is_array($data)) {
+                return response()->json(['message' => 'Invalid JSON format'], 500);
+            }
+
+            // Find the index of the item with the given ID
+            $index = array_search($id, array_column($data, 'id'));
+
+            if ($index !== false) {
+                // Remove the item from the array
+                array_splice($data, $index, 1);
+
+                // Encode the updated array back to JSON
+                $rencanaAnggaranBiaya->uraian_pekerjaan = $data;
+
+                // Save the updated record
+                $rencanaAnggaranBiaya->save();
+
+                return response()->json(['message' => 'Row deleted successfully']);
+            } else {
+                return response()->json(['message' => 'Row not found'], 404);
+            }
+        } else {
+            return response()->json(['message' => 'Record not found'], 404);
+        }
     }
 
 }
