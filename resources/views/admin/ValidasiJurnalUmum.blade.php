@@ -162,11 +162,7 @@
         </div>
         <div class="header-right">
             <div class="container">
-                <div class="search-container">
-                    <label>
-                        <input type="search" class="form-control form-control-sm" placeholder="Search">
-                    </label>
-                </div>
+                
             </div>
             <div class="dashboard-setting user-notification">
                 <div class="dropdown">
