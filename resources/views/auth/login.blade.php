@@ -63,7 +63,7 @@
                                 <button type="submit" class="btn btn-primary btn-block" name="login"><a href="/beranda"
                                         style="color:#fff "><b>Login</a></b></button>
                             </div>
-                        
+                        </form>
                     </div>
                 </div>
 
