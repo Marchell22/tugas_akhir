@@ -231,7 +231,7 @@
                         </p>
                     </div>
                     <div class="position-relative">
-                        <p>Invoice No. <span>XXXX</span></p>
+                        <p>PT <span>Sinar Kaliman Sehat</span></p>
                     </div>
                 </div>
             </section>

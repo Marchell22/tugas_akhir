@@ -417,7 +417,6 @@
                                     <th>No</th>
                                     <th class="table-plus datatable-nosort">Nama</th>
                                     <th class="table-plus datatable-nosort">Username</th>
-                                    <th class="table-plus datatable-nosort">Email</th>
                                     <th class="table-plus datatable-nosort">Role</th>
                                     <th class="datatable-nosort">Action</th>
                                 </tr>
@@ -428,7 +427,6 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $d->name }}</td>
                                         <td>{{ $d->username }} </td>
-                                        <td>{{ $d->email }}</td>
                                         <td>{{ $d->role }}</td>
                                         <td>
                                             <div class="dropdown">
@@ -438,7 +436,7 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                     <a class="dropdown-item"
-                                                        onclick="openPopup('popup1', '{{ $d->id }}', '{{ $d->name }}', '{{ $d->email }}', '{{ $d->username }}', '{{ $d->role }}')">
+                                                        onclick="openPopup('popup1', '{{ $d->id }}', '{{ $d->name }}', '{{ $d->username }}', '{{ $d->role }}')">
                                                         <i class="dw dw-edit2"></i> Edit
                                                     </a>
                                                     <form
@@ -478,17 +476,6 @@
                     <input type="text" class="form-control" placeholder="Masukan Nama" id="name"
                         name="name" value="{{ old('name') }}">
                     @error('name')
-                        <small>{{ $message }}</small>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label" for="email">Email</label>
-                <div class="col-sm-12 col-md-10">
-                    <input type="email" class="form-control" placeholder="Masukan Email" id="email"
-                        name="email" value="{{ old('email') }}">
-                    @error('email')
                         <small>{{ $message }}</small>
                     @enderror
                 </div>
@@ -551,13 +538,6 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Email</label>
-                <div class="col-sm-12 col-md-10">
-                    <input type="email" name="email" id="editEmail" class="form-control"
-                        placeholder="Masukan Email">
-                </div>
-            </div>
-            <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Username</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="text" name="username" id="editUsername" class="form-control"
@@ -599,14 +579,13 @@
 
         }
 
-        function openPopup(popupId, userId, userName, userEmail, userUsername, userRole) {
+        function openPopup(popupId, userId, userName,  userUsername, userRole) {
             document.getElementById('popup1').style.display = "block";
             document.getElementById("overlay").style.display = "block";
 
             // Set input values with user data
             document.getElementById('editUserId').value = userId;
             document.getElementById('editName').value = userName;
-            document.getElementById('editEmail').value = userEmail;
             document.getElementById('editUsername').value = userUsername;
             document.getElementById('editRole').value = userRole;
 
@@ -621,19 +600,17 @@
         function validateForm() {
             // Get form fields
             var name = document.getElementById('name').value;
-            var email = document.getElementById('email').value;
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
             var role = document.getElementById('role').value;
 
             // Check if all fields are filled
-            if (name === "" || email === "" || username === "" || password === "" || role === "") {
+            if (name === ""|| username === "" || password === "" || role === "") {
                 alert("Semua field harus diisi.");
                 return false; // Prevent form submission
             }
 
             // Additional validation if needed
-            // For example, check email format or password strength
 
             return true; // Allow form submission
         }
