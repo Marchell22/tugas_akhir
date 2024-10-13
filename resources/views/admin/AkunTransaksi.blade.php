@@ -635,8 +635,26 @@
     </div>
 
     <script>
-        function openPopup(popupId, userId, userKelompokAkun, userKelompokLaporanPosisiKeuangan, userKode, userNama,
-            postSaldo, postPenyesuaian, postLaporan) {
+        function validateForm() {
+            // Get form fields
+            var kelompokAkun = document.getElementById('kelompok_akun_id').value;
+            var kode = document.getElementById('kode').value;
+            var nama = document.getElementById('nama').value;
+            var postSaldo = document.querySelector('input[name="post_saldo"]:checked');
+            var postPenyesuaian = document.querySelector('input[name="post_penyesuaian"]:checked');
+            var postLaporan = document.querySelector('input[name="post_laporan"]:checked');
+
+            // Check if all fields are filled
+            if (kelompokAkun === "" || kode === "" || nama === "" || !postSaldo || !postPenyesuaian || !postLaporan) {
+                alert("Semua field harus diisi.");
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
+        <script>
+        function openPopup(popupId, userId, userKelompokAkun, userKelompokLaporanPosisiKeuangan, userKode, userNama, postSaldo, postPenyesuaian, postLaporan) {
             $('#editForm')[0].reset();
             $('#addForm')[0].reset();
 
@@ -665,25 +683,6 @@
             $("#kelompok_akun_id").val(0).trigger('change');
             document.getElementById(popupId).style.display = 'none';
             document.getElementById("overlay").style.display = "none";
-        }
-    </script>
-    <script>
-        function validateForm() {
-            // Get form fields
-            var kelompokAkun = document.getElementById('kelompok_akun_id').value;
-            var kode = document.getElementById('kode').value;
-            var nama = document.getElementById('nama').value;
-            var postSaldo = document.querySelector('input[name="post_saldo"]:checked');
-            var postPenyesuaian = document.querySelector('input[name="post_penyesuaian"]:checked');
-            var postLaporan = document.querySelector('input[name="post_laporan"]:checked');
-
-            // Check if all fields are filled
-            if (kelompokAkun === "" || kode === "" || nama === "" || !postSaldo || !postPenyesuaian || !postLaporan) {
-                alert("Semua field harus diisi.");
-                return false; // Prevent form submission
-            }
-
-            return true; // Allow form submission
         }
     </script>
 

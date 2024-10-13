@@ -172,6 +172,7 @@ class AkunTransaksiController extends Controller
     $user->kelompok_akun_id = $request->input('kelompok_akun_id');
     $user->kode = $request->input('kode');
     $user->nama = $request->input('nama');
+    $user->post_saldo = $request->input('post_saldo');
     $user->post_penyesuaian = $request->input('post_penyesuaian');
     $user->post_laporan = $request->input('post_laporan');
     $user->kelompok_laporan_posisi_keuangan = $request->input('kelompok_laporan_posisi_keuangan');

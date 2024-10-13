@@ -113,7 +113,7 @@ class JurnalUmumController extends Controller
             'keterangan' => 'required|string',
             'bukti' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg',
             'debit_atau_kredit' => 'required|numeric',
-            'nilai' => 'required|numeric',
+            'nilai' => 'required|numeric|min:0',
             'status' => 'required|string|in:pending,approved,rejected',
         ]);
 
@@ -121,14 +121,10 @@ class JurnalUmumController extends Controller
             return redirect()->back()->withInput()->withErrors($validator);
         }
 
-        $akun = AkunTransaksi::findOrFail($request->akun_id);
         $nilai = $request->nilai;
 
         // Jika post_saldo tidak sama dengan debit_atau_kredit, berikan nilai negatif
-        if ($akun->post_saldo != $request->debit_atau_kredit) {
-            $nilai = -abs($nilai); // Ubah nilai menjadi negatif
-        }
-
+        
         $data = $request->only([
             'akun_id',
             'tanggal',
@@ -168,13 +164,10 @@ class JurnalUmumController extends Controller
         //     ], 422);
         // }
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
-        $akun = AkunTransaksi::findOrFail($request->akun_id);
+
         $nilai = $request->nilai;
 
-        // Jika post_saldo tidak sama dengan debit_atau_kredit, berikan nilai negatif
-        if ($akun->post_saldo != $request->debit_atau_kredit) {
-            $nilai = -abs($nilai); // Ubah nilai menjadi negatif
-        }
+    
         $data = $request->only([
             'akun_id',
             'tanggal',
@@ -215,18 +208,10 @@ class JurnalUmumController extends Controller
         //     ], 422);
         // }
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
-        $akun = AkunTransaksi::findOrFail($request->akun_id);
         $nilai = $request->nilai;
         $jurnal = JurnalUmum::find($id);
         // Jika post_saldo tidak sama dengan debit_atau_kredit, berikan nilai negatif
-        if ($akun->post_saldo != $request->debit_atau_kredit) {
-            $nilai = -abs($nilai); // Ubah nilai menjadi negatif
-        }else{
-            $nilai = abs($nilai);
-        }
-        if (!$jurnal) {
-            return redirect()->back()->with('error', 'Data tidak ditemukan.');
-        }
+        
 
         $jurnal->akun_id = $request->input('akun_id');
         $jurnal->tanggal = $request->input('tanggal');

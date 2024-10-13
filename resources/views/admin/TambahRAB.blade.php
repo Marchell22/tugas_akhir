@@ -599,6 +599,16 @@
                         },
                         error: function(xhr) {
                             console.log('Error:', xhr.responseText);
+                            try {
+                                // Mencoba untuk mengurai respons JSON
+                                var errorResponse = JSON.parse(xhr.responseText);
+                                alert('Error: ' + errorResponse
+                                .message); // Menampilkan pesan error dalam alert
+                            } catch (e) {
+                                // Jika respons bukan JSON
+                                alert('Terjadi kesalahan saat mengirim form: ' + xhr.status + ' ' +
+                                    xhr.statusText);
+                            }
                         }
                     });
                 });

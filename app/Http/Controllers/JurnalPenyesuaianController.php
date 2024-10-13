@@ -46,7 +46,7 @@ class JurnalPenyesuaianController extends Controller
         $data = $query->get();
 
         // Kembalikan view dengan data
-        return view('user.JurnalPenyesuaian', compact('data'));
+        return view('admin.JurnalPenyesuaian', compact('data'));
     }
     public function ValidasiJurnalPenyesuaianFilter(Request $request)
     {
@@ -126,12 +126,10 @@ class JurnalPenyesuaianController extends Controller
         //     ], 422);
         // }
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
-        $akun = AkunTransaksi::findOrFail($request->akun_id);
+
         $nilai = $request->nilai;
         // Jika post_saldo tidak sama dengan debit_atau_kredit, berikan nilai negatif
-        if ($akun->post_saldo != $request->debit_atau_kredit) {
-            $nilai = -abs($nilai); // Ubah nilai menjadi negatif
-        }
+       
 
         $data = $request->only([
             'akun_id',
@@ -172,13 +170,11 @@ class JurnalPenyesuaianController extends Controller
         //         'errors' => $validator->errors()
         //     ], 422);
         // }
-        $akun = AkunTransaksi::findOrFail($request->akun_id);
+
         $nilai = $request->nilai;
 
         // Jika post_saldo tidak sama dengan debit_atau_kredit, berikan nilai negatif
-        if ($akun->post_saldo != $request->debit_atau_kredit) {
-            $nilai = -abs($nilai); // Ubah nilai menjadi negatif
-        }
+       
         
         $data = $request->only([
             'akun_id',
@@ -218,17 +214,9 @@ class JurnalPenyesuaianController extends Controller
         //         'errors' => $validator->errors()
         //     ], 422);
         // }
-        $akun = AkunTransaksi::findOrFail($request->akun_id);
         $nilai = $request->nilai;
         $jurnal = JurnalPenyesuaian::find($id);
-        if ($akun->post_saldo != $request->debit_atau_kredit) {
-            $nilai = -abs($nilai); // Ubah nilai menjadi negatif
-        } else {
-            $nilai = abs($nilai);
-        }
-        if (!$jurnal) {
-            return redirect()->back()->with('error', 'Data tidak ditemukan.');
-        }
+       
 
         $jurnal->akun_id = $request->input('akun_id');
         $jurnal->tanggal = $request->input('tanggal');

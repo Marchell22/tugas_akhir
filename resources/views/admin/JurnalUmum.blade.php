@@ -163,7 +163,7 @@
         </div>
         <div class="header-right">
             <div class="container">
-                
+
             </div>
             <div class="dashboard-setting user-notification">
                 <div class="dropdown">
@@ -214,8 +214,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
@@ -521,7 +520,8 @@
                 <label class="col-sm-12 col-md-2 col-form-label"for="nilai">Nilai</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="number" class="form-control" name="nilai" id="nilai"
-                        placeholder="Masukan Nilai" value="{{ old('nilai') }}">
+                        placeholder="Masukan Nilai" value="{{ old('nilai') }}" min="0"
+                        oninput="this.value = this.value < 0 ? '' : this.value;">
                 </div>
                 <input type="hidden" name="status" value="approved">
             </div>
@@ -616,7 +616,8 @@
                 <label class=" col-sm-12 col-md-2 col-form-label" for="nilai">Nilai</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="number" class="form-control" placeholder="Masukan Nilai" name="nilai"
-                        id="editNilai">
+                        id="editNilai" min="0"
+                        oninput="this.value = this.value < 0 ? '' : this.value;">
                 </div>
             </div>
             <button type="submit" style="width:100px;" class="btn btn-primary">Edit</button>
@@ -700,6 +701,19 @@
             document.getElementById('imagePopup').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }
+
+        document.getElementById('nilai').addEventListener('input', function() {
+            if (this.value < 0) {
+                this.value = '';
+            }
+        });
+        document.getElementById('editNilai').addEventListener('input', function() {
+            if (this.value < 0) {
+                this.value = '';
+            }
+        });
+
+
 
         function openPopup(popupId, userId, userAkun_id, userTanggal, userKeterangan, userBukti, DebitKredit, userNilai) {
             $('#editForm')[0].reset();
