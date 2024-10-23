@@ -313,7 +313,7 @@ class LaporanController extends Controller
                 return $carry;
             }, (object) ['akun_id' => $group->first()->akun_id, 'nilai' => 0]);
         });
-
+        session(['aggregatedResults' => $aggregatedResults, 'akunTransaksi' => $akunTransaksi,]);
         // Return the view with the results
         return view('admin.LabaRugi', compact('akunTransaksi', 'aggregatedResults'));
     }

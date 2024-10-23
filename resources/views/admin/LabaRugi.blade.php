@@ -360,6 +360,11 @@
             </div>
             @if (request()->has('kriteria'))
                 <div class="card-box mb-30">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button onclick="window.location.href='{{ route('admin.downloadLabaRugi') }}'"
+                            class="btn btn-danger"
+                            style="width: 8%; margin-top:10px;margin-bottom:10px; margin-right: 20px;">Report</button>
+                    </div>
                     <div class="pb-10 pd-2">
                         @php
                             $totalPendapatan = 0;
