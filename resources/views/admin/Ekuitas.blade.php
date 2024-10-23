@@ -146,8 +146,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
@@ -359,6 +358,11 @@
             </div>
             @if (request()->has('kriteria'))
                 <div class="card-box mb-30">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button onclick="window.location.href='{{ route('admin.downloadEkuitas') }}'"
+                            class="btn btn-danger"
+                            style="width: 8%; margin-top:10px;margin-bottom:10px; margin-right: 20px;">Report</button>
+                    </div>
                     <div class="pd-10">
                     </div>
                     <div class="pb-10 pd-2">

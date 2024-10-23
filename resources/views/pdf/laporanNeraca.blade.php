@@ -85,70 +85,80 @@
             </tr>
         </table>
         <div style="text-align:center; margin-top: 20px;">
-            <h2>Neraca</h2>
+            <h2>
+                @if ($kategori == 1)
+                    Neraca Lajur
+                @elseif($kategori == 2)
+                    Neraca Lajur Penyesuaian
+                @elseif($kategori == 3)
+                    Neraca Lajur Disesuaikan
+                @else
+                    {{ $kategori }}
+                @endif
+            </h2>
         </div>
-            <!-- Wrapping the table in a div to center it -->
-            <div class="table-container">
-                @php
-                    $total = 0;
-                    $totalDebit = 0;
-                    $totalKredit = 0;
-                @endphp
-                <table class="full-width-table">
-                    <thead>
+        <!-- Wrapping the table in a div to center it -->
+        <div class="table-container">
+            @php
+                $total = 0;
+                $totalDebit = 0;
+                $totalKredit = 0;
+            @endphp
+            <table class="full-width-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="vertical-align: middle" class="text-center">Kode</th>
+                        <th rowspan="2" style="vertical-align: middle" class="text-center">Nama</th>
+                        <th colspan="2" class="text-center">Neraca Saldo</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Debit</th>
+                        <th class="text-center">Kredit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($akunTransaksi as $d)
+                        @php
+                            $result = $results->where('akun_id', $d->id)->first();
+                            $nilai = $result ? $result->nilai : 0;
+                            if ($d->post_saldo == 2) {
+                                $totalKredit += $nilai;
+                            } elseif ($d->post_saldo == 1) {
+                                $totalDebit += $nilai;
+                            }
+                        @endphp
                         <tr>
-                            <th rowspan="2" style="vertical-align: middle" class="text-center">Kode</th>
-                            <th rowspan="2" style="vertical-align: middle" class="text-center">Nama</th>
-                            <th colspan="2" class="text-center">Neraca Saldo</th>
+                            @if ($d->post_saldo == 2)
+                                <td>{{ $d->kode }}</td>
+                                <td>{{ $d->nama }}</td>
+                                <td>-</td>
+                                <td>{{ number_format($nilai, 0, ',', '.') }}</td>
+                            @elseif($d->post_saldo == 1)
+                                <td>{{ $d->kode }}</td>
+                                <td>{{ $d->nama }}</td>
+                                <td>{{ number_format($nilai, 0, ',', '.') }}</td>
+                                <td>-</td>
+                            @endif
                         </tr>
-                        <tr>
-                            <th class="text-center">Debit</th>
-                            <th class="text-center">Kredit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($akunTransaksi as $d)
-                            @php
-                                $result = $results->where('akun_id', $d->id)->first();
-                                $nilai = $result ? $result->nilai : 0;
-                                if ($d->post_saldo == 2) {
-                                    $totalKredit += $nilai;
-                                } elseif ($d->post_saldo == 1) {
-                                    $totalDebit += $nilai;
-                                }
-                            @endphp
-                            <tr>
-                                @if ($d->post_saldo == 2)
-                                    <td>{{ $d->kode }}</td>
-                                    <td>{{ $d->nama }}</td>
-                                    <td>-</td>
-                                    <td>{{ number_format($nilai, 0, ',', '.') }}</td>
-                                @elseif($d->post_saldo == 1)
-                                    <td>{{ $d->kode }}</td>
-                                    <td>{{ $d->nama }}</td>
-                                    <td>{{ number_format($nilai, 0, ',', '.') }}</td>
-                                    <td>-</td>
-                                @endif
-                            </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot class="">
-                        <tr>
-                            <th colspan="2" class="text-right">Jumlah</th>
-                            <th>{{ number_format($totalDebit, 0, ',', '.') }}</th>
-                            <th>{{ number_format($totalKredit, 0, ',', '.') }}</th>
-                        </tr>
-                        <tr>
-                            @php
-                                $total = $totalDebit - $totalKredit;
-                            @endphp
-                            <th colspan="2" class="text-right">Selisih</th>
-                            <th colspan="2" class="text-right" id="selisih_neraca_saldo">
-                                {{ number_format($total, 0, ',', '.') }}</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+                    @endforeach
+                </tbody>
+                <tfoot class="">
+                    <tr>
+                        <th colspan="2" class="text-right">Jumlah</th>
+                        <th>{{ number_format($totalDebit, 0, ',', '.') }}</th>
+                        <th>{{ number_format($totalKredit, 0, ',', '.') }}</th>
+                    </tr>
+                    <tr>
+                        @php
+                            $total = $totalDebit - $totalKredit;
+                        @endphp
+                        <th colspan="2" class="text-right">Selisih</th>
+                        <th colspan="2" class="text-right" id="selisih_neraca_saldo">
+                            {{ number_format($total, 0, ',', '.') }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </body>
 

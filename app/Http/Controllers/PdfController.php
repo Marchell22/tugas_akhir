@@ -60,4 +60,19 @@ class PdfController extends Controller
         // Download PDF dengan nama invoice.pdf
         return $pdf->download('Neraca.pdf');
     }
+    public function downloadEkuitas()
+    {
+        // Mengambil data dari sesi
+        $aggregatedResults = session('aggregatedResults', collect());
+        $akunTransaksi = session('akunTransaksi', collect());
+        $data = [
+            'aggregatedResults' => $aggregatedResults,
+            'akunTransaksi' => $akunTransaksi,
+        ];
+        // Load view dengan data dan generate PDF
+        $pdf = Pdf::loadView('pdf.laporanPerubahanEkuitas', $data)->setPaper('A4', 'portrait'); // A4 dengan orientasi portrait;
+
+        // Download PDF dengan nama invoice.pdf
+        return $pdf->download('Ekuitas.pdf');
+    }
 }

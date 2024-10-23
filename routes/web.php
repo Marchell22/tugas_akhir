@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/download-pdf/{id}', [PdfController::class, 'downloadRAB'])->name('downloadRAB');
     Route::get('/downloadbukubesar-pdf', [PdfController::class, 'downloadBukuBesar'])->name('downloadBukuBesar');
     Route::get('/downloadneraca-pdf', [PdfController::class, 'downloadNeraca'])->name('downloadNeraca');
+    Route::get('/downloadekuitas-pdf', [PdfController::class, 'downloadekuitas'])->name('downloadEkuitas');
 
 });
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function () {
