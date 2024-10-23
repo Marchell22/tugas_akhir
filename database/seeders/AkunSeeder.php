@@ -15,16 +15,14 @@ class AkunSeeder extends Seeder
     public function run(): void
     {
          User::create([
-            'name' => 'Tomu',
-            'username' => 'Tomu22',
-            'email' => 'tomu@tomu.com',
+            'name' => 'admin',
+            'username' => 'admin',
             'password' => Hash::make('abcd1234'),
             'role' => 'admin'
         ]);
         User::create([
-            'name' => 'Marchell',
-            'username' => 'Marchell22',
-            'email' => 'Marchell@Marchell.com',
+            'name' => 'user',
+            'username' => 'user',
             'password' => Hash::make('abcd1234'),
             'role' => 'user'
         ]);

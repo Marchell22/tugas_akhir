@@ -10,6 +10,7 @@ use App\Http\Controllers\JurnalPenyesuaianController;
 use App\Http\Controllers\NeracaLajurController;
 use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RencanaAnggaranBiayaController;
 use App\Models\RencanaAnggaranBiaya;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::put('/UpdateRAB/update/{id}', [RencanaAnggaranBiayaController::class, 'update'])->name('UpdateRAB');
     Route::delete('/DeleteRAB/{id}', [RencanaAnggaranBiayaController::class, 'delete'])->name('DeleteRAB');
     Route::get('/RencanaAnggaranBiaya/LaporanRAB/{id}', [RencanaAnggaranBiayaController::class, 'LaporanRAB'])->name('LaporanRAB');
+    Route::get('/download-pdf/{id}', [PdfController::class, 'downloadRAB'])->name('downloadRAB');;
 
 });
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function () {

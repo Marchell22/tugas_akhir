@@ -7,9 +7,9 @@
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('tmplt/vendors/images/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('tmplt/vendors/images/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('tmplt/vendors/images/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('tmplt/vendors/images/sks.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('tmplt/vendors/images/sks.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('tmplt/vendors/images/sks.png') }}">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -96,7 +96,7 @@
         </div>
         <div class="header-right">
             <div class="container">
-               
+
             </div>
             <div class="dashboard-setting user-notification">
                 <div class="dropdown">
@@ -147,8 +147,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
@@ -370,7 +369,7 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-outline-info"style="width: 10%">Cari</button>
+                            <button type="submit" class="btn btn-primary"style="width: 8%">Cari</button>
                         </div>
                     </form>
 
@@ -389,6 +388,10 @@
                         <span class="font-weight-900">Nama Akun : {{ $akunTransaksi->nama }}</span>
                         <span class="font-weight-900">Kode Akun : {{ $akunTransaksi->kode }}</span>
                     </div>
+
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-danger"style="width: 8%; margin-bottom:20px; margin-right: 20px;">Report</button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -451,9 +454,8 @@
                     document.getElementById('tanggalAkhirOptions').style.display = 'flex';
                 }
             });
-            
         </script>
-        
+
         <!-- js -->
         <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>
         <script src="{{ asset('tmplt/vendors/scripts/script.min.js') }}"></script>
