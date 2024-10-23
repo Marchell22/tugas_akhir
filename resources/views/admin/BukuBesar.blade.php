@@ -391,7 +391,10 @@
 
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="submit" class="btn btn-danger"style="width: 8%; margin-bottom:20px; margin-right: 20px;">Report</button>
+                    <button onclick="window.location.href='{{ route('admin.downloadBukuBesar') }}'"
+                        class="btn btn-danger"
+                        style="width: 8%; margin-bottom:20px; margin-right: 20px;">Report</button>
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

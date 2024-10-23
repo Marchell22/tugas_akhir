@@ -65,7 +65,7 @@ class BukuBesarController extends Controller
             // Optionally sort the results by created_at
             $results = $results->sortBy('created_at');
         }
-
+        session(['results' => $results, 'akunTransaksiList'=> $akunTransaksiList]);
         // Return the view with both the list and the search results
         return view('admin.BukuBesar', compact('akunTransaksiList', 'results'));
     }
