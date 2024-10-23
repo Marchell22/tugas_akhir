@@ -96,7 +96,7 @@
         </div>
         <div class="header-right">
             <div class="container">
-               
+
             </div>
             <div class="dashboard-setting user-notification">
                 <div class="dropdown">
@@ -147,8 +147,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
@@ -375,6 +374,11 @@
             </div>
             @if (request()->has('kriteria', 'kategori'))
                 <div class="card-box mb-30">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button onclick="window.location.href='{{ route('admin.downloadNeraca') }}'"
+                            class="btn btn-danger"
+                            style="width: 8%; margin-top:10px;margin-bottom:10px; margin-right: 20px;">Report</button>
+                    </div>
                     <div class="pb-10 pd-2">
                         @php
                             $total = 0;
@@ -409,13 +413,13 @@
                                         @if ($d->post_saldo == 2)
                                             <td>{{ $d->kode }}</td>
                                             <td>{{ $d->nama }}</td>
-                                            <td></td>
-                                            <td>{{ number_format($nilai, 0, ',', '.') }}</td>
+                                            <td>-</td>
+                                            <td>{{ $nilai !== null ? number_format($nilai, 0, ',', '.') : '-' }}</td>
                                         @elseif($d->post_saldo == 1)
                                             <td>{{ $d->kode }}</td>
                                             <td>{{ $d->nama }}</td>
-                                            <td>{{ number_format($nilai, 0, ',', '.') }}</td>
-                                            <td></td>
+                                            <td>{{ $nilai !== null ? number_format($nilai, 0, ',', '.') : '-' }}</td>
+                                            <td>-</td>
                                         @endif
                                     </tr>
                                 @endforeach

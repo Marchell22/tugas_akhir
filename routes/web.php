@@ -58,6 +58,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/RencanaAnggaranBiaya/LaporanRAB/{id}', [RencanaAnggaranBiayaController::class, 'LaporanRAB'])->name('LaporanRAB');
     Route::get('/download-pdf/{id}', [PdfController::class, 'downloadRAB'])->name('downloadRAB');
     Route::get('/downloadbukubesar-pdf', [PdfController::class, 'downloadBukuBesar'])->name('downloadBukuBesar');
+    Route::get('/downloadneraca-pdf', [PdfController::class, 'downloadNeraca'])->name('downloadNeraca');
 
 });
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function () {

@@ -96,7 +96,7 @@ class NeracaLajurController extends Controller
                 $results = collect();
                 break;
         }
-
+        session(['results' => $results, 'akunTransaksi' => $akunTransaksi]);
         return view('admin.NeracaLajur', compact('akunTransaksi', 'results'));
     }
 
