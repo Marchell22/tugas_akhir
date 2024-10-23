@@ -60,7 +60,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/downloadbukubesar-pdf', [PdfController::class, 'downloadBukuBesar'])->name('downloadBukuBesar');
     Route::get('/downloadneraca-pdf', [PdfController::class, 'downloadNeraca'])->name('downloadNeraca');
     Route::get('/downloadekuitas-pdf', [PdfController::class, 'downloadekuitas'])->name('downloadEkuitas');
-    Route::get('/downloadekuitas-pdf', [PdfController::class, 'downloadLabaRugi'])->name('downloadLabaRugi');
+    Route::get('/downloadeLabaRugi-pdf', [PdfController::class, 'downloadLabaRugi'])->name('downloadLabaRugi');
+    Route::get('/downloadPosisiKeuangan-pdf', [PdfController::class, 'downloadPosisiKeuangan'])->name('downloadPosisiKeuangan');
 });
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function () {
     Route::get('/AkunTransaksi', [AkunTransaksiController::class, 'userAkunTransaksi'])->name('AkunTransaksi');
