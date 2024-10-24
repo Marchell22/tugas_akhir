@@ -79,6 +79,7 @@ class JurnalPenutupController extends Controller
                 return $carry;
             }, (object) ['akun_id' => $group->first()->akun_id, 'nilai' => 0]);
         });
+        session(['aggregatedResults' => $aggregatedResults, 'akunTransaksi' => $akunTransaksi,]);
         return view('admin.JurnalPenutup', compact('akunTransaksi', 'aggregatedResults'));
         
     }

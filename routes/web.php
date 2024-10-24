@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/downloadekuitas-pdf', [PdfController::class, 'downloadekuitas'])->name('downloadEkuitas');
     Route::get('/downloadeLabaRugi-pdf', [PdfController::class, 'downloadLabaRugi'])->name('downloadLabaRugi');
     Route::get('/downloadPosisiKeuangan-pdf', [PdfController::class, 'downloadPosisiKeuangan'])->name('downloadPosisiKeuangan');
+    Route::get('/downloadJurnalPenutup-pdf', [PdfController::class, 'downloadJurnalPenutup'])->name('downloadJurnalPenutup');
 });
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'web', 'cekRole:user'], 'as' => 'user.'], function () {
     Route::get('/AkunTransaksi', [AkunTransaksiController::class, 'userAkunTransaksi'])->name('AkunTransaksi');

@@ -109,7 +109,6 @@
                             <th colspan="5" class="text-center">Aktiva</th>
                         </tr>
                     </thead>
-                <tbody>
                     <tr>
                         <th colspan="5" style="text-align: left;">Aktiva Lancar</th>
                     </tr>
