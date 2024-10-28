@@ -7,9 +7,9 @@
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('tmplt/vendors/images/sks.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('tmplt/vendors/images/sks.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('tmplt/vendors/images/sks.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('tmplt/vendors/images/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('tmplt/vendors/images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('tmplt/vendors/images/favicon-16x16.png') }}">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -228,8 +228,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
@@ -370,12 +369,15 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('logout') }}" class="dropdown-toggle no-arrow">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" class="dropdown-toggle no-arrow"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <span class="micon dw dw-right-arrow1"></span><span class="mtext">Logout</span>
                         </a>
-
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -417,6 +419,7 @@
                                     <th>No</th>
                                     <th class="table-plus datatable-nosort">Nama</th>
                                     <th class="table-plus datatable-nosort">Username</th>
+                                    <th class="table-plus datatable-nosort">Email</th>
                                     <th class="table-plus datatable-nosort">Role</th>
                                     <th class="datatable-nosort">Action</th>
                                 </tr>
@@ -427,6 +430,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $d->name }}</td>
                                         <td>{{ $d->username }} </td>
+                                        <td>{{ $d->email }}</td>
                                         <td>{{ $d->role }}</td>
                                         <td>
                                             <div class="dropdown">
@@ -436,7 +440,7 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                     <a class="dropdown-item"
-                                                        onclick="openPopup('popup1', '{{ $d->id }}', '{{ $d->name }}', '{{ $d->username }}', '{{ $d->role }}')">
+                                                        onclick="openPopup('popup1', '{{ $d->id }}', '{{ $d->name }}', '{{ $d->email }}', '{{ $d->username }}', '{{ $d->role }}')">
                                                         <i class="dw dw-edit2"></i> Edit
                                                     </a>
                                                     <form
@@ -476,6 +480,17 @@
                     <input type="text" class="form-control" placeholder="Masukan Nama" id="name"
                         name="name" value="{{ old('name') }}">
                     @error('name')
+                        <small>{{ $message }}</small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label" for="email">Email</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="email" class="form-control" placeholder="Masukan Email" id="email"
+                        name="email" value="{{ old('email') }}">
+                    @error('email')
                         <small>{{ $message }}</small>
                     @enderror
                 </div>
@@ -538,6 +553,13 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Email</label>
+                <div class="col-sm-12 col-md-10">
+                    <input type="email" name="email" id="editEmail" class="form-control"
+                        placeholder="Masukan Email">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Username</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="text" name="username" id="editUsername" class="form-control"
@@ -579,13 +601,14 @@
 
         }
 
-        function openPopup(popupId, userId, userName,  userUsername, userRole) {
+        function openPopup(popupId, userId, userName, userEmail, userUsername, userRole) {
             document.getElementById('popup1').style.display = "block";
             document.getElementById("overlay").style.display = "block";
 
             // Set input values with user data
             document.getElementById('editUserId').value = userId;
             document.getElementById('editName').value = userName;
+            document.getElementById('editEmail').value = userEmail;
             document.getElementById('editUsername').value = userUsername;
             document.getElementById('editRole').value = userRole;
 
@@ -600,17 +623,19 @@
         function validateForm() {
             // Get form fields
             var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
             var role = document.getElementById('role').value;
 
             // Check if all fields are filled
-            if (name === ""|| username === "" || password === "" || role === "") {
+            if (name === "" || email === "" || username === "" || password === "" || role === "") {
                 alert("Semua field harus diisi.");
                 return false; // Prevent form submission
             }
 
             // Additional validation if needed
+            // For example, check email format or password strength
 
             return true; // Allow form submission
         }

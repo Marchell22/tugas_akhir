@@ -19,12 +19,14 @@ class AkunPenggunaController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'username' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
             'role' => 'required',
         ]);
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
         $data['name'] = $request->name;
         $data['username'] = $request->username;
+        $data['email'] = $request->email;
         $data['password'] = Hash::make($request->password);
         $data['role'] = $request->role;
 
@@ -37,6 +39,7 @@ class AkunPenggunaController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'username' => 'required',
+            'email' => 'required|email',
             'password' => 'nullable',
             'role' => 'required|in:admin,user'  // Ensure role values are valid
         ]);
@@ -54,6 +57,7 @@ class AkunPenggunaController extends Controller
 
         // Update user details
         $user->name = $request->input('name');
+        $user->email = $request->input('email');
         $user->username = $request->input('username');
         $user->role = $request->input('role');
 

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
 
-     <!-- Site favicon -->
+    <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('tmplt/vendors/images/sks.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('tmplt/vendors/images/sks.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('tmplt/vendors/images/sks.png') }}">
@@ -163,7 +163,7 @@
         </div>
         <div class="header-right">
             <div class="container">
-               
+
             </div>
             <div class="dashboard-setting user-notification">
                 <div class="dropdown">
@@ -214,8 +214,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
@@ -358,11 +357,15 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('logout') }}" class="dropdown-toggle no-arrow">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" class="dropdown-toggle no-arrow"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <span class="micon dw dw-right-arrow1"></span><span class="mtext">Logout</span>
                         </a>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -471,7 +474,7 @@
                 <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12" name="akun_id" id="akun_id">
-                         @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
+                        @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
                             <option value="{{ $item->id }}" {{ old('akun_id') == $item->id ? 'selected' : '' }}>
                                 {{ $item->kode }} - {{ $item->nama }}</option>
                         @endforeach
@@ -525,7 +528,7 @@
                     <input type="number" class="form-control" name="nilai" id="nilai"
                         placeholder="Masukan Nilai" value="{{ old('nilai') }}">
                 </div>
-                 <input type="hidden" name="status" value="approved">
+                <input type="hidden" name="status" value="approved">
             </div>
             <button type="submit" style="width:100px;" class="btn btn-success">Tambah</button>
         </form>

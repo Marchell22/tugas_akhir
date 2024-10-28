@@ -163,7 +163,7 @@
         </div>
         <div class="header-right">
             <div class="container">
-               
+
             </div>
             <div class="dashboard-setting user-notification">
                 <div class="dropdown">
@@ -214,8 +214,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
@@ -358,10 +357,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('logout') }}" class="dropdown-toggle no-arrow">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" class="dropdown-toggle no-arrow"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <span class="micon dw dw-right-arrow1"></span><span class="mtext">Logout</span>
                         </a>
-
                     </li>
 
                 </ul>
@@ -653,8 +656,9 @@
             return true; // Allow form submission
         }
     </script>
-        <script>
-        function openPopup(popupId, userId, userKelompokAkun, userKelompokLaporanPosisiKeuangan, userKode, userNama, postSaldo, postPenyesuaian, postLaporan) {
+    <script>
+        function openPopup(popupId, userId, userKelompokAkun, userKelompokLaporanPosisiKeuangan, userKode, userNama,
+            postSaldo, postPenyesuaian, postLaporan) {
             $('#editForm')[0].reset();
             $('#addForm')[0].reset();
 

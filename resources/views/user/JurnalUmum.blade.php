@@ -312,10 +312,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('logout') }}" class="dropdown-toggle no-arrow">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" class="dropdown-toggle no-arrow"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <span class="micon dw dw-right-arrow1"></span><span class="mtext">Logout</span>
                         </a>
-
                     </li>
                 </ul>
             </div>
@@ -589,7 +593,7 @@
             document.getElementById('overlay').style.display = 'none';
         }
     </script>
-     <script>
+    <script>
         function validateForm() {
             console.log("validateForm called"); // Debugging
 
