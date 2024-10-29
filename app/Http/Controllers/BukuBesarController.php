@@ -30,28 +30,33 @@ class BukuBesarController extends Controller
                 // Filter by period (1 Year, 1 Month, 1 Week)
                 $period = $request->input('periode');
                 $dateThreshold = null;
+                $currentdate = Carbon::now()->toDateString();
 
                 if ($period == 1) {
-                    $dateThreshold = Carbon::now()->subYear();
+                    $dateThreshold = Carbon::now()->subYear()->toDateString();
                 } elseif ($period == 2) {
-                    $dateThreshold = Carbon::now()->subMonth();
+                    $dateThreshold = Carbon::now()->subMonth()->toDateString();;
                 } elseif ($period == 3) {
-                    $dateThreshold = Carbon::now()->subWeek();
+                    $dateThreshold = Carbon::now()->subWeek()->toDateString();;
                 }
 
                 if ($dateThreshold) {
                     $jurnalUmumQuery->where('created_at', '>=', $dateThreshold);
                     $jurnalPenyesuaianQuery->where('created_at', '>=', $dateThreshold);
                 }
+                session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
             } elseif ($kriteria === 'tanggal') {
                 // Filter by specific date range
                 $tanggalAwal = $request->input('tanggal_awal');
                 $tanggalAkhir = $request->input('tanggal_akhir');
+                $dateThreshold = $tanggalAwal;
+                $currentdate = $tanggalAkhir;
 
                 if ($tanggalAwal && $tanggalAkhir) {
                     $jurnalUmumQuery->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir]);
                     $jurnalPenyesuaianQuery->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir]);
                 }
+                session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
             }
 
             // Get the results from both queries

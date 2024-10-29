@@ -289,7 +289,7 @@
 
                         </a>
                     </li>
-                     <li>
+                    <li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST"
                             style="display: none;">
                             @csrf
@@ -361,14 +361,16 @@
                         <div class="form-group row" id="tanggalOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                             <div class="col-sm-12 col-md-10">
-                                <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal">
+                                <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal"
+                                    onchange="validateTanggal()">
                             </div>
                         </div>
 
                         <div class="form-group row" id="tanggalAkhirOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                             <div class="col-sm-12 col-md-10">
-                                <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir">
+                                <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir"
+                                    onchange="validateTanggal()">
                             </div>
                         </div>
 
@@ -461,7 +463,29 @@
                     document.getElementById('tanggalAkhirOptions').style.display = 'flex';
                 }
             });
+
+            function validateTanggal() {
+                // Ambil nilai dari input Tanggal Awal dan Tanggal Akhir
+                const tanggalAwal = document.getElementById('tanggalAwal').value;
+                const tanggalAkhir = document.getElementById('tanggalAkhir').value;
+
+                // Periksa apakah kedua tanggal diisi
+                if (tanggalAwal && tanggalAkhir) {
+                    // Konversi nilai ke format Date agar bisa dibandingkan
+                    const dateAwal = new Date(tanggalAwal);
+                    const dateAkhir = new Date(tanggalAkhir);
+
+                    // Periksa apakah Tanggal Awal lebih besar dari Tanggal Akhir
+                    if (dateAwal > dateAkhir) {
+                        alert("Tanggal Awal harus melebihi atau sama dengan Tanggal Akhir.");
+
+                        // Reset nilai Tanggal Awal
+                        document.getElementById('tanggalAwal').value = '';
+                    }
+                }
+            }
         </script>
+
 
         <!-- js -->
         <script src="{{ asset('tmplt/vendors/scripts/core.js') }}"></script>

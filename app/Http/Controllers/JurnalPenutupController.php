@@ -19,16 +19,18 @@ class JurnalPenutupController extends Controller
         $kriteria = $request->input('kriteria');
         $periode = $request->input('periode');
         $dateThreshold = null;
+        $currentdate = Carbon::now()->toDateString();
 
         // Tentukan tanggal threshold berdasarkan periode jika diperlukan
         if ($kriteria === 'periode') {
             if ($periode == 1) {
-                $dateThreshold = Carbon::now()->subYear();
+                $dateThreshold = Carbon::now()->subYear()->toDateString();
             } elseif ($periode == 2) {
-                $dateThreshold = Carbon::now()->subMonth();
+                $dateThreshold = Carbon::now()->subMonth()->toDateString();
             } elseif ($periode == 3) {
-                $dateThreshold = Carbon::now()->subWeek();
+                $dateThreshold = Carbon::now()->subWeek()->toDateString();
             }
+            session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
         }
         foreach ($akunTransaksi as $akun) {
             $akunId = $akun->id;
@@ -45,11 +47,14 @@ class JurnalPenutupController extends Controller
             } elseif ($kriteria === 'tanggal') {
                 $tanggalAwal = $request->input('tanggal_awal');
                 $tanggalAkhir = $request->input('tanggal_akhir');
+                $dateThreshold = $tanggalAwal;
+                $currentdate = $tanggalAkhir;
 
                 if ($tanggalAwal && $tanggalAkhir) {
                     $jurnalUmumQuery->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir]);
                     $jurnalPenyesuaianQuery->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir]);
                 }
+                session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
             }
 
             // Gabungkan hasil query ke koleksi utama

@@ -102,6 +102,12 @@
                             <p><strong>Kode Akun :</strong>
                                 <span class="font-weight-900">{{ $akunTransaksi->kode }}</span>
                             </p>
+                             <p><strong>Tanggal Awal:</strong>
+                                <span class="font-weight-900">{{ $dataThreshold }}</span>
+                            </p>
+                             <p><strong>Tanggal Akhir :</strong>
+                                <span class="font-weight-900">{{ $currentdate }}</span>
+                            </p>
                         </div>
                     </div>
                 </div>

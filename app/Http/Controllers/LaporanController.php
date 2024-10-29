@@ -23,13 +23,22 @@ class LaporanController extends Controller
 
         // Tentukan tanggal threshold berdasarkan periode jika diperlukan
         if ($kriteria === 'periode') {
+            $currentdate = Carbon::now()->toDateString();
             if ($periode == 1) {
-                $dateThreshold = Carbon::now()->subYear();
+                $dateThreshold = Carbon::now()->subYear()->toDateString();
             } elseif ($periode == 2) {
-                $dateThreshold = Carbon::now()->subMonth();
+                $dateThreshold = Carbon::now()->subMonth()->toDateString();
             } elseif ($periode == 3) {
-                $dateThreshold = Carbon::now()->subWeek();
+                $dateThreshold = Carbon::now()->subWeek()->toDateString();
             }
+            session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
+        } elseif ($kriteria === 'tanggal') {
+            // Filter by specific date range
+            $tanggalAwal = $request->input('tanggal_awal');
+            $tanggalAkhir = $request->input('tanggal_akhir');
+            $dateThreshold = $tanggalAwal;
+            $currentdate = $tanggalAkhir;
+            session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
         }
         foreach ($akunTransaksi->where('kelompok_akun_id', 3) as $akun) {
             $akunId = $akun->id;
@@ -196,13 +205,22 @@ class LaporanController extends Controller
 
         // Tentukan tanggal threshold berdasarkan periode jika diperlukan
         if ($kriteria === 'periode') {
+            $currentdate = Carbon::now()->toDateString();
             if ($periode == 1) {
-                $dateThreshold = Carbon::now()->subYear();
+                $dateThreshold = Carbon::now()->subYear()->toDateString();
             } elseif ($periode == 2) {
-                $dateThreshold = Carbon::now()->subMonth();
+                $dateThreshold = Carbon::now()->subMonth()->toDateString();
             } elseif ($periode == 3) {
-                $dateThreshold = Carbon::now()->subWeek();
+                $dateThreshold = Carbon::now()->subWeek()->toDateString();
             }
+            session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
+        } elseif ($kriteria === 'tanggal') {
+            // Filter by specific date range
+            $tanggalAwal = $request->input('tanggal_awal');
+            $tanggalAkhir = $request->input('tanggal_akhir');
+            $dateThreshold = $tanggalAwal;
+            $currentdate = $tanggalAkhir;
+            session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
         }
 
         // Loop untuk akun dengan kelompok_akun_id 4 (Pendapatan)
@@ -329,14 +347,24 @@ class LaporanController extends Controller
         $dateThreshold = null;
 
         // Tentukan tanggal threshold berdasarkan periode jika diperlukan
+        // Tentukan tanggal threshold berdasarkan periode jika diperlukan
         if ($kriteria === 'periode') {
+            $currentdate = Carbon::now()->toDateString();
             if ($periode == 1) {
-                $dateThreshold = Carbon::now()->subYear();
+                $dateThreshold = Carbon::now()->subYear()->toDateString();
             } elseif ($periode == 2) {
-                $dateThreshold = Carbon::now()->subMonth();
+                $dateThreshold = Carbon::now()->subMonth()->toDateString();
             } elseif ($periode == 3) {
-                $dateThreshold = Carbon::now()->subWeek();
+                $dateThreshold = Carbon::now()->subWeek()->toDateString();
             }
+            session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
+        } elseif ($kriteria === 'tanggal') {
+            // Filter by specific date range
+            $tanggalAwal = $request->input('tanggal_awal');
+            $tanggalAkhir = $request->input('tanggal_akhir');
+            $dateThreshold = $tanggalAwal;
+            $currentdate = $tanggalAkhir;
+            session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
         }
         foreach ($akunTransaksi as $akun) {
             $akunId = $akun->id;

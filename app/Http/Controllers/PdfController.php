@@ -32,9 +32,13 @@ class PdfController extends Controller
         // Mengambil data dari sesi
         $results = session('results', collect());
         $akunTransaksiList = session('akunTransaksiList', collect());
+        $dataThreshold = session('dataThreshold', collect());
+        $currentdate = session('currentdate', collect());
         $data = [
             'results' => $results,
             'akunTransaksiList' => $akunTransaksiList,
+            'dataThreshold' => $dataThreshold,
+            'currentdate' => $currentdate,
         ];
 
         // Load view dengan data dan generate PDF
@@ -49,10 +53,14 @@ class PdfController extends Controller
         $results = session('results', collect());
         $akunTransaksi = session('akunTransaksi', collect());
         $kategori = session('kategori', collect());
+        $dataThreshold = session('dataThreshold', collect());
+        $currentdate = session('currentdate', collect());
         $data = [
             'results' => $results,
             'akunTransaksi' => $akunTransaksi,
             'kategori' => $kategori,
+            'dataThreshold' => $dataThreshold,
+            'currentdate' => $currentdate,
         ];
         // Load view dengan data dan generate PDF
         $pdf = Pdf::loadView('pdf.laporanNeraca', $data)->setPaper('A4', 'portrait'); // A4 dengan orientasi portrait;
@@ -65,9 +73,13 @@ class PdfController extends Controller
         // Mengambil data dari sesi
         $aggregatedResults = session('aggregatedResults', collect());
         $akunTransaksi = session('akunTransaksi', collect());
+        $dataThreshold = session('dataThreshold', collect());
+        $currentdate = session('currentdate', collect());
         $data = [
             'aggregatedResults' => $aggregatedResults,
             'akunTransaksi' => $akunTransaksi,
+            'dataThreshold' => $dataThreshold,
+            'currentdate' => $currentdate,
         ];
         // Load view dengan data dan generate PDF
         $pdf = Pdf::loadView('pdf.laporanPerubahanEkuitas', $data)->setPaper('A4', 'portrait'); // A4 dengan orientasi portrait;
@@ -80,9 +92,13 @@ class PdfController extends Controller
         // Mengambil data dari sesi
         $aggregatedResults = session('aggregatedResults', collect());
         $akunTransaksi = session('akunTransaksi', collect());
+        $dataThreshold = session('dataThreshold', collect());
+        $currentdate = session('currentdate', collect());
         $data = [
             'aggregatedResults' => $aggregatedResults,
             'akunTransaksi' => $akunTransaksi,
+            'dataThreshold' => $dataThreshold,
+            'currentdate' => $currentdate,
         ];
         // Load view dengan data dan generate PDF
         $pdf = Pdf::loadView('pdf.laporanLabaRugi', $data)->setPaper('A4', 'portrait'); // A4 dengan orientasi portrait;
@@ -95,9 +111,13 @@ class PdfController extends Controller
         // Mengambil data dari sesi
         $aggregatedResults = session('aggregatedResults', collect());
         $akunTransaksi = session('akunTransaksi', collect());
+        $dataThreshold = session('dataThreshold', collect());
+        $currentdate = session('currentdate', collect());
         $data = [
             'aggregatedResults' => $aggregatedResults,
             'akunTransaksi' => $akunTransaksi,
+            'dataThreshold' => $dataThreshold,
+            'currentdate' => $currentdate,
         ];
         // Load view dengan data dan generate PDF
         $pdf = Pdf::loadView('pdf.laporanPosisiKeuangan', $data)->setPaper('A4', 'portrait'); // A4 dengan orientasi portrait;
@@ -110,9 +130,13 @@ class PdfController extends Controller
         // Mengambil data dari sesi
         $aggregatedResults = session('aggregatedResults', collect());
         $akunTransaksi = session('akunTransaksi', collect());
+        $dataThreshold = session('dataThreshold', collect());
+        $currentdate = session('currentdate', collect());
         $data = [
             'aggregatedResults' => $aggregatedResults,
             'akunTransaksi' => $akunTransaksi,
+            'dataThreshold' => $dataThreshold,
+            'currentdate' => $currentdate,
         ];
         // Load view dengan data dan generate PDF
         $pdf = Pdf::loadView('pdf.laporanJurnalPenutup', $data)->setPaper('A4', 'portrait'); // A4 dengan orientasi portrait;

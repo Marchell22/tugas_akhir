@@ -161,7 +161,7 @@
         </div>
         <div class="header-right">
             <div class="container">
-                
+
             </div>
             <div class="dashboard-setting user-notification">
                 <div class="dropdown">
@@ -212,8 +212,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="">
-                        <label class="custom-control-label" for="sidebaricon-1"><i
-                                class="fa fa-angle-down"></i></label>
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon"
@@ -354,7 +353,7 @@
 
                         </a>
                     </li>
-                   <li>
+                    <li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST"
                             style="display: none;">
                             @csrf
@@ -386,7 +385,7 @@
                                         <p class="mb-0 text-sm">Menu Validasi</p>
                                     </div>
                                     <div class="mb-3">
-                                          <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
+                                        <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
                                                 class="icon-copy ion-ios-calendar-outline"
                                                 style="font-size: 30px; color:white"></i></a>
                                         <a class="btn btn-success show-modal"
@@ -537,20 +536,22 @@
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="awal" value="{{ request('awal') }}">
+                    <input class="form-control" id="tanggalAwal" type="date" name="awal"
+                        value="{{ request('awal') }}" onchange="validateTanggal()">
                 </div>
             </div>
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="akhir" value="{{ request('akhir') }}">
+                    <input class="form-control" id="tanggalAkhir" type="date" name="akhir"
+                        value="{{ request('akhir') }}" onchange="validateTanggal()">
                 </div>
             </div>
             <button type='submit' style="width:100px;" class="btn btn-primary">Cari</button>
 
         </form>
     </div>
-    
+
     <script>
         function openPopup(popupId) {
             $('#addForm')[0].reset();
@@ -565,6 +566,27 @@
         }
     </script>
     <script>
+        function validateTanggal() {
+            // Ambil nilai dari input Tanggal Awal dan Tanggal Akhir
+            const tanggalAwal = document.getElementById('tanggalAwal').value;
+            const tanggalAkhir = document.getElementById('tanggalAkhir').value;
+
+            // Periksa apakah kedua tanggal diisi
+            if (tanggalAwal && tanggalAkhir) {
+                // Konversi nilai ke format Date agar bisa dibandingkan
+                const dateAwal = new Date(tanggalAwal);
+                const dateAkhir = new Date(tanggalAkhir);
+
+                // Periksa apakah Tanggal Awal lebih besar dari Tanggal Akhir
+                if (dateAwal > dateAkhir) {
+                    alert("Tanggal Awal harus melebihi atau sama dengan Tanggal Akhir.");
+
+                    // Reset nilai Tanggal Awal
+                    document.getElementById('tanggalAwal').value = '';
+                }
+            }
+        }
+
         function validateForm() {
             console.log("validateForm called"); // Debugging
 

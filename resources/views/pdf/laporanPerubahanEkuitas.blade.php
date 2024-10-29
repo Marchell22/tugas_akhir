@@ -89,6 +89,20 @@
                 Perubahan Ekuitas
             </h2>
         </div>
+        <section class="store-user mt-5">
+            <div class="col-10">
+                <div class="row extra-info pt-3">
+                    <div class="col-7">
+                        <p><strong>Tanggal Awal:</strong>
+                            <span class="font-weight-900">{{ $dataThreshold }}</span>
+                        </p>
+                        <p><strong>Tanggal Akhir :</strong>
+                            <span class="font-weight-900">{{ $currentdate }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Wrapping the table in a div to center it -->
         <div class="table-container">
             @php

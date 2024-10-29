@@ -17,16 +17,24 @@ class NeracaLajurController extends Controller
         $kategori = $request->input('kategori');
         $periode = $request->input('periode');
         $dateThreshold = null;
-
         // Tentukan tanggal threshold berdasarkan periode jika diperlukan
         if ($kriteria === 'periode') {
+            $currentdate = Carbon::now()->toDateString();
             if ($periode == 1) {
-                $dateThreshold = Carbon::now()->subYear();
+                $dateThreshold = Carbon::now()->subYear()->toDateString();
             } elseif ($periode == 2) {
-                $dateThreshold = Carbon::now()->subMonth();
+                $dateThreshold = Carbon::now()->subMonth()->toDateString();
             } elseif ($periode == 3) {
-                $dateThreshold = Carbon::now()->subWeek();
+                $dateThreshold = Carbon::now()->subWeek()->toDateString();
             }
+            session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
+        } elseif ($kriteria === 'tanggal') {
+            // Filter by specific date range
+            $tanggalAwal = $request->input('tanggal_awal');
+            $tanggalAkhir = $request->input('tanggal_akhir');
+            $dateThreshold = $tanggalAwal;
+            $currentdate = $tanggalAkhir;
+            session(['dataThreshold' => $dateThreshold, 'currentdate' => $currentdate]);
         }
 
         // Query dan filter untuk Jurnal Umum

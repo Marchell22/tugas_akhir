@@ -545,13 +545,15 @@
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="awal" value="{{ request('awal') }}">
+                    <input class="form-control" id="tanggalAwal" type="date" name="awal"
+                        value="{{ request('awal') }}" onchange="validateTanggal()">
                 </div>
             </div>
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="akhir" value="{{ request('akhir') }}">
+                    <input class="form-control" id="tanggalAkhir" type="date" name="akhir"
+                        value="{{ request('akhir') }}" onchange="validateTanggal()">
                 </div>
             </div>
             <button type='submit' style="width:100px;" class="btn btn-primary">Cari</button>
@@ -636,6 +638,27 @@
 
 
     <script>
+        function validateTanggal() {
+            // Ambil nilai dari input Tanggal Awal dan Tanggal Akhir
+            const tanggalAwal = document.getElementById('tanggalAwal').value;
+            const tanggalAkhir = document.getElementById('tanggalAkhir').value;
+
+            // Periksa apakah kedua tanggal diisi
+            if (tanggalAwal && tanggalAkhir) {
+                // Konversi nilai ke format Date agar bisa dibandingkan
+                const dateAwal = new Date(tanggalAwal);
+                const dateAkhir = new Date(tanggalAkhir);
+
+                // Periksa apakah Tanggal Awal lebih besar dari Tanggal Akhir
+                if (dateAwal > dateAkhir) {
+                    alert("Tanggal Awal harus melebihi atau sama dengan Tanggal Akhir.");
+
+                    // Reset nilai Tanggal Awal
+                    document.getElementById('tanggalAwal').value = '';
+                }
+            }
+        }
+
         function showImagePopup(imageUrl) {
             const overlay = document.createElement('div');
             overlay.style.position = 'fixed';
