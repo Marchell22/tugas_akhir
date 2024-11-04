@@ -327,8 +327,10 @@
                                 <select class="custom-select col-12" name="akun" required>
                                     <option value="" selected>Pilih...</option>
                                     @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
-                                        <option value="{{ $item->id }}">{{ $item->kode }} -
-                                            {{ $item->nama }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ request('akun') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->kode }} - {{ $item->nama }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -339,8 +341,10 @@
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12" id="kriteriaSelect" name="kriteria" required>
                                     <option value="" selected>Pilih...</option>
-                                    <option value="periode">Periode</option>
-                                    <option value="tanggal">Tanggal</option>
+                                    <option value="periode" {{ request('kriteria') == 'periode' ? 'selected' : '' }}>
+                                        Periode</option>
+                                    <option value="tanggal" {{ request('kriteria') == 'tanggal' ? 'selected' : '' }}>
+                                        Tanggal</option>
                                 </select>
                             </div>
                         </div>
@@ -350,19 +354,21 @@
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12" name="periode">
                                     <option value="" selected>Pilih...</option>
-                                    <option value="1">1 Tahun Terakhir</option>
-                                    <option value="2">1 Bulan Terakhir</option>
-                                    <option value="3">1 Minggu Terakhir</option>
+                                    <option value="1" {{ request('periode') == '1' ? 'selected' : '' }}>1 Tahun
+                                        Terakhir</option>
+                                    <option value="2" {{ request('periode') == '2' ? 'selected' : '' }}>1 Bulan
+                                        Terakhir</option>
+                                    <option value="3" {{ request('periode') == '3' ? 'selected' : '' }}>1 Minggu
+                                        Terakhir</option>
                                 </select>
                             </div>
                         </div>
 
-                        <!-- Tanggal options (hidden by default) -->
                         <div class="form-group row" id="tanggalOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                             <div class="col-sm-12 col-md-10">
                                 <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal"
-                                    onchange="validateTanggal()">
+                                    value="{{ request('tanggal_awal') }}" onchange="validateTanggal()">
                             </div>
                         </div>
 
@@ -370,12 +376,12 @@
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                             <div class="col-sm-12 col-md-10">
                                 <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir"
-                                    onchange="validateTanggal()">
+                                    value="{{ request('tanggal_akhir') }}" onchange="validateTanggal()">
                             </div>
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-primary"style="width: 8%">Cari</button>
+                            <button type="submit" class="btn btn-primary" style="width: 8%">Cari</button>
                         </div>
                     </form>
 
@@ -447,6 +453,22 @@
         @endif
         <!-- Periode options (hidden by default) -->
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const kriteriaSelect = document.getElementById('kriteriaSelect');
+                const periodeOptions = document.getElementById('periodeOptions');
+                const tanggalOptions = document.getElementById('tanggalOptions');
+                const tanggalAkhirOptions = document.getElementById('tanggalAkhirOptions');
+
+                function toggleFields() {
+                    const kriteria = kriteriaSelect.value;
+                    periodeOptions.style.display = kriteria === 'periode' ? 'block' : 'none';
+                    tanggalOptions.style.display = tanggalAkhirOptions.style.display = kriteria === 'tanggal' ?
+                        'block' : 'none';
+                }
+
+                kriteriaSelect.addEventListener('change', toggleFields);
+                toggleFields(); // Run once on page load
+            });
             document.getElementById('kriteriaSelect').addEventListener('change', function() {
                 var selectedKriteria = this.value;
 

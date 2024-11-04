@@ -87,11 +87,11 @@
         <div style="text-align:center; margin-top: 20px;">
             <h2>
                 @if ($kategori == 1)
-                    Neraca Lajur
+                    Neraca Saldo
                 @elseif($kategori == 2)
-                    Neraca Lajur Penyesuaian
+                    Neraca Saldo Penyesuaian
                 @elseif($kategori == 3)
-                    Neraca Lajur Disesuaikan
+                    Neraca Saldo Disesuaikan
                 @else
                     {{ $kategori }}
                 @endif

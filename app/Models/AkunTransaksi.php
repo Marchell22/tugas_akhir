@@ -9,7 +9,7 @@ class AkunTransaksi extends Model
 
 {
     use HasFactory;
-    protected $table    = 'akunTransaksi';
+    protected $table    = 'akuntransaksi';
     protected $fillable = [
         'kelompok_akun_id',
         'kode',

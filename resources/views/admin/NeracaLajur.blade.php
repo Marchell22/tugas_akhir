@@ -326,19 +326,25 @@
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12" name="kategori">
                                     <option value="" selected>Pilih...</option>
-                                    <option value="1">Neraca Lajur</option>
-                                    <option value="2">Penyesuaian</option>
-                                    <option value="3">Neraca Lajur yang Disesuaikan</option>
+                                    <option value="1" {{ request('kategori') == '1' ? 'selected' : '' }}>Neraca
+                                        Saldo</option>
+                                    <option value="2" {{ request('kategori') == '2' ? 'selected' : '' }}>
+                                        Penyesuaian</option>
+                                    <option value="3" {{ request('kategori') == '3' ? 'selected' : '' }}>Neraca
+                                        Saldo yang Disesuaikan</option>
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12" id="kriteriaSelect" name="kriteria" required>
                                     <option value="" selected>Pilih...</option>
-                                    <option value="periode">Periode</option>
-                                    <option value="tanggal">Tanggal</option>
+                                    <option value="periode" {{ request('kriteria') == 'periode' ? 'selected' : '' }}>
+                                        Periode</option>
+                                    <option value="tanggal" {{ request('kriteria') == 'tanggal' ? 'selected' : '' }}>
+                                        Tanggal</option>
                                 </select>
                             </div>
                         </div>
@@ -348,9 +354,12 @@
                             <div class="col-sm-12 col-md-10">
                                 <select class="custom-select col-12" name="periode">
                                     <option value="" selected>Pilih...</option>
-                                    <option value="1">1 Tahun Terakhir</option>
-                                    <option value="2">1 Bulan Terakhir</option>
-                                    <option value="3">1 Minggu Terakhir</option>
+                                    <option value="1" {{ request('periode') == '1' ? 'selected' : '' }}>1 Tahun
+                                        Terakhir</option>
+                                    <option value="2" {{ request('periode') == '2' ? 'selected' : '' }}>1 Bulan
+                                        Terakhir</option>
+                                    <option value="3" {{ request('periode') == '3' ? 'selected' : '' }}>1 Minggu
+                                        Terakhir</option>
                                 </select>
                             </div>
                         </div>
@@ -360,7 +369,7 @@
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                             <div class="col-sm-12 col-md-10">
                                 <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal"
-                                    onchange="validateTanggal()">
+                                    value="{{ request('tanggal_awal') }}" onchange="validateTanggal()">
                             </div>
                         </div>
 
@@ -368,10 +377,9 @@
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                             <div class="col-sm-12 col-md-10">
                                 <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir"
-                                    onchange="validateTanggal()">
+                                    value="{{ request('tanggal_akhir') }}" onchange="validateTanggal()">
                             </div>
                         </div>
-
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button type="submit" class="btn btn-outline-info"style="width: 10%">Cari</button>
                         </div>
@@ -487,6 +495,22 @@
                 document.getElementById('tanggalOptions').style.display = 'flex';
                 document.getElementById('tanggalAkhirOptions').style.display = 'flex';
             }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const kriteriaSelect = document.getElementById('kriteriaSelect');
+            const periodeOptions = document.getElementById('periodeOptions');
+            const tanggalOptions = document.getElementById('tanggalOptions');
+            const tanggalAkhirOptions = document.getElementById('tanggalAkhirOptions');
+
+            function toggleFields() {
+                const kriteria = kriteriaSelect.value;
+                periodeOptions.style.display = kriteria === 'periode' ? 'block' : 'none';
+                tanggalOptions.style.display = tanggalAkhirOptions.style.display = kriteria === 'tanggal' ?
+                    'block' : 'none';
+            }
+
+            kriteriaSelect.addEventListener('change', toggleFields);
+            toggleFields(); // Initial check on page load
         });
     </script>
     <!-- js -->

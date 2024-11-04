@@ -419,7 +419,6 @@
                                     {{-- <th class="table-plus datatable-nosort">Name</th> --}}
                                     <th>No</th>
                                     <th class="table-plus datatable-nosort">Nama</th>
-                                    <th class="table-plus datatable-nosort">Username</th>
                                     <th class="table-plus datatable-nosort">Email</th>
                                     <th class="table-plus datatable-nosort">Role</th>
                                     <th class="datatable-nosort">Action</th>
@@ -430,7 +429,6 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $d->name }}</td>
-                                        <td>{{ $d->username }} </td>
                                         <td>{{ $d->email }}</td>
                                         <td>{{ $d->role }}</td>
                                         <td>
@@ -441,7 +439,7 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                     <a class="dropdown-item"
-                                                        onclick="openPopup('popup1', '{{ $d->id }}', '{{ $d->name }}', '{{ $d->email }}', '{{ $d->username }}', '{{ $d->role }}')">
+                                                        onclick="openPopup('popup1', '{{ $d->id }}', '{{ $d->name }}', '{{ $d->email }}', '{{ $d->role }}')">
                                                         <i class="dw dw-edit2"></i> Edit
                                                     </a>
                                                     <form
@@ -497,16 +495,6 @@
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label" for="username">Username</label>
-                <div class="col-sm-12 col-md-10">
-                    <input type="text" class="form-control" placeholder="Masukan Username" id="username"
-                        name="username" value="{{ old('username') }}">
-                    @error('username')
-                        <small>{{ $message }}</small>
-                    @enderror
-                </div>
-            </div>
 
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label" for="password">Password</label>
@@ -561,13 +549,6 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-12 col-md-2 col-form-label">Username</label>
-                <div class="col-sm-12 col-md-10">
-                    <input type="text" name="username" id="editUsername" class="form-control"
-                        placeholder="Masukan Username">
-                </div>
-            </div>
-            <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Password</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="password" name="password" class="form-control"
@@ -602,7 +583,7 @@
 
         }
 
-        function openPopup(popupId, userId, userName, userEmail, userUsername, userRole) {
+        function openPopup(popupId, userId, userName, userEmail, userRole) {
             document.getElementById('popup1').style.display = "block";
             document.getElementById("overlay").style.display = "block";
 
@@ -610,7 +591,6 @@
             document.getElementById('editUserId').value = userId;
             document.getElementById('editName').value = userName;
             document.getElementById('editEmail').value = userEmail;
-            document.getElementById('editUsername').value = userUsername;
             document.getElementById('editRole').value = userRole;
 
             document.getElementById('editForm').action = "{{ url('admin/AkunPengguna/update') }}/" + userId;
@@ -625,12 +605,11 @@
             // Get form fields
             var name = document.getElementById('name').value;
             var email = document.getElementById('email').value;
-            var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
             var role = document.getElementById('role').value;
 
             // Check if all fields are filled
-            if (name === "" || email === "" || username === "" || password === "" || role === "") {
+            if (name === "" || email === "" || password === "" || role === "") {
                 alert("Semua field harus diisi.");
                 return false; // Prevent form submission
             }
