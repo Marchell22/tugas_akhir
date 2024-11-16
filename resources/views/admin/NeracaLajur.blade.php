@@ -444,15 +444,6 @@
                                     <th>{{ number_format($totalDebit, 0, ',', '.') }}</th>
                                     <th>{{ number_format($totalKredit, 0, ',', '.') }}</th>
                                 </tr>
-                                <tr>
-                                    @php
-                                        $total = $totalDebit - $totalKredit;
-                                    @endphp
-                                    <th colspan="2" class="text-right">Selisih</th>
-                                    <th colspan="2" class="text-right" id="selisih_neraca_saldo">
-                                        {{ number_format($total, 0, ',', '.') }}</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

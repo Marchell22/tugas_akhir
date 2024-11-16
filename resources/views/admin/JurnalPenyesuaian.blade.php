@@ -680,9 +680,9 @@
             popup.style.padding = '10px';
             popup.style.zIndex = '1000';
             popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.5)';
-            popup.style.maxWidth = '15%';
-            popup.style.maxHeight = '90%';
-            popup.style.overflow = 'hidden';
+            popup.style.maxWidth = '55%';
+            popup.style.maxHeight = '100%';
+              popup.style.overflow = 'auto'; // Allow scrolling for overflow content
 
             // Create an image element
             const img = document.createElement('img');
@@ -692,17 +692,24 @@
 
             // Create a close button
             const closeBtn = document.createElement('button');
-            closeBtn.innerText = 'Close';
-            closeBtn.style.display = 'block';
-            closeBtn.style.marginTop = '10px';
-            closeBtn.style.marginLeft = 'auto';
-            closeBtn.style.marginRight = 'auto';
+            closeBtn.innerText = '✖'; // Use an "X" icon
+            closeBtn.style.position = 'absolute';
+            closeBtn.style.top = '10px';
+            closeBtn.style.right = '10px';
             closeBtn.style.border = 'none';
-            closeBtn.style.backgroundColor = '#f00';
-            closeBtn.style.color = '#fff';
+            closeBtn.style.backgroundColor = 'transparent';
+            closeBtn.style.color = '#f00';
             closeBtn.style.cursor = 'pointer';
-            closeBtn.style.padding = '5px 10px';
-            closeBtn.style.borderRadius = '5px';
+            closeBtn.style.fontSize = '18px';
+            closeBtn.style.padding = '5px';
+            closeBtn.style.borderRadius = '50%';
+            closeBtn.style.width = '30px';
+            closeBtn.style.height = '30px';
+            closeBtn.style.display = 'flex';
+            closeBtn.style.alignItems = 'center';
+            closeBtn.style.justifyContent = 'center';
+
+            // Set the close button's click event to remove the overlay and popup
             closeBtn.onclick = function() {
                 document.body.removeChild(overlay);
                 document.body.removeChild(popup);
@@ -722,6 +729,7 @@
                 document.body.removeChild(popup);
             };
         }
+
 
         function closeImagePopup() {
             document.getElementById('imagePopup').style.display = 'none';

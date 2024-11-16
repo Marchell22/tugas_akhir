@@ -30,7 +30,6 @@
 
     <body class="hold-transition login-page">
         <div class="container-fluid">
-
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-4">
                     <div class="card">
@@ -47,16 +46,24 @@
                                     <label for="email">Email:</label>
                                     <input type="text" name="email" class="form-control" id="email" required>
                                 </div>
-                                @error('username')
-                                    <small>{{ $email }}</small>
-                                @enderror
+                                @if ($errors->has('email'))
+                                    <div class="text-danger mt-2">
+                                        @foreach ($errors->get('email') as $message)
+                                            <p>{{ $message }}</p>
+                                        @endforeach
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="password">Password:</label>
                                     <input type="password" name="password" class="form-control" id="password" required>
                                 </div>
-                                @error('password')
-                                    <small>{{ $password }}</small>
-                                @enderror
+                                @if ($errors->has('password'))
+                                    <div class="text-danger mt-2">
+                                        @foreach ($errors->get('password') as $message)
+                                            <p>{{ $message }}</p>
+                                        @endforeach
+                                    </div>
+                                @endif
                                 <div class="flex items-center justify-end mt-4">
                                     @if (Route::has('password.request'))
                                         <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
