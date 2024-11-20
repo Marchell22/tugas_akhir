@@ -432,7 +432,7 @@
                                     {{-- <th class="table-plus datatable-nosort">Name</th> --}}
                                     <th class="table-plus sort_disabled">Bidang</th>
                                     <th class="table-plus datatable-nosort">Kegiatan</th>
-                                    <th class="table-plus datatable-nosort">Waktu Pelakasanan</th>
+                                    <th class="table-plus datatable-nosort">Periode</th>
                                     <th class="table-plus datatable-nosort">Output</th>
                                     <th class="datatable-nosort">Action</th>
                                 </tr>
@@ -453,7 +453,7 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 <a class="dropdown-item"href="{{ route('admin.downloadRAB', $d->id)}}"><i
-                                                        class="dw dw-eye"></i>
+                                                        class="dw dw-download1"></i>
                                                     Download</a>
                                                 <a class="dropdown-item"
                                                     href="{{ route('admin.EditRAB', $d->id) }}"><i

@@ -97,7 +97,7 @@
                         <p><strong>Kegiatan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> :
                             <span>{{ $rencanaAnggaranBiaya->kegiatan }}</span>
                         </p>
-                        <p><strong>Pelaksanaan &nbsp;</strong> :
+                        <p><strong>Periode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> :
                             <span>{{ $rencanaAnggaranBiaya->waktu_pelaksanaan }}</span>
                         </p>
                         <p><strong>Output
@@ -123,14 +123,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($uraianPekerjaan as $uraian)
+                    @foreach ($uraianPekerjaan as $index => $uraian)
                         <tr class="foreach-border">
-                            <td>{{ $uraian['id'] }}</td>
+                            <td>{{ $index + 1 }}</td> <!-- Menampilkan urutan nomor dimulai dari 1 -->
                             <td>{{ $uraian['uraian_pekerjaan'] }}</td>
                             <td>{{ $uraian['satuan'] }}</td>
                             <td>{{ $uraian['volume'] }}</td>
-                            <td>Rp {{ number_format($uraian['harga_satuan'], 0, ',', '.') }}</td>
-                            <td>Rp {{ number_format($uraian['total_harga'], 0, ',', '.') }}</td>
+                            <td>{{ $uraian['harga_satuan'] }}</td>
+                            <td>{{ $uraian['total_harga'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -450,7 +450,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="waktu_pelaksanaan">Waktu Pelaksanaan</label>
+                                                <label for="waktu_pelaksanaan">Periode</label>
                                                 <input type="text" class="form-control" id="waktu_pelaksanaan"
                                                     name="waktu_pelaksanaan"
                                                     value="{{ $rencanaAnggaranBiaya->waktu_pelaksanaan }}" required>
@@ -598,12 +598,14 @@
                                 console.log('Error:', xhr.responseText);
                             }
                         });
+                        $row.remove();
+                    } else {
+                        // Jika tombol Cancel ditekan, tidak ada yang terjadi
+                        console.log('Deletion cancelled');
                     }
                 }
             });
-            $('#table').find('tbody').on('click', '.deleteRow', function() {
-                $(this).closest('tr').remove();
-            });
+
 
             $(document).ready(function() {
                 $('.model-popup').on('submit', function(e) {
@@ -647,7 +649,7 @@
                             window.location.href = response.redirect_url;
                         },
                         error: function(xhr) {
-                            console.log('Error:', xhr.responseText);
+                            alert('Isi Data:', xhr.responseText);
                         }
                     });
                 });
