@@ -43,24 +43,24 @@ class AkunPenggunaController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Find the user by ID
+        $user = User::find($id);
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($id),
-            ], // Validasi unik untuk kolom email
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable',
             'role' => 'required|in:admin,user'  // Ensure role values are valid
         ]);
+        $request->validate([
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'name' => 'required',
+        // Validasi lainnya
+         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator);
         }
-
-        // Find the user by ID
-        $user = User::find($id);
 
         if (!$user) {
             return redirect()->route('admin.AkunPengguna')->with('error', 'User not found.');
@@ -81,6 +81,21 @@ class AkunPenggunaController extends Controller
 
         return redirect()->route('admin.AkunPengguna')->with('success', 'Data pengguna berhasil diperbarui.');
     }
+    public function checkEmailEdit(Request $request)
+{
+
+    $email = $request->email;
+
+    // Check if the email exists in the database
+    $exists = User::where('email', $email)->exists();
+
+    return response()->json([
+        'exists' => $exists
+    ]);
+}
+
+
+
 
     public function delete($id)
     {

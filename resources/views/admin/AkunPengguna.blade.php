@@ -4,6 +4,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Sistem Informasi Akutansi - PT Sinar Kaliman Sehat</title>
 
     <!-- Site favicon -->
@@ -653,9 +654,9 @@
             return isAvailable;
         }
         document.getElementById('editForm').addEventListener('submit', function(e) {
-            const emailInput = document.getElementById('editEmail');
-            const originalEmail = emailInput.getAttribute('data-original-email');
-            const email = emailInput.value;
+            const email = document.getElementById('editEmail').value;
+            const originalEmail = document.getElementById('editEmail').dataset
+            .originalEmail; // This assumes the original email is stored as a data attribute
 
             // Simple check for empty email
             if (!email) {
@@ -664,14 +665,37 @@
                 return;
             }
 
-            // Check if the email is the same as the original
+            // Check if the email has been changed
             if (email === originalEmail) {
-                alert('Email tidak boleh sama dengan email sebelumnya!');
+                alert('Tidak ada perubahan pada email!');
                 e.preventDefault();
                 return;
             }
 
-            // Additional checks can go here
+            // You can add an AJAX request here to check if the email already exists in the database
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Editcheck-email', // Replace with the correct route
+                data: {
+                    email: email,
+                    _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
+                },
+                success: function(response) {
+                    if (response.exists) {
+                        alert('Email sudah digunakan!');
+                        e.preventDefault(); // Prevent form submission
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX request failed!');
+                    console.error('Status: ' + status);
+                    console.error('Error: ' + error);
+                    console.error('Response Text: ' + xhr
+                    .responseText); // View the full response from the server
+                     alert('Email sudah digunakan!');
+                }
+
+            });
         });
     </script>
 
