@@ -25,7 +25,7 @@ class PdfController extends Controller
         $pdf = Pdf::loadView('pdf.laporanRAB', $data)->setPaper('A4', 'portrait'); // A4 dengan orientasi portrait;
 
         // Download PDF dengan nama invoice.pdf
-        return $pdf->download('invoice.pdf');
+        return $pdf->download('LaporanRAB.pdf');
     }
     public function downloadbukubesar()
     {

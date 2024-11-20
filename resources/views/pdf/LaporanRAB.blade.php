@@ -129,11 +129,23 @@
                             <td>{{ $uraian['uraian_pekerjaan'] }}</td>
                             <td>{{ $uraian['satuan'] }}</td>
                             <td>{{ $uraian['volume'] }}</td>
-                            <td>{{ $uraian['harga_satuan'] }}</td>
-                            <td>{{ $uraian['total_harga'] }}</td>
+                            <td>Rp {{ number_format($uraian['harga_satuan'], 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($uraian['total_harga'], 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    @php
+                        $totalJumlah = array_sum(array_column($uraianPekerjaan, 'total_harga'));
+                    @endphp
+                    <tr>
+                        <td colspan="5" style="text-align: right; font-weight: bold;">Total Jumlah:</td>
+                        <td style="font-weight: bold; text-align: center; vertical-align: middle;">
+                            Rp {{ number_format($totalJumlah, 0, ',', '.') }}
+                        </td>
+
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
