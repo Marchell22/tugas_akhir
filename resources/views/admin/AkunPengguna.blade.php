@@ -667,8 +667,6 @@
 
             // Check if the email has been changed
             if (email === originalEmail) {
-                alert('Tidak ada perubahan pada email!');
-                e.preventDefault();
                 return;
             }
 
