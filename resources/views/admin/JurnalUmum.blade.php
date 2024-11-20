@@ -681,7 +681,7 @@
             popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.5)';
             popup.style.maxWidth = '55%';
             popup.style.maxHeight = '100%';
-              popup.style.overflow = 'auto'; // Allow scrolling for overflow content
+            popup.style.overflow = 'auto'; // Allow scrolling for overflow content
 
             // Create an image element
             const img = document.createElement('img');
@@ -776,7 +776,23 @@
 
                 existingImageContainer.appendChild(imgElement);
             }
+            $('#editForm').on('submit', function(e) {
+                // Ambil nilai input dari form
+                const userId = $('#editUserId').val();
+                const akunId = $('#editAkun_id').val();
+                const tanggal = $('#editTanggal').val();
+                const keterangan = $('#editKeterangan').val();
+                const nilai = $('#editNilai').val();
 
+                // Cek jika salah satu nilai kosong
+                if (!userId || !akunId || !tanggal || !keterangan || !nilai) {
+                    e.preventDefault(); // Cegah pengiriman form
+                    alert('Semua data harus diisi. Tidak boleh ada kolom kosong.');
+                    return;
+                }
+
+                // Jika semua input valid, form akan dikirim
+            });
 
             // Set form action
             $('#editForm').attr('action', "{{ url('admin/JurnalUmum/update') }}/" + userId);
