@@ -452,9 +452,6 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item"href="{{ route('admin.LaporanRAB', $d->id)}}"><i
-                                                        class="dw dw-eye"></i>
-                                                    Detail Data</a>
                                                 <a class="dropdown-item"href="{{ route('admin.downloadRAB', $d->id)}}"><i
                                                         class="dw dw-eye"></i>
                                                     Download</a>

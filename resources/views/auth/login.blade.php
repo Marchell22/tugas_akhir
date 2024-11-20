@@ -37,7 +37,11 @@
                         </div>
                         <div class="img-container d-flex justify-content-between" style="margin-top: 20px;">
                         </div>
-                        <h2 class="text-center" style="margin-top: 5px; font-weight: bold;">LOGIN </h2>
+                        <div class="text-center" style="margin-top: 15px;">
+                            <img src="{{ asset('tmplt/vendors/images/sks.png') }}" alt="SKS Logo"
+                                style="max-width: 100px; height: auto;">
+                        </div>
+                        <h1 class="text-center" style="margin-top: 5px; font-weight: bold;">LOGIN </h1>
                         <div class="card-body login-form">
                             <form method="POST" action="{{ route('login-proses') }}">
                                 @csrf
@@ -79,12 +83,21 @@
                                             href="/beranda" style="color:#fff "><b>Login</a></b></button>
                                 </div>
                             </form>
+                            <!-- Menampilkan Pop-Up Alert -->
+                            @if (session('error'))
+                                <script>
+                                    window.onload = function() {
+                                        alert("{{ session('error') }}");
+                                    };
+                                </script>
+                            @endif
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
-        </div>
     </body>
+
+
 @endsection

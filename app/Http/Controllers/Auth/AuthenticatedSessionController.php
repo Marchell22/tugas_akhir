@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
             $user = Auth::user();
         } catch (\Exception $e) {
             Log::error('Authentication failed: ', ['email' => $request->email, 'error' => $e->getMessage()]);
-            return redirect()->back()->withErrors(['email' => 'Login failed.']);
+           return redirect()->back()->with('error', 'Login gagal. Periksa email dan password Anda.');
         }
         if ($user->role === 'admin') {
             return redirect()->intended(route('admin.AkunTransaksi')); // Redirect to admin dashboard
@@ -41,9 +41,6 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('user.AkunTransaksi')); // Redirect to user dashboard
         }
         return redirect()->intended(route('login', false));
-
-
-       
     }
 
     /**

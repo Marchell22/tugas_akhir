@@ -149,6 +149,10 @@
                     </div>
                     <div class="img-container d-flex justify-content-between" style="margin-top: 20px;">
                     </div>
+                    <div class="text-center" style="margin-top: 15px;">
+                        <img src="{{ asset('tmplt/vendors/images/sks.png') }}" alt="SKS Logo"
+                            style="max-width: 100px; height: auto;">
+                    </div>
                     <h2 class="text-center" style="margin-top: 5px; font-weight: bold;">FORGOT PASSWORD </h2>
                     <div class="card-body login-form">
                         <!-- Session Status -->
@@ -186,8 +190,7 @@
     <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}">
-        < /> <!--AdminLTE App-- >
-        <
+        < /> <!--AdminLTE App-- > <
         script src = "{{ asset('lte/dist/js/adminlte.min.js') }}" >
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
