@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -17,11 +18,13 @@ class AkunPenggunaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'role' => 'required',
-        ]);
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required',
+        'role' => 'required',
+    ], [
+        'email.unique' => 'Email sudah digunakan. Silakan gunakan email lain.',
+    ]);
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
         $data['name'] = $request->name;
         $data['email'] = $request->email;
@@ -31,12 +34,23 @@ class AkunPenggunaController extends Controller
         User::create($data);
         return redirect()->route('admin.AkunPengguna');
     }
+    public function checkEmail(Request $request)
+    {
+    $emailExists = User::where('email', $request->email)->exists();
+
+    return response()->json(['available' => !$emailExists]);
+    }
+
     public function update(Request $request, $id)
     {
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($id),
+            ], // Validasi unik untuk kolom email
             'password' => 'nullable',
             'role' => 'required|in:admin,user'  // Ensure role values are valid
         ]);

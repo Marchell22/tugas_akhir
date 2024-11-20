@@ -545,7 +545,7 @@
                 <label class="col-sm-12 col-md-2 col-form-label">Email</label>
                 <div class="col-sm-12 col-md-10">
                     <input type="email" name="email" id="editEmail" class="form-control"
-                        placeholder="Masukan Email">
+                        placeholder="Masukan Email" data-original-email="{{ $d->email }}">
                 </div>
             </div>
             <div class="form-group row">
@@ -619,6 +619,60 @@
 
             return true; // Allow form submission
         }
+
+        function validateForm() {
+            const email = document.getElementById('email').value;
+
+            if (!email) {
+                alert('Email harus diisi!');
+                return false;
+            }
+
+            let isAvailable = false;
+
+            // Cek email menggunakan AJAX
+            $.ajax({
+                url: '/admin/check-email', // Endpoint Laravel untuk memeriksa email
+                method: 'GET',
+                data: {
+                    email: email
+                },
+                async: false, // Buat sinkron untuk menghentikan proses pengiriman sementara
+                success: function(response) {
+                    if (response.available) {
+                        isAvailable = true;
+                    } else {
+                        alert('Email sudah digunakan. Silakan gunakan email lain.');
+                    }
+                },
+                error: function() {
+                    alert('Terjadi kesalahan saat memvalidasi email.');
+                }
+            });
+
+            return isAvailable;
+        }
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            const emailInput = document.getElementById('editEmail');
+            const originalEmail = emailInput.getAttribute('data-original-email');
+            const email = emailInput.value;
+
+            // Simple check for empty email
+            if (!email) {
+                alert('Email tidak boleh kosong!');
+                e.preventDefault();
+                return;
+            }
+
+            // Check if the email is the same as the original
+            if (email === originalEmail) {
+                alert('Email tidak boleh sama dengan email sebelumnya!');
+                e.preventDefault();
+                return;
+            }
+
+            // Additional checks can go here
+        });
     </script>
 
 
