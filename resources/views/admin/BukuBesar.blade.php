@@ -320,11 +320,11 @@
                                 data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
                         </div> --}}
                     </div>
-                    <form method="GET" action="{{ route('admin.BukuBesar') }}">
+                    <form id="searchForm" method="GET" action="{{ route('admin.BukuBesar') }}">
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Akun</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12" name="akun" required>
+                                <select class="custom-select col-12" name="akun" id="akun" required>
                                     <option value="" selected>Pilih...</option>
                                     @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
                                         <option value="{{ $item->id }}"
@@ -352,7 +352,7 @@
                         <div class="form-group row" id="periodeOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12" name="periode">
+                                <select class="custom-select col-12" id="periode" name="periode">
                                     <option value="" selected>Pilih...</option>
                                     <option value="1" {{ request('periode') == '1' ? 'selected' : '' }}>1 Tahun
                                         Terakhir</option>
@@ -368,7 +368,7 @@
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                             <div class="col-sm-12 col-md-10">
                                 <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal"
-                                    value="{{ request('tanggal_awal') }}" onchange="validateTanggal()">
+                                    value="{{ request('tanggal_awal') }}">
                             </div>
                         </div>
 
@@ -376,7 +376,7 @@
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                             <div class="col-sm-12 col-md-10">
                                 <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir"
-                                    value="{{ request('tanggal_akhir') }}" onchange="validateTanggal()">
+                                    value="{{ request('tanggal_akhir') }}">
                             </div>
                         </div>
 
@@ -453,6 +453,61 @@
         @endif
         <!-- Periode options (hidden by default) -->
         <script>
+            document.getElementById('searchForm').addEventListener('submit', function(e) {
+                const akun = document.getElementById('akun').value;
+                const kriteria = document.getElementById('kriteriaSelect').value;
+
+                // Check if Akun or Kriteria is empty
+                if (!akun) {
+                    alert('Field "Akun" harus diisi.');
+                    e.preventDefault();
+                    return;
+                }
+
+                if (!kriteria) {
+                    alert('Field "Kriteria" harus diisi.');
+                    e.preventDefault();
+                    return;
+                }
+
+                // If Kriteria is "periode", ensure periode is selected
+                if (kriteria === 'periode') {
+                    const periode = document.getElementById('periode').value;
+                    if (!periode) {
+                        alert('Field "Periode" harus diisi.');
+                        e.preventDefault();
+                        return;
+                    }
+                }
+
+                // If Kriteria is "tanggal", ensure Tanggal Awal and Tanggal Akhir are selected
+                if (kriteria === 'tanggal') {
+                    const tanggalAwal = document.getElementById('tanggalAwal').value;
+                    const tanggalAkhir = document.getElementById('tanggalAkhir').value;
+
+                    if (!tanggalAwal) {
+                        alert('Field "Tanggal Awal" harus diisi.');
+                        e.preventDefault();
+                        return;
+                    }
+
+                    if (!tanggalAkhir) {
+                        alert('Field "Tanggal Akhir" harus diisi.');
+                        e.preventDefault();
+                        return;
+                    }
+
+                    // Validate that Tanggal Awal is not after Tanggal Akhir
+                    const dateAwal = new Date(tanggalAwal);
+                    const dateAkhir = new Date(tanggalAkhir);
+                    if (dateAwal > dateAkhir) {
+                        alert('Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir.');
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            });
+
             document.addEventListener('DOMContentLoaded', function() {
                 const kriteriaSelect = document.getElementById('kriteriaSelect');
                 const periodeOptions = document.getElementById('periodeOptions');

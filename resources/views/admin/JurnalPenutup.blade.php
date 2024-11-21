@@ -316,7 +316,7 @@
                             <p class="mb-30">Kelola Jurnal Penutup</p>
                         </div>
                     </div>
-                    <form>
+                    <form id="searchForm">
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
                             <div class="col-sm-12 col-md-10">
@@ -486,6 +486,45 @@
         </div>
     </div>
     <script>
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            const kriteria = document.getElementById('kriteriaSelect').value;
+            // Validasi Periode jika Kriteria adalah "periode"
+            if (kriteria === 'periode') {
+                const periode = document.getElementById('periode').value;
+                if (!periode) {
+                    alert('Field "Periode" harus diisi.');
+                    e.preventDefault();
+                    return;
+                }
+            }
+
+            // Validasi Tanggal jika Kriteria adalah "tanggal"
+            if (kriteria === 'tanggal') {
+                const tanggalAwal = document.getElementById('tanggalAwal').value;
+                const tanggalAkhir = document.getElementById('tanggalAkhir').value;
+
+                if (!tanggalAwal) {
+                    alert('Field "Tanggal Awal" harus diisi.');
+                    e.preventDefault();
+                    return;
+                }
+
+                if (!tanggalAkhir) {
+                    alert('Field "Tanggal Akhir" harus diisi.');
+                    e.preventDefault();
+                    return;
+                }
+
+                // Pastikan Tanggal Awal tidak lebih besar dari Tanggal Akhir
+                const dateAwal = new Date(tanggalAwal);
+                const dateAkhir = new Date(tanggalAkhir);
+                if (dateAwal > dateAkhir) {
+                    alert('Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir.');
+                    e.preventDefault();
+                    return;
+                }
+            }
+        });
         document.addEventListener('DOMContentLoaded', function() {
             const kriteriaSelect = document.getElementById('kriteriaSelect');
             const periodeOptions = document.getElementById('periodeOptions');
@@ -501,6 +540,22 @@
 
             kriteriaSelect.addEventListener('change', toggleFields);
             toggleFields(); // Run once on page load
+        });
+        document.getElementById('kriteriaSelect').addEventListener('change', function() {
+            var selectedKriteria = this.value;
+
+            // Hide both options first
+            document.getElementById('periodeOptions').style.display = 'none';
+            document.getElementById('tanggalOptions').style.display = 'none';
+            document.getElementById('tanggalAkhirOptions').style.display = 'none';
+
+            // Show the appropriate options based on selection
+            if (selectedKriteria === 'periode') {
+                document.getElementById('periodeOptions').style.display = 'flex';
+            } else if (selectedKriteria === 'tanggal') {
+                document.getElementById('tanggalOptions').style.display = 'flex';
+                document.getElementById('tanggalAkhirOptions').style.display = 'flex';
+            }
         });
 
         function validateTanggal() {
@@ -523,22 +578,6 @@
                 }
             }
         }
-        document.getElementById('kriteriaSelect').addEventListener('change', function() {
-            var selectedKriteria = this.value;
-
-            // Hide both options first
-            document.getElementById('periodeOptions').style.display = 'none';
-            document.getElementById('tanggalOptions').style.display = 'none';
-            document.getElementById('tanggalAkhirOptions').style.display = 'none';
-
-            // Show the appropriate options based on selection
-            if (selectedKriteria === 'periode') {
-                document.getElementById('periodeOptions').style.display = 'flex';
-            } else if (selectedKriteria === 'tanggal') {
-                document.getElementById('tanggalOptions').style.display = 'flex';
-                document.getElementById('tanggalAkhirOptions').style.display = 'flex';
-            }
-        });
     </script>
     <script>
         $(document).ready(function() {

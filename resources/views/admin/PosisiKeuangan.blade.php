@@ -320,7 +320,7 @@
                                 data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
                         </div> --}}
                     </div>
-                    <form>
+                    <form id="searchForm">
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 col-form-label">Kriteria</label>
                             <div class="col-sm-12 col-md-10">
@@ -337,7 +337,7 @@
                         <div class="form-group row" id="periodeOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                             <div class="col-sm-12 col-md-10">
-                                <select class="custom-select col-12" name="periode">
+                                <select class="custom-select col-12" id="periode" name="periode">
                                     <option value="" selected>Pilih...</option>
                                     <option value="1" {{ request('periode') == '1' ? 'selected' : '' }}>1 Tahun
                                         Terakhir</option>
@@ -349,12 +349,11 @@
                             </div>
                         </div>
 
-                        <!-- Tanggal options (hidden by default) -->
                         <div class="form-group row" id="tanggalOptions" style="display:none;">
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                             <div class="col-sm-12 col-md-10">
                                 <input class="form-control" type="date" id="tanggalAwal" name="tanggal_awal"
-                                    value="{{ request('tanggal_awal') }}" onchange="validateTanggal()">
+                                    value="{{ request('tanggal_awal') }}">
                             </div>
                         </div>
 
@@ -362,7 +361,7 @@
                             <label class="col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                             <div class="col-sm-12 col-md-10">
                                 <input class="form-control" type="date" id="tanggalAkhir" name="tanggal_akhir"
-                                    value="{{ request('tanggal_akhir') }}" onchange="validateTanggal()">
+                                    value="{{ request('tanggal_akhir') }}">
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -746,7 +745,46 @@
         </div>
     </div>
     <script>
-         document.addEventListener('DOMContentLoaded', function() {
+         document.getElementById('searchForm').addEventListener('submit', function(e) {
+            const kriteria = document.getElementById('kriteriaSelect').value;
+            // Validasi Periode jika Kriteria adalah "periode"
+            if (kriteria === 'periode') {
+                const periode = document.getElementById('periode').value;
+                if (!periode) {
+                    alert('Field "Periode" harus diisi.');
+                    e.preventDefault();
+                    return;
+                }
+            }
+
+            // Validasi Tanggal jika Kriteria adalah "tanggal"
+            if (kriteria === 'tanggal') {
+                const tanggalAwal = document.getElementById('tanggalAwal').value;
+                const tanggalAkhir = document.getElementById('tanggalAkhir').value;
+
+                if (!tanggalAwal) {
+                    alert('Field "Tanggal Awal" harus diisi.');
+                    e.preventDefault();
+                    return;
+                }
+
+                if (!tanggalAkhir) {
+                    alert('Field "Tanggal Akhir" harus diisi.');
+                    e.preventDefault();
+                    return;
+                }
+
+                // Pastikan Tanggal Awal tidak lebih besar dari Tanggal Akhir
+                const dateAwal = new Date(tanggalAwal);
+                const dateAkhir = new Date(tanggalAkhir);
+                if (dateAwal > dateAkhir) {
+                    alert('Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir.');
+                    e.preventDefault();
+                    return;
+                }
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
             const kriteriaSelect = document.getElementById('kriteriaSelect');
             const periodeOptions = document.getElementById('periodeOptions');
             const tanggalOptions = document.getElementById('tanggalOptions');
@@ -762,7 +800,23 @@
             kriteriaSelect.addEventListener('change', toggleFields);
             toggleFields(); // Run once on page load
         });
-        
+        document.getElementById('kriteriaSelect').addEventListener('change', function() {
+            var selectedKriteria = this.value;
+
+            // Hide both options first
+            document.getElementById('periodeOptions').style.display = 'none';
+            document.getElementById('tanggalOptions').style.display = 'none';
+            document.getElementById('tanggalAkhirOptions').style.display = 'none';
+
+            // Show the appropriate options based on selection
+            if (selectedKriteria === 'periode') {
+                document.getElementById('periodeOptions').style.display = 'flex';
+            } else if (selectedKriteria === 'tanggal') {
+                document.getElementById('tanggalOptions').style.display = 'flex';
+                document.getElementById('tanggalAkhirOptions').style.display = 'flex';
+            }
+        });
+
         function validateTanggal() {
             // Ambil nilai dari input Tanggal Awal dan Tanggal Akhir
             const tanggalAwal = document.getElementById('tanggalAwal').value;
