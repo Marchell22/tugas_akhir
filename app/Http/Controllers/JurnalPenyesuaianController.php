@@ -97,7 +97,7 @@ class JurnalPenyesuaianController extends Controller
         $data = $query->get();
 
         // Kembalikan view dengan data
-        return view('admin.JurnalPenyesuaian', compact('data'));
+        return view('user.JurnalPenyesuaian', compact('data'));
     }
     public function ValidasiJurnalPenyesuaian()
     {

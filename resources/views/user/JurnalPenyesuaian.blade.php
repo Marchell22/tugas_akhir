@@ -343,7 +343,7 @@
                                         <p class="mb-0 text-sm">Kelola Jurnal Penyesuaian</p>
                                     </div>
                                     <div class="mb-3">
-                                         <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
+                                        <a onclick="openPopup('popup2')" class="btn btn-primary" title="Waktu"><i
                                                 class="icon-copy ion-ios-calendar-outline"
                                                 style="font-size: 30px; color:white"></i></a>
                                         <a class="btn btn-success show-modal"
@@ -416,15 +416,15 @@
     <div id="overlay" onclick="closePopup('popup1')"></div>
     <div id="popup1" class="popup" style="width: 50%;">
         <span class="close" onclick="closePopup('popup1')">&times;</span>
-        <form id="addForm" class="model-popup" action="{{ route('user.JurnalPenyesuaianstore') }}"
-            method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
+        <form id="addForm" class="model-popup" action="{{ route('user.JurnalPenyesuaianstore') }}" method="POST"
+            onsubmit="return validateForm()" enctype="multipart/form-data">
             @csrf
             <h4 class="modal-title">Tambah Jurnal Penyesuaian</h4>
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label" for="akun_id">Akun</label>
                 <div class="col-sm-12 col-md-10">
                     <select class="custom-select col-12" name="akun_id" id="akun_id">
-                         @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
+                        @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
                             <option value="{{ $item->id }}" {{ old('akun_id') == $item->id ? 'selected' : '' }}>
                                 {{ $item->kode }} - {{ $item->nama }}</option>
                         @endforeach
@@ -487,19 +487,22 @@
     <div id="popup2" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup2')">&times;</span>
-        <form class="model-popup" action="{{ route('user.JurnalPenyesuaianFilter') }}" method="GET">
+        <form class="model-popup" action="{{ route('user.JurnalPenyesuaianFilter') }}" method="GET"
+            onsubmit="return validateWaktu()">
             <h4 class="modal-title">Waktu</h4>
 
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="awal" value="{{ request('awal') }}">
+                    <input class="form-control" id="tanggalAwal" type="date" name="awal"
+                        value="{{ request('awal') }}" onchange="validateTanggal()">
                 </div>
             </div>
             <div class="form-group row">
                 <label class=" col-sm-12 col-md-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-12 col-md-10">
-                    <input class="form-control " type="date" name="akhir" value="{{ request('akhir') }}">
+                    <input class="form-control" id="tanggalAkhir" type="date" name="akhir"
+                        value="{{ request('akhir') }}" onchange="validateTanggal()">
                 </div>
             </div>
             <button type='submit' style="width:100px;" class="btn btn-primary">Cari</button>
@@ -507,6 +510,43 @@
         </form>
     </div>
     <script>
+        function validateWaktu() {
+            // Ambil nilai dari input Tanggal Awal dan Tanggal Akhir
+            const tanggalAwal = document.getElementById('tanggalAwal').value;
+            const tanggalAkhir = document.getElementById('tanggalAkhir').value;
+
+            // Cek apakah salah satu tanggal kosong
+            if (!tanggalAwal || !tanggalAkhir) {
+                alert("Tanggal Awal dan Tanggal Akhir harus diisi!");
+                return false; // Mencegah form disubmit jika ada tanggal yang kosong
+            }
+
+            // Jika semua valid, izinkan form disubmit
+            return true;
+        }
+
+        function validateTanggal() {
+            // Ambil nilai dari input Tanggal Awal dan Tanggal Akhir
+            const tanggalAwal = document.getElementById('tanggalAwal').value;
+            const tanggalAkhir = document.getElementById('tanggalAkhir').value;
+
+            // Periksa apakah kedua tanggal diisi
+            if (tanggalAwal && tanggalAkhir) {
+                // Konversi nilai ke format Date agar bisa dibandingkan
+                const dateAwal = new Date(tanggalAwal);
+                const dateAkhir = new Date(tanggalAkhir);
+
+                // Periksa apakah Tanggal Awal lebih besar dari Tanggal Akhir
+                if (dateAwal > dateAkhir) {
+                    alert("Tanggal Awal harus melebihi atau sama dengan Tanggal Akhir.");
+
+                    // Reset nilai Tanggal Awal
+                    document.getElementById('tanggalAwal').value = '';
+                }
+            }
+        }
+
+
         function openPopup(popupId) {
             $('#addForm')[0].reset();
             document.getElementById(popupId).style.display = 'block';
@@ -542,9 +582,9 @@
             popup.style.padding = '10px';
             popup.style.zIndex = '1000';
             popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.5)';
-            popup.style.maxWidth = '15%';
-            popup.style.maxHeight = '90%';
-            popup.style.overflow = 'hidden';
+            popup.style.maxWidth = '55%';
+            popup.style.maxHeight = '100%';
+            popup.style.overflow = 'auto'; // Allow scrolling for overflow content
 
             // Create an image element
             const img = document.createElement('img');
@@ -554,17 +594,24 @@
 
             // Create a close button
             const closeBtn = document.createElement('button');
-            closeBtn.innerText = 'Close';
-            closeBtn.style.display = 'block';
-            closeBtn.style.marginTop = '10px';
-            closeBtn.style.marginLeft = 'auto';
-            closeBtn.style.marginRight = 'auto';
+            closeBtn.innerText = '✖'; // Use an "X" icon
+            closeBtn.style.position = 'absolute';
+            closeBtn.style.top = '10px';
+            closeBtn.style.right = '10px';
             closeBtn.style.border = 'none';
-            closeBtn.style.backgroundColor = '#f00';
-            closeBtn.style.color = '#fff';
+            closeBtn.style.backgroundColor = 'transparent';
+            closeBtn.style.color = '#f00';
             closeBtn.style.cursor = 'pointer';
-            closeBtn.style.padding = '5px 10px';
-            closeBtn.style.borderRadius = '5px';
+            closeBtn.style.fontSize = '18px';
+            closeBtn.style.padding = '5px';
+            closeBtn.style.borderRadius = '50%';
+            closeBtn.style.width = '30px';
+            closeBtn.style.height = '30px';
+            closeBtn.style.display = 'flex';
+            closeBtn.style.alignItems = 'center';
+            closeBtn.style.justifyContent = 'center';
+
+            // Set the close button's click event to remove the overlay and popup
             closeBtn.onclick = function() {
                 document.body.removeChild(overlay);
                 document.body.removeChild(popup);
@@ -590,7 +637,7 @@
             document.getElementById('overlay').style.display = 'none';
         }
     </script>
-     <script>
+    <script>
         function validateForm() {
             console.log("validateForm called"); // Debugging
 

@@ -529,7 +529,8 @@
     <div id="popup2" class="popup" style="width: 50%;">
 
         <span class="close" onclick="closePopup('popup2')">&times;</span>
-        <form class="model-popup" action="{{ route('admin.ValidasiJurnalPenyesuaianFilter') }}" method="GET">
+        <form class="model-popup" action="{{ route('admin.ValidasiJurnalPenyesuaianFilter') }}" method="GET"
+            onsubmit="return validateWaktu()">
             <h4 class="modal-title">Waktu</h4>
 
             <div class="form-group row">
@@ -552,6 +553,21 @@
     </div>
 
     <script>
+        function validateWaktu() {
+            // Ambil nilai dari input Tanggal Awal dan Tanggal Akhir
+            const tanggalAwal = document.getElementById('tanggalAwal').value;
+            const tanggalAkhir = document.getElementById('tanggalAkhir').value;
+
+            // Cek apakah salah satu tanggal kosong
+            if (!tanggalAwal || !tanggalAkhir) {
+                alert("Tanggal Awal dan Tanggal Akhir harus diisi!");
+                return false; // Mencegah form disubmit jika ada tanggal yang kosong
+            }
+
+            // Jika semua valid, izinkan form disubmit
+            return true;
+        }
+
         function validateTanggal() {
             // Ambil nilai dari input Tanggal Awal dan Tanggal Akhir
             const tanggalAwal = document.getElementById('tanggalAwal').value;
