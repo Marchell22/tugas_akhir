@@ -458,7 +458,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
+                                                  <label class="col-sm-12 col-md-2 col-form-label">Periode</label>
                                                 <div class="col-sm-12 col-md-10">
                                                     <input type="text" name="waktu_pelaksanaan"
                                                         class="form-control" placeholder="Masukan Waktu Pelaksanaan">
@@ -476,6 +476,7 @@
                                             <table class="table table-bordered bordered" id="table">
                                                 <thead>
                                                     <tr>
+                                                        <th>Akun Transaksi</th>
                                                         <th>Uraian Pekerjaan</th>
                                                         <th>Satuan</th>
                                                         <th>Volume</th>
@@ -527,15 +528,16 @@
                     e.preventDefault(); // Prevent default link behavior
 
                     // Create new row with unique ID
-                    var tr = `<tr>
-            <td><input type="hidden" name="uraian_pekerjaan[${nextId}][id]" value="${nextId}"><input type="text" name="uraian_pekerjaan[${nextId}][uraian_pekerjaan]" class="form-control"></td>
-            <td><input type="text" name="uraian_pekerjaan[${nextId}][satuan]" class="form-control"></td>
-            <td><input type="number" name="uraian_pekerjaan[${nextId}][volume]" class="form-control volume"></td>
-            <td><input type="number" name="uraian_pekerjaan[${nextId}][harga_satuan]" class="form-control harga_satuan"></td>
-            <td><input type="number" name="uraian_pekerjaan[${nextId}][total_harga]" class="form-control total_harga" readonly></td>
-            <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
-        </tr>`;
-
+                        var tr = `<tr>
+                            td
+                            <td><input type="hidden" name="uraian_pekerjaan[${nextId}][id]" value="${nextId}"><input type="text" name="uraian_pekerjaan[${nextId}][uraian_pekerjaan]" class="form-control"></td>
+                            <td><input type="text" name="uraian_pekerjaan[${nextId}][satuan]" class="form-control"></td>
+                            <td><input type="number" name="uraian_pekerjaan[${nextId}][volume]" class="form-control volume"></td>
+                            <td><input type="number" name="uraian_pekerjaan[${nextId}][harga_satuan]" class="form-control harga_satuan"></td>
+                            <td><input type="number" name="uraian_pekerjaan[${nextId}][total_harga]" class="form-control total_harga" readonly></td>
+                            <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
+                        </tr>`;
+                    
                     // Append new row to table
                     $('#table').find('tbody').append(tr);
 

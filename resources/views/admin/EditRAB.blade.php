@@ -450,7 +450,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="waktu_pelaksanaan">Periode</label>
+                                                  <label for="waktu_pelaksanaan">Periode</label>
                                                 <input type="text" class="form-control" id="waktu_pelaksanaan"
                                                     name="waktu_pelaksanaan"
                                                     value="{{ $rencanaAnggaranBiaya->waktu_pelaksanaan }}" required>
@@ -606,7 +606,6 @@
                 }
             });
 
-
             $(document).ready(function() {
                 $('.model-popup').on('submit', function(e) {
                     e.preventDefault();
@@ -649,7 +648,7 @@
                             window.location.href = response.redirect_url;
                         },
                         error: function(xhr) {
-                            alert('Isi Data:', xhr.responseText);
+                             alert('Lengkapi Semua Data:', xhr.responseText);
                         }
                     });
                 });
