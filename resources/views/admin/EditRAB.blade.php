@@ -667,11 +667,8 @@
                             formObject[item.name] = item.value;
                         }
                     });
-
                     formObject['uraian_pekerjaan'] = uraianPekerjaan;
-
                     console.log('Formatted form data:', formObject);
-
                     $.ajax({
                         type: 'PUT',
                         url: $(this).attr('action'),
