@@ -112,7 +112,6 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Akun Transaksi</th>
                         <th>Uraian</th>
                         <th>Satuan</th>
                         <th>Volume</th>
@@ -141,6 +140,18 @@
                         </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    @php
+                        $totalJumlah = array_sum(array_column($uraianPekerjaan, 'total_harga'));
+                    @endphp
+                    <tr>
+                        <td colspan="5" style="text-align: right; font-weight: bold;">Total Jumlah:</td>
+                        <td style="font-weight: bold; text-align: center; vertical-align: middle;">
+                            Rp {{ number_format($totalJumlah, 0, ',', '.') }}
+                        </td>
+
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
