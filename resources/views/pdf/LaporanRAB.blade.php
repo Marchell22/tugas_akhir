@@ -115,6 +115,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Akun Transaksi</th>
+
                         <th>Uraian</th>
                         <th>Satuan</th>
                         <th>Volume</th>
@@ -126,6 +128,13 @@
                     @foreach ($uraianPekerjaan as $index => $uraian)
                         <tr class="foreach-border">
                             <td>{{ $index + 1 }}</td> <!-- Menampilkan urutan nomor dimulai dari 1 -->
+                            <td>
+                                @php
+                                    // Mencari nama akun berdasarkan akun_id dari $akunTransaksis
+                                    $akun = $akunTransaksis->firstWhere('id', $uraian['akun_id']);
+                                @endphp
+                                {{ $akun ? $akun->nama : 'Nama Akun Tidak Ditemukan' }}
+                            </td>
                             <td>{{ $uraian['uraian_pekerjaan'] }}</td>
                             <td>{{ $uraian['satuan'] }}</td>
                             <td>{{ $uraian['volume'] }}</td>
@@ -139,7 +148,7 @@
                         $totalJumlah = array_sum(array_column($uraianPekerjaan, 'total_harga'));
                     @endphp
                     <tr>
-                        <td colspan="5" style="text-align: right; font-weight: bold;">Total Jumlah:</td>
+                        <td colspan="6" style="text-align: right; font-weight: bold;">Total Jumlah:</td>
                         <td style="font-weight: bold; text-align: center; vertical-align: middle;">
                             Rp {{ number_format($totalJumlah, 0, ',', '.') }}
                         </td>

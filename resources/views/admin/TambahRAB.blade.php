@@ -510,6 +510,7 @@
                 let nextId = 1; // Initialize ID counter
 
                 function calculateTotal(row) {
+                    var akun_id = row.find('.akun_id').val();
                     var volume = row.find('.volume').val();
                     var harga_satuan = row.find('.harga_satuan').val();
                     var total_harga = row.find('.total_harga');
@@ -528,16 +529,21 @@
                     e.preventDefault(); // Prevent default link behavior
 
                     // Create new row with unique ID
-                        var tr = `<tr>
-                            td
-                            <td><input type="hidden" name="uraian_pekerjaan[${nextId}][id]" value="${nextId}"><input type="text" name="uraian_pekerjaan[${nextId}][uraian_pekerjaan]" class="form-control"></td>
-                            <td><input type="text" name="uraian_pekerjaan[${nextId}][satuan]" class="form-control"></td>
-                            <td><input type="number" name="uraian_pekerjaan[${nextId}][volume]" class="form-control volume"></td>
-                            <td><input type="number" name="uraian_pekerjaan[${nextId}][harga_satuan]" class="form-control harga_satuan"></td>
-                            <td><input type="number" name="uraian_pekerjaan[${nextId}][total_harga]" class="form-control total_harga" readonly></td>
-                            <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
-                        </tr>`;
-                    
+                    var tr = `<tr>
+                        <td><select class="custom-select col-12" name="uraian_pekerjaan[${nextId}][akun_id]">
+                        @foreach (App\Models\AkunTransaksi::orderBy('kode')->get() as $item)
+                            <option value="{{ $item->id }}">
+                                {{ $item->kode }} - {{ $item->nama }}</option>
+                        @endforeach
+                    </select></td>
+                        <td><input type="hidden" name="uraian_pekerjaan[${nextId}][id]" value="${nextId}"><input type="text" name="uraian_pekerjaan[${nextId}][uraian_pekerjaan]" class="form-control"></td>
+                        <td><input type="text" name="uraian_pekerjaan[${nextId}][satuan]" class="form-control"></td>
+                        <td><input type="number" name="uraian_pekerjaan[${nextId}][volume]" class="form-control volume"></td>
+                        <td><input type="number" name="uraian_pekerjaan[${nextId}][harga_satuan]" class="form-control harga_satuan"></td>
+                        <td><input type="number" name="uraian_pekerjaan[${nextId}][total_harga]" class="form-control total_harga" readonly></td>
+                        <td><a href="javascript:void(0)" class="btn btn-danger btn-sm deleteRow">-</a></td>
+                    </tr>`;
+
                     // Append new row to table
                     $('#table').find('tbody').append(tr);
 
@@ -563,13 +569,13 @@
                     $('#table tbody tr').each(function() {
                         var row = $(this);
                         var rowObject = {
-                            id: row.find('input[name$="[id]"]')
-                                .val(), // Extract the ID from the input field
+                            id: row.find('input[name$="[id]"]').val(), // Extract the ID from the input field
                             uraian_pekerjaan: row.find('input[name$="[uraian_pekerjaan]"]').val(),
                             satuan: row.find('input[name$="[satuan]"]').val(),
                             volume: row.find('input[name$="[volume]"]').val(),
                             harga_satuan: row.find('input[name$="[harga_satuan]"]').val(),
-                            total_harga: row.find('input[name$="[total_harga]"]').val()
+                            total_harga: row.find('input[name$="[total_harga]"]').val(),
+                            akun_id: row.find('select[name$="[akun_id]"]').val()
                         };
                         uraianPekerjaan.push(rowObject);
                     });

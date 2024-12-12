@@ -15,10 +15,12 @@ class PdfController extends Controller
     public function downloadRAB($id)
     {
         $rencanaAnggaranBiaya = RencanaAnggaranBiaya::findOrFail($id);
+        $akunTransaksis = AkunTransaksi::where('status', 'approved')->orderBy('kode')->get();
         $uraianPekerjaan = $rencanaAnggaranBiaya->uraian_pekerjaan ?? [];
         $data = [
             'rencanaAnggaranBiaya' => $rencanaAnggaranBiaya,
-            'uraianPekerjaan' => $uraianPekerjaan
+            'uraianPekerjaan' => $uraianPekerjaan,
+            'akunTransaksis' => $akunTransaksis,
         ];
 
         // Load view dengan data dan generate PDF

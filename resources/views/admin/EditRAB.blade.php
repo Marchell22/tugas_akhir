@@ -450,7 +450,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                  <label for="waktu_pelaksanaan">Periode</label>
+                                                <label for="waktu_pelaksanaan">Periode</label>
                                                 <input type="text" class="form-control" id="waktu_pelaksanaan"
                                                     name="waktu_pelaksanaan"
                                                     value="{{ $rencanaAnggaranBiaya->waktu_pelaksanaan }}" required>
@@ -466,6 +466,7 @@
                                             <table class="table table-bordered" id="table">
                                                 <thead>
                                                     <tr>
+                                                        <th>Akun Transaksi</th>
                                                         <th>Uraian Pekerjaan</th>
                                                         <th>Satuan</th>
                                                         <th>Volume</th>
@@ -483,6 +484,15 @@
                                                 <tbody>
                                                     @foreach ($uraianPekerjaan as $uraian)
                                                         <tr>
+                                                            <td><select class="custom-select col-12" name="akun_id[]">
+                                                                    @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            name="akun_id"
+                                                                            {{ $uraian['akun_id'] == $item->id ? 'selected' : '' }}>
+                                                                            {{ $item->kode }} - {{ $item->nama }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select></td>
                                                             <td><input type="text" name="uraian_pekerjaan[]"
                                                                     value="{{ $uraian['uraian_pekerjaan'] }}"
                                                                     class="form-control"></td>
@@ -525,6 +535,9 @@
 
 
         <script>
+            var rencanaAnggaranBiayaId = @json($rencanaAnggaranBiaya->id);
+
+            console.log("ID Rencana Anggaran Biaya:", rencanaAnggaranBiayaId);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -544,6 +557,7 @@
             }
 
             function calculateTotal(row) {
+                var akun_id = row.find('.akun_id').val();
                 var volume = row.find('.volume').val();
                 var harga_satuan = row.find('.harga_satuan').val();
                 var total_harga = row.find('.total_harga');
@@ -559,6 +573,17 @@
             $('#table').find('thead').on('click', '.addRowCategory', function() {
                 var newId = getNextId();
                 var tr = `<tr>
+                    <td>
+                    <div class="col-sm-12 col-md-10">
+                        <select class="custom-select col-12" name="akun_id[]">
+                            @foreach (App\Models\AkunTransaksi::where('status', 'approved')->orderBy('kode')->get() as $item)
+                                <option value="{{ $uraian['akun_id'] }}" name="akun_id[]">
+                                    {{ $item->kode }} - {{ $item->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </td>
                 <td><input type="text" name="uraian_pekerjaan[]" class="form-control"></td>
                 <td><input type="text" name="satuan[]" class="form-control"></td>
                 <td><input type="number" name="volume[]" class="form-control volume"></td>
@@ -572,7 +597,7 @@
 
             $('#table').find('tbody').on('click', '.deleteRow', function() {
                 var $row = $(this).closest('tr');
-                var id = $(this).data('id');
+                var id = rencanaAnggaranBiayaId;
                 var rowId = $row.find('input[name="id[]"]').val(); // Get ID from hidden input
                 console.log('Deleting row with ID:', id);
 
@@ -586,9 +611,15 @@
                     if (confirm('Are you sure you want to delete this row?')) {
                         $.ajax({
                             type: 'DELETE',
-                            url: '/admin/DeleteRAB/' + id,
+                            url: '/admin/DeleteRAB',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                id: id,
+                                rowId: rowId,
+                                _token: $('meta[name="csrf-token"]').attr(
+                                    'content') // CSRF token untuk keamanan
                             },
                             success: function(response) {
                                 console.log('Row deleted successfully');
@@ -622,7 +653,9 @@
                             satuan: row.find('input[name="satuan[]"]').val(),
                             volume: row.find('input[name="volume[]"]').val(),
                             harga_satuan: row.find('input[name="harga_satuan[]"]').val(),
-                            total_harga: row.find('input[name="total_harga[]"]').val()
+                            total_harga: row.find('input[name="total_harga[]"]').val(),
+                            akun_id: row.find('select[name="akun_id[]"]')
+                                .val() // Added akun_id field
                         };
                         uraianPekerjaan.push(rowObject);
                     });
@@ -648,7 +681,7 @@
                             window.location.href = response.redirect_url;
                         },
                         error: function(xhr) {
-                             alert('Lengkapi Semua Data:', xhr.responseText);
+                            alert('Lengkapi Semua Data:', xhr.responseText);
                         }
                     });
                 });

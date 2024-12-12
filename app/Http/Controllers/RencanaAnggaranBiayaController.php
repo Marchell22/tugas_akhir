@@ -57,6 +57,7 @@ class RencanaAnggaranBiayaController extends Controller
             'uraian_pekerjaan.*.satuan' => 'required|string',
             'uraian_pekerjaan.*.volume' => 'required|numeric',
             'uraian_pekerjaan.*.harga_satuan' => 'required|numeric',
+            'uraian_pekerjaan.*.akun_id' => 'required|numeric',
             'uraian_pekerjaan.*.total_harga' => 'required|numeric',
         ]);
 
@@ -84,7 +85,8 @@ class RencanaAnggaranBiayaController extends Controller
                     $existingEntry['satuan'] !== $newEntry['satuan'] ||
                     $existingEntry['volume'] !== $newEntry['volume'] ||
                     $existingEntry['harga_satuan'] !== $newEntry['harga_satuan'] ||
-                    $existingEntry['total_harga'] !== $newEntry['total_harga']
+                    $existingEntry['total_harga'] !== $newEntry['total_harga']||
+                    $existingEntry['akun_id'] !== $newEntry['akun_id']
                 ) {
                     // Update hanya jika ada perubahan
                     $finalData[] = $newEntry;
@@ -119,45 +121,54 @@ class RencanaAnggaranBiayaController extends Controller
             'redirect_url' => route('admin.RencanaAnggaranBiaya')
         ]);
     }
-    public function delete($id)
-    {
-        // Retrieve the record that contains the JSON data
-        $rencanaAnggaranBiaya = RencanaAnggaranBiaya::first(); // Adjust this to match your query logic
+    public function delete(Request $request)
+{
+    // Menangkap nilai ID dan Row ID dari permintaan
+    $id = $request->input('id');
+    $rowId = $request->input('rowId');
 
-        if ($rencanaAnggaranBiaya) {
-            // Check if the column is already an array or still a JSON string
-            $data = $rencanaAnggaranBiaya->uraian_pekerjaan;
+    Log::info('Delete function called with ID:', ['id' => $id]);
+    Log::info('Row ID to delete:', ['rowId' => $rowId]);
 
-            // Decode the JSON data only if it's a valid JSON string
-            if (is_string($data)) {
-                $data = json_decode($data, true);
+    // Menemukan Rencana Anggaran Biaya berdasarkan ID
+    $rencanaAnggaranBiaya = RencanaAnggaranBiaya::find($id);
+
+    if ($rencanaAnggaranBiaya) {
+        // Ambil data uraian_pekerjaan yang berupa JSON
+        $uraianPekerjaan = $rencanaAnggaranBiaya->uraian_pekerjaan;
+
+        // Cari index dari rowId yang ingin dihapus
+        $indexToDelete = null;
+        foreach ($uraianPekerjaan as $index => $item) {
+            if ($item['id'] == $rowId) {
+                $indexToDelete = $index;
+                break;
             }
-
-            if (!is_array($data)) {
-                return response()->json(['message' => 'Invalid JSON format'], 500);
-            }
-
-            // Find the index of the item with the given ID
-            $index = array_search($id, array_column($data, 'id'));
-
-            if ($index !== false) {
-                // Remove the item from the array
-                array_splice($data, $index, 1);
-
-                // Encode the updated array back to JSON
-                $rencanaAnggaranBiaya->uraian_pekerjaan = $data;
-
-                // Save the updated record
-                $rencanaAnggaranBiaya->save();
-
-                return response()->json(['message' => 'Row deleted successfully']);
-            } else {
-                return response()->json(['message' => 'Row not found'], 404);
-            }
-        } else {
-            return response()->json(['message' => 'Record not found'], 404);
         }
+
+        if ($indexToDelete !== null) {
+            // Hapus item dari array jika ditemukan
+            unset($uraianPekerjaan[$indexToDelete]);
+
+            // Reindex array jika perlu
+            $rencanaAnggaranBiaya->uraian_pekerjaan = array_values($uraianPekerjaan);
+
+            // Simpan kembali model
+            $rencanaAnggaranBiaya->save();
+
+            Log::info('Row deleted successfully with ID:', ['id' => $rowId]);
+
+            return response()->json(['message' => 'Row deleted successfully']);
+        } else {
+            Log::warning('Row with given ID not found in JSON data.', ['rowId' => $rowId]);
+            return response()->json(['message' => 'Row not found in data'], 404);
+        }
+    } else {
+        Log::warning('Rencana Anggaran Biaya not found.', ['id' => $id]);
+        return response()->json(['message' => 'Rencana Anggaran Biaya not found'], 404);
     }
+}
+
     public function LaporanRAB($id)
     {
         $rencanaAnggaranBiaya = RencanaAnggaranBiaya::findOrFail($id);
