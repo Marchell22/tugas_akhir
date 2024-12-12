@@ -86,7 +86,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'web', 'cekRole:admi
     Route::get('/TambahRAB', [RencanaAnggaranBiayaController::class, 'TambahRAB'])->name('TambahRAB');
     Route::get('/EditRAB/Edit/{id}', [RencanaAnggaranBiayaController::class, 'edit'])->name('EditRAB');
     Route::put('/UpdateRAB/update/{id}', [RencanaAnggaranBiayaController::class, 'update'])->name('UpdateRAB');
-    Route::delete('/DeleteRAB/{id}', [RencanaAnggaranBiayaController::class, 'delete'])->name('DeleteRAB');
+    Route::delete('/DeleteRAB', [RencanaAnggaranBiayaController::class, 'delete'])->name('DeleteRAB');
     Route::get('/RencanaAnggaranBiaya/LaporanRAB/{id}', [RencanaAnggaranBiayaController::class, 'LaporanRAB'])->name('LaporanRAB');
     Route::get('/download-pdf/{id}', [PdfController::class, 'downloadRAB'])->name('downloadRAB');
     Route::get('/downloadbukubesar-pdf', [PdfController::class, 'downloadBukuBesar'])->name('downloadBukuBesar');
