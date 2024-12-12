@@ -709,4 +709,6 @@
         <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
 </body>
 
+
 </html>
+
