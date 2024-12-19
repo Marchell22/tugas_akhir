@@ -6,10 +6,6 @@
     <style type="text/css">
         body {
             font-family: Arial, sans-serif;
-            margin-top: 2cm;
-            margin-left: 2cm;
-            margin-right: 2cm;
-            margin-bottom: 2cm;
         }
 
         .rangkasurat {
@@ -23,12 +19,12 @@
 
         .tengah {
             text-align: center;
-            line-height: 5px;
+            line-height: 3px;
         }
 
         .table {
             border-bottom: 3px solid #000;
-            padding: 2px;
+            padding: 5px;
             margin: 0 auto;
         }
 
@@ -64,7 +60,7 @@
         /* Style for A4 compatibility */
         @page {
             size: A4;
-            margin: 0mm 0mm 0mm 0mm;
+            margin: 20mm;
         }
     </style>
 </head>
@@ -77,9 +73,9 @@
                 <td class="tengah">
                     <h1>PT. SINAR KALIMAN SEHAT</h1>
                     <h3>Produsen dan Distributor Obat Herbal</h3>
-                    <b>Jl. Anggrek Raya no. 10 a-b Cengkareng Barat, Jakarta Barat,</b><br>
-                    <b style="margin-top: 18px; display: inline-block;">Jakarta 11720</b>
-                    <b style="margin-top: 18px; ">Telp. 6285693902293</b>
+                    <b style="margin-bottom: 20px">Jl. Anggrek Raya no. 10 a-b Cengkareng Barat, </b><br>
+                    <b>Jakarta Barat, Jakarta 11720</b>
+                    <b style="margin-top: 35px; display: inline-block;">Telp. 6285693902293</b>
 
                 </td>
             </tr>
@@ -97,7 +93,8 @@
                         <p><strong>Kegiatan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> :
                             <span>{{ $rencanaAnggaranBiaya->kegiatan }}</span>
                         </p>
-                        <p><strong>Periode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> :
+
+                        <p><strong>Periode &nbsp;</strong> :
                             <span>{{ $rencanaAnggaranBiaya->waktu_pelaksanaan }}</span>
                         </p>
                         <p><strong>Output
@@ -115,8 +112,6 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Akun Transaksi</th>
-
                         <th>Uraian</th>
                         <th>Satuan</th>
                         <th>Volume</th>
@@ -138,9 +133,8 @@
                             <td>{{ $uraian['uraian_pekerjaan'] }}</td>
                             <td>{{ $uraian['satuan'] }}</td>
                             <td>{{ $uraian['volume'] }}</td>
-                           <td>Rp {{ number_format($uraian['harga_satuan'], 0, ',', '.') }}</td>
-
-                            <td>Rp {{ number_format($uraian['total_harga'], 0, ',', '.') }}</td>
+                            <td>{{ $uraian['harga_satuan'] }}</td>
+                            <td>{{ $uraian['total_harga'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -149,7 +143,7 @@
                         $totalJumlah = array_sum(array_column($uraianPekerjaan, 'total_harga'));
                     @endphp
                     <tr>
-                        <td colspan="6" style="text-align: right; font-weight: bold;">Total Jumlah:</td>
+                        <td colspan="5" style="text-align: right; font-weight: bold;">Total Jumlah:</td>
                         <td style="font-weight: bold; text-align: center; vertical-align: middle;">
                             Rp {{ number_format($totalJumlah, 0, ',', '.') }}
                         </td>

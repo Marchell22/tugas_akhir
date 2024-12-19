@@ -667,11 +667,8 @@
                             formObject[item.name] = item.value;
                         }
                     });
-
                     formObject['uraian_pekerjaan'] = uraianPekerjaan;
-
                     console.log('Formatted form data:', formObject);
-
                     $.ajax({
                         type: 'PUT',
                         url: $(this).attr('action'),
@@ -709,4 +706,6 @@
         <script src="{{ asset('tmplt/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
 </body>
 
+
 </html>
+
