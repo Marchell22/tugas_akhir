@@ -73,7 +73,7 @@
     <div class="rangkasurat">
         <table class="table" width="100%">
             <tr>
-                <td><img src="{{ public_path('tmplt/vendors/images/sks.png') }}" width="160px"></td>
+                <td><img src="{{ public_path('tmplt/vendors/images/sks.png') }}" width="160px""></td>
                 <td class="tengah">
                     <h1>PT. SINAR KALIMAN SEHAT</h1>
                     <h3>Produsen dan Distributor Obat Herbal</h3>

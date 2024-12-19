@@ -430,11 +430,11 @@
                                             <td>{{ $d->kode }}</td>
                                             <td>{{ $d->nama }}</td>
                                             <td>-</td>
-                                            <td>{{ $nilai !== null ? number_format($nilai, 0, ',', '.') : '-' }}</td>
+                                            <td>Rp.{{ $nilai !== null ? number_format($nilai, 0, ',', '.') : '-' }}</td>
                                         @elseif($d->post_saldo == 1)
                                             <td>{{ $d->kode }}</td>
                                             <td>{{ $d->nama }}</td>
-                                            <td>{{ $nilai !== null ? number_format($nilai, 0, ',', '.') : '-' }}</td>
+                                            <td>Rp.{{ $nilai !== null ? number_format($nilai, 0, ',', '.') : '-' }}</td>
                                             <td>-</td>
                                         @endif
                                     </tr>
@@ -443,8 +443,8 @@
                             <tfoot class="">
                                 <tr>
                                     <th colspan="2" class="text-right">Jumlah</th>
-                                    <th>{{ number_format($totalDebit, 0, ',', '.') }}</th>
-                                    <th>{{ number_format($totalKredit, 0, ',', '.') }}</th>
+                                    <th>Rp.{{ number_format($totalDebit, 0, ',', '.') }}</th>
+                                    <th>Rp.{{ number_format($totalKredit, 0, ',', '.') }}</th>
                                 </tr>
                         </table>
                     </div>

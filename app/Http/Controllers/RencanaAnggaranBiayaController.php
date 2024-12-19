@@ -32,7 +32,7 @@ class RencanaAnggaranBiayaController extends Controller
         ]);
 
         return response()->json(['redirect' => route('admin.RencanaAnggaranBiaya')]);
-    
+
     }
 
     public function edit($id)

@@ -138,8 +138,9 @@
                             <td>{{ $uraian['uraian_pekerjaan'] }}</td>
                             <td>{{ $uraian['satuan'] }}</td>
                             <td>{{ $uraian['volume'] }}</td>
-                            <td>{{ $uraian['harga_satuan'] }}</td>
-                            <td>{{ $uraian['total_harga'] }}</td>
+                           <td>Rp {{ number_format($uraian['harga_satuan'], 0, ',', '.') }}</td>
+
+                            <td>Rp {{ number_format($uraian['total_harga'], 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
