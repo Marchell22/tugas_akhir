@@ -97,9 +97,13 @@ class AkunPenggunaController extends Controller
 
 
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
         $user = User::find($id);
+         if (!Hash::check($request->password, $user->password)) {
+        // Jika password salah, kirimkan error ke session
+        return back()->withErrors(['password' => 'Password is incorrect.']);
+    }
 
         if (!$user) {
             return redirect()->route('admin.AkunPengguna')->with('error', 'User not found');

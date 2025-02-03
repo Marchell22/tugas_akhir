@@ -94,7 +94,7 @@
                             <span>{{ $rencanaAnggaranBiaya->kegiatan }}</span>
                         </p>
 
-                        <p><strong>Periode &nbsp;</strong> :
+                        <p><strong>Periode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> :
                             <span>{{ $rencanaAnggaranBiaya->waktu_pelaksanaan }}</span>
                         </p>
                         <p><strong>Output
@@ -112,6 +112,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Akun Transaksi</th>
                         <th>Uraian</th>
                         <th>Satuan</th>
                         <th>Volume</th>
@@ -125,7 +126,6 @@
                             <td>{{ $index + 1 }}</td> <!-- Menampilkan urutan nomor dimulai dari 1 -->
                             <td>
                                 @php
-                                    // Mencari nama akun berdasarkan akun_id dari $akunTransaksis
                                     $akun = $akunTransaksis->firstWhere('id', $uraian['akun_id']);
                                 @endphp
                                 {{ $akun ? $akun->nama : 'Nama Akun Tidak Ditemukan' }}
@@ -133,8 +133,7 @@
                             <td>{{ $uraian['uraian_pekerjaan'] }}</td>
                             <td>{{ $uraian['satuan'] }}</td>
                             <td>{{ $uraian['volume'] }}</td>
-                          <td>Rp {{ number_format($uraian['harga_satuan'], 0, ',', '.') }}</td>
-
+                            <td>Rp {{ number_format($uraian['harga_satuan'], 0, ',', '.') }}</td>
                             <td>Rp {{ number_format($uraian['total_harga'], 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
@@ -144,7 +143,7 @@
                         $totalJumlah = array_sum(array_column($uraianPekerjaan, 'total_harga'));
                     @endphp
                     <tr>
-                        <td colspan="5" style="text-align: right; font-weight: bold;">Total Jumlah:</td>
+                        <td colspan="6" style="text-align: right; font-weight: bold;">Total Jumlah:</td>
                         <td style="font-weight: bold; text-align: center; vertical-align: middle;">
                             Rp {{ number_format($totalJumlah, 0, ',', '.') }}
                         </td>
